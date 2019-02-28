@@ -78,4 +78,13 @@ public class MarkerException extends RuntimeException {
     public static final MarkerException invalidMarker() {
         return new MarkerException("ERROR: invalid marker, cannot be NULL or empty.");
     }
+
+    /**
+     * Returns {@link MarkerException} instance by invalid (empty or null) source
+     *
+     * @return {@link MarkerException} instance
+     */
+    public static final MarkerException invalidSource() {
+        return new MarkerException("ERROR: invalid source, cannot be NULL or empty.");
+    }
 }

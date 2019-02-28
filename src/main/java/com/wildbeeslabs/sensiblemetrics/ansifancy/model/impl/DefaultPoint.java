@@ -94,6 +94,11 @@ public class DefaultPoint implements Point {
     private CharSequence dataCode;
 
     /**
+     * Default data type
+     */
+    private Type type;
+
+    /**
      * Returns new {@link DefaultPoint} instance by input data parameters
      *
      * @param dataView - initial input data view {@link CharSequence}

@@ -21,26 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl;
 
-import java.io.Serializable;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
+import lombok.NoArgsConstructor;
 
 /**
- * Point interface declaration
+ * Default {@link Point} processor implementation {@link Processor}
  *
+ * @param <T> type of element to be processed
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Point extends Serializable {
+@NoArgsConstructor
+public class PointProcessor<T> implements Processor<T, Point> {
 
-    enum Type {
-        ESCAPE_BEGIN,
-        ESCAPE_END
+    /**
+     * Returns {@link Iterable} collection of processed values {@link Point} by input argument value {@code T}
+     *
+     * @param value - initial input argument value {@code T}
+     * @return {@link Iterable} collection of processed values {@link Point}
+     */
+    @Override
+    public <S extends Iterable<? extends Point>> S process(T value) {
+        return null;
     }
-
-    Type getType();
-
-    <T extends CharSequence> T getDataSymbol();
-
-    <T extends CharSequence> T getDataCode();
 }
