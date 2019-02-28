@@ -23,26 +23,44 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.FancyConfiguration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
-import lombok.Getter;
 
 /**
- * Marker parser implementation {@link javax.swing.text.html.parser.Parser}
+ * Default parser implementation {@link Parser}
  *
- * @param <T> type of element to be stored by entry
+ * @param <T> type of element to be parsed
  * @author Alexander Rogalskiy
- * @version 1.1
- * @since 1.0
+ * @version 1.0
  */
-public class DefaultMarkerParser<T extends CharSequence, R extends CharSequence> implements Parser<T, R> {
+public class DefaultParser<T extends CharSequence, R extends CharSequence> implements Parser<T, R> {
 
+    /**
+     * Default character escape sequences
+     */
     private static final char CHR_ESCAPE = '`';
     private static final char CHR_ESCAPE_CLASS_BEGIN = '{';
     private static final char CHR_ESCAPE_CLASS_END = '}';
 
-    @Getter
-    private FancyConfiguration configuration = new FancyConfiguration();
+    /**
+     * Default input configuration {@link DefaultConfiguration}
+     */
+    private DefaultConfiguration configuration;
+    /**
+     * Default input source {@code T}
+     */
+    private T source;
+
+    /**
+     * Default parser constructor with input configuration {@link DefaultConfiguration} and source {@link String}
+     *
+     * @param configuration - initial input configuration {@link DefaultConfiguration}
+     * @param source        - initial input source {@link String}
+     */
+    public DefaultParser(final DefaultConfiguration configuration, final T source) {
+        this.configuration = configuration;
+        this.source = source;
+    }
 
     @Override
     public R parse(final T value) {

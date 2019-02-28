@@ -57,7 +57,7 @@ public class DefaultSequence implements Sequence {
     /**
      * Default collection of styles
      */
-    private Collection<? extends Style> styles;
+    private Collection<Style> styles;
 
     @Override
     public int length() {
@@ -72,6 +72,17 @@ public class DefaultSequence implements Sequence {
     @Override
     public CharSequence subSequence(int start, int end) {
         return null;
+    }
+
+    /**
+     * Returns current {@link DefaultSequence} updated by input array of styles {@link Style}
+     *
+     * @param styles - initial input array of styles {@link Style}
+     * @return updated {@link DefaultSequence}
+     */
+    public DefaultSequence add(final Style... styles) {
+        Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])).stream().forEach(getStyles()::add);
+        return this;
     }
 
     /**

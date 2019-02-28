@@ -33,7 +33,7 @@ import java.io.Serializable;
  */
 public interface Point extends Serializable {
 
-    <T extends CharSequence> T getDataView();
+    <T extends CharSequence> T getDataSymbol();
 
     <T extends CharSequence> T getDataCode();
 }

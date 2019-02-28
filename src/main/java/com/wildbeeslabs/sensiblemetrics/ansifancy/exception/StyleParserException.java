@@ -25,18 +25,17 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Marker parser runtime exception {@link RuntimeException}
+ * Style parser runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SymbolParserException extends RuntimeException {
+public class StyleParserException extends RuntimeException {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -44,59 +43,58 @@ public class SymbolParserException extends RuntimeException {
     private static final long serialVersionUID = 2408356002846172868L;
 
     /**
-     * Default {@link SymbolParserException} constructor with initial exception message
+     * Default {@link StyleParserException} constructor with initial exception message
      *
      * @param message - initial input exception message {@link String}
      */
-    public SymbolParserException(final String message) {
+    public StyleParserException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link SymbolParserException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link StyleParserException} constructor with initial exception cause {@Link Throwable}
      *
      * @param cause - initial input exception cause {@Link Throwable}
      */
-    public SymbolParserException(final Throwable cause) {
+    public StyleParserException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link SymbolParserException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link StyleParserException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@Link Throwable}
      */
-    public SymbolParserException(final String message, final Throwable cause) {
+    public StyleParserException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link SymbolParserException} instance by unknown point {@link Point}
+     * Returns {@link StyleParserException} instance by unknown point {@link Point}
      *
-     * @param point - initial input symbol point {@link Point}
-     * @return {@link SymbolParserException} instance
+     * @param point - initial input point {@Link Point}
+     * @return {@link StyleParserException} instance
      */
-    public static final SymbolParserException unknownPoint(final Point point) {
-        return new SymbolParserException(String.format("ERROR: unknown point={%s} detected", point));
+    public static final StyleParserException unknownPoint(final Point point) {
+        return new StyleParserException(String.format("ERROR: unknown point={%s} detected", point));
     }
 
     /**
-     * Returns {@link SymbolParserException} instance by invalid style {@link Style}
+     * Returns {@link StyleParserException} instance by invalid (empty or null) point {@link Point}
      *
-     * @param style - initial input symbol style {@Link Style}
-     * @return {@link SymbolParserException} instance
+     * @return {@link StyleParserException} instance
      */
-    public static final SymbolParserException invalidStyle(final Style style) {
-        return new SymbolParserException(String.format("ERROR: invalid style={%s} detected", style));
+    public static final StyleParserException invalidPoint() {
+        return new StyleParserException(String.format("ERROR: invalid point, cannot be NULL or empty."));
     }
 
     /**
-     * Returns {@link SymbolParserException} instance by invalid (empty or null) symbol {@link Sequence}
+     * Returns {@link StyleParserException} instance by invalid (empty or null) style {@link Style}
      *
-     * @return {@link SymbolParserException} instance
+     * @return {@link StyleParserException} instance
      */
-    public static final SymbolParserException invalidSymbol() {
-        return new SymbolParserException("ERROR: invalid symbol, cannot be NULL or empty.");
+    public static final StyleParserException invalidStyle() {
+        return new StyleParserException("ERROR: invalid style, cannot be NULL or empty.");
     }
 }

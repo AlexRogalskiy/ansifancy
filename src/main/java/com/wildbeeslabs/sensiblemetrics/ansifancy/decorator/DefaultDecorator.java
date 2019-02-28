@@ -23,30 +23,46 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.DefaultParser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * Fancy decorator implementation {@link RuntimeException}
+ * Default decorator implementation
  */
 @Data
 //@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class FancyDecorator<T, R> {
+public class DefaultDecorator<T extends CharSequence, R> {
 
+    /**
+     * Default parser instance {@link Parser}
+     */
     private final Parser<T, R> parser;
+    /**
+     * Default configuration instance {@link DefaultConfiguration}
+     */
+    private final DefaultConfiguration configuration;
 
-    public FancyDecorator(final Parser<T, R> parser) {
+    /**
+     * Default fancy decorator constructor with initial parser {@link Parser} and configuration {@link DefaultConfiguration}
+     *
+     * @param parser        - initial input parser instance {@link Parser}
+     * @param configuration - initial input configuration instance {@link DefaultConfiguration}
+     */
+    public DefaultDecorator(final Parser<T, R> parser, final DefaultConfiguration configuration) {
         this.parser = parser;
+        this.configuration = configuration;
     }
 
     //public static final AnsiScape ansi = new AnsiScape();
 
     public R format(final T source, final Object... args) {
-        //final Parser parser = new DefaultMarkerParser(context, source);
+        final Parser parser = new DefaultParser(getConfiguration(), source);
         return (R) String.format(getParser().parse(source).toString(), args);
     }
 }

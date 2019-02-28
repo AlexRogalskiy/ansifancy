@@ -23,13 +23,17 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.StyleParserException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.*;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Default style implementation {@link Style}
@@ -95,6 +99,67 @@ public class DefaultStyle implements Style {
      * Default collection of style points
      */
     private Collection<Point> points;
+
+    /**
+     * Returns current {@link DefaultSequence} updated by input array of styles {@link Style}
+     *
+     * @param points - initial input array of styles {@link Point
+     * @return updated {@link DefaultSequence}
+     */
+    public DefaultStyle add(final Point... points) {
+        Arrays.asList(Optional.ofNullable(points).orElseThrow(StyleParserException::invalidPoint)).stream().forEach(getPoints()::add);
+        return this;
+    }
+
+    /**
+     * Returns current {@link DefaultStyle} updated by {@link Point} instance
+     *
+     * @param dataView - initial input  data view {@link CharSequence}
+     * @param dataCode - initial input data code {@link CharSequence}
+     * @return updated {@link DefaultPoint} instance
+     */
+    public DefaultStyle add(final CharSequence dataView, final CharSequence dataCode) {
+        getPoints().add(DefaultPoint.getPoint(dataView, dataCode));
+        return this;
+    }
+
+    /**
+     * Returns current {@link DefaultStyle} updated by input {@link DefaultStyle} instance
+     *
+     * @param style - initial input {@link DefaultStyle} instance
+     * @return updated {@link DefaultPoint} instance
+     */
+    public DefaultStyle inherit(final DefaultStyle style) {
+        if (Objects.isNull(style)) {
+            throw StyleParserException.invalidStyle();
+        }
+        getPoints().addAll(style.getPoints());
+        return this;
+    }
+
+    /**
+     * Returns string representation of current collection of {@link Point} data codes
+     *
+     * @return string representation of current collection of {@link Point} data codes
+     */
+    public String getCodePoints() {
+        return getPoints().stream()
+            .map(Point::getDataCode)
+            .map(String::valueOf)
+            .collect(Collectors.joining(StringUtils.EMPTY));
+    }
+
+    /**
+     * Returns string representation of current collection of {@link Point} data symbols
+     *
+     * @return string representation of current collection of {@link Point} data symbols
+     */
+    public String getSymbolPoints() {
+        return getPoints().stream()
+            .map(Point::getDataSymbol)
+            .map(String::valueOf)
+            .collect(Collectors.joining(StringUtils.EMPTY));
+    }
 
     /**
      * Returns new {@link DefaultStyle} instance by input parameters
