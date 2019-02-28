@@ -47,71 +47,91 @@ public class DefaultPoint implements Point {
     private static final long serialVersionUID = 3840718954768956199L;
 
     /**
-     * Default control escape points
-     */
-    public static final Point RESET = DefaultPoint.getPoint("reset", "0");
-    public static final Point BOLD = DefaultPoint.getPoint("bold", "1");
-    public static final Point DIM = DefaultPoint.getPoint("dim", "2");
-    public static final Point UNDER_LINE = DefaultPoint.getPoint("uline", "4");
-    public static final Point BLINK = DefaultPoint.getPoint("blink", "5");
-    public static final Point REVERSE = DefaultPoint.getPoint("rev", "7");
-    public static final Point BLANK = DefaultPoint.getPoint("blank", "8");
-    public static final Point OVER_STRIKE = DefaultPoint.getPoint("ostrike", "9");
-
-    /**
-     * Default color escape points
-     */
-    public static final Point BlACK_FOREGROUND = DefaultPoint.getPoint("black_fg", "30");
-    public static final Point BLACK_BACKGROUND = DefaultPoint.getPoint("black_bg", "40");
-    public static final Point RED_FOREGROUND = DefaultPoint.getPoint("red_fg", "31");
-    public static final Point RED_BACKGROUND = DefaultPoint.getPoint("red_bg", "41");
-    public static final Point GREEN_FOREGROUND = DefaultPoint.getPoint("green_fg", "32");
-    public static final Point GREEN_BACKGROUND = DefaultPoint.getPoint("green_bg", "44");
-    public static final Point YELLOW_FOREGROUND = DefaultPoint.getPoint("yellow_fg", "33");
-    public static final Point YELLOW_BACKGROUND = DefaultPoint.getPoint("yellow_bg", "43");
-    public static final Point BLUE_FOREGROUND = DefaultPoint.getPoint("blue_fg", "34");
-    public static final Point BLUE_BACKGROUND = DefaultPoint.getPoint("blue_bg", "44");
-    public static final Point MAGENTA_FOREGROUND = DefaultPoint.getPoint("magenta_fg", "35");
-    public static final Point MAGENTA_BACKGROUND = DefaultPoint.getPoint("magenta_bg", "45");
-    public static final Point CYAN_FOREGROUND = DefaultPoint.getPoint("cyan_fg", "36");
-    public static final Point CYAN_BACKGROUND = DefaultPoint.getPoint("cyan_bg", "46");
-    public static final Point WHITE_FOREGROUND = DefaultPoint.getPoint("white_fg", "37");
-    public static final Point WHITE_BACKGROUND = DefaultPoint.getPoint("white_bg", "47");
-
-    /**
-     * Default escape format
+     * Default character escape format
      */
     private static final String DEFAULT_ESCAPE_FORMAT = ((char) 27) + "[%sm";
 
     /**
-     * Default data view
+     * Default service escape points
      */
-    private CharSequence dataSymbol;
+    public static final Point RESET = DefaultPoint.getPoint("reset", "0", Type.SERVICE_CONTROL);
+    public static final Point BOLD = DefaultPoint.getPoint("bold", "1", Type.DECORATION_CONTROL);
+    public static final Point DIM = DefaultPoint.getPoint("dim", "2", Type.DECORATION_CONTROL);
+    public static final Point UNDER_LINE = DefaultPoint.getPoint("uline", "4", Type.DECORATION_CONTROL);
+    public static final Point BLINK = DefaultPoint.getPoint("blink", "5", Type.DECORATION_CONTROL);
+    public static final Point REVERSE = DefaultPoint.getPoint("rev", "7", Type.DECORATION_CONTROL);
+    public static final Point BLANK = DefaultPoint.getPoint("blank", "8", Type.DECORATION_CONTROL);
+    public static final Point OVERSTRIKE = DefaultPoint.getPoint("ostrike", "9", Type.DECORATION_CONTROL);
 
     /**
-     * Default data code
+     * Default foreground color escape points
      */
-    private CharSequence dataCode;
+    public static final Point BlACK_FOREGROUND = DefaultPoint.getPoint("black_fg", "30", Type.FOREGROUND_COLOR);
+    public static final Point RED_FOREGROUND = DefaultPoint.getPoint("red_fg", "31", Type.FOREGROUND_COLOR);
+    public static final Point GREEN_FOREGROUND = DefaultPoint.getPoint("green_fg", "32", Type.FOREGROUND_COLOR);
+    public static final Point YELLOW_FOREGROUND = DefaultPoint.getPoint("yellow_fg", "33", Type.FOREGROUND_COLOR);
+    public static final Point BLUE_FOREGROUND = DefaultPoint.getPoint("blue_fg", "34", Type.FOREGROUND_COLOR);
+    public static final Point MAGENTA_FOREGROUND = DefaultPoint.getPoint("magenta_fg", "35", Type.FOREGROUND_COLOR);
+    public static final Point CYAN_FOREGROUND = DefaultPoint.getPoint("cyan_fg", "36", Type.FOREGROUND_COLOR);
+    public static final Point WHITE_FOREGROUND = DefaultPoint.getPoint("white_fg", "37", Type.FOREGROUND_COLOR);
 
     /**
-     * Default data type
+     * Default background color escape points
+     */
+    public static final Point BLACK_BACKGROUND = DefaultPoint.getPoint("black_bg", "40", Type.BACKGROUND_COLOR);
+    public static final Point RED_BACKGROUND = DefaultPoint.getPoint("red_bg", "41", Type.BACKGROUND_COLOR);
+    public static final Point GREEN_BACKGROUND = DefaultPoint.getPoint("green_bg", "44", Type.BACKGROUND_COLOR);
+    public static final Point YELLOW_BACKGROUND = DefaultPoint.getPoint("yellow_bg", "43", Type.BACKGROUND_COLOR);
+    public static final Point BLUE_BACKGROUND = DefaultPoint.getPoint("blue_bg", "44", Type.BACKGROUND_COLOR);
+    public static final Point MAGENTA_BACKGROUND = DefaultPoint.getPoint("magenta_bg", "45", Type.BACKGROUND_COLOR);
+    public static final Point CYAN_BACKGROUND = DefaultPoint.getPoint("cyan_bg", "46", Type.BACKGROUND_COLOR);
+    public static final Point WHITE_BACKGROUND = DefaultPoint.getPoint("white_bg", "47", Type.BACKGROUND_COLOR);
+
+    /**
+     * Default point symbol
+     */
+    private CharSequence symbol;
+
+    /**
+     * Default point code
+     */
+    private CharSequence code;
+
+    /**
+     * Default point type
      */
     private Type type;
 
     /**
      * Returns new {@link DefaultPoint} instance by input data parameters
      *
-     * @param dataView - initial input data view {@link CharSequence}
-     * @param dataCode - initial input data code {@link CharSequence}
+     * @param symbol - initial input symbol {@link CharSequence}
+     * @param code   - initial input code {@link CharSequence}
      * @return new {@link DefaultPoint} instance
      */
-    public static DefaultPoint getPoint(@NonNull final CharSequence dataView, final CharSequence dataCode) {
-        if (isEmpty(dataCode)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape sequence={%s}, should not be empty or null", dataView));
+    public static DefaultPoint getPoint(@NonNull final CharSequence symbol, final CharSequence code, final Type type) {
+        if (isEmpty(code)) {
+            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
         return DefaultPoint.builder()
-            .dataCode(dataCode)
-            .dataSymbol(String.format(DEFAULT_ESCAPE_FORMAT, dataView))
+            .code(code)
+            .symbol(String.format(DEFAULT_ESCAPE_FORMAT, symbol))
+            .type(type)
             .build();
+    }
+
+    @Override
+    public int length() {
+        return 0;
+    }
+
+    @Override
+    public char charAt(int index) {
+        return 0;
+    }
+
+    @Override
+    public CharSequence subSequence(int start, int end) {
+        return null;
     }
 }

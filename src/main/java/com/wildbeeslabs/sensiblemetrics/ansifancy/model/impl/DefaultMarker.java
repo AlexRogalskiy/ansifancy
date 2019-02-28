@@ -24,9 +24,14 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.*;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Default marker implementation {@link Marker}
@@ -51,21 +56,38 @@ public class DefaultMarker implements Marker {
      */
     private Position position;
     /**
-     * Default marker sequence
+     * Default symbol meta data
      */
-    private Sequence sequence;
+    private MetaData metaData;
+    /**
+     * Default collection of styles
+     */
+    private Collection<Style> styles;
+
+    /**
+     * Returns updated {@link DefaultMarker} marker by input array of styles {@link Style}
+     *
+     * @param styles - initial input array of styles {@link Style}
+     * @return updated {@link DefaultMarker} marker
+     */
+    public DefaultMarker add(final Style... styles) {
+        Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])).stream().forEach(getStyles()::add);
+        return this;
+    }
 
     /**
      * Returns new {@link DefaultMarker} instance by input parameters
      *
      * @param position - initial input marker position {@link Position}
-     * @param sequence - initial input marker sequence {@link Sequence}
+     * @param metaData - initial input meta data {@link MetaData}
+     * @param styles   - initial array of styles {@link Style}
      * @return new {@link DefaultMarker} instance
      */
-    public static DefaultMarker getMarker(@NonNull final Position position, @NonNull final Sequence sequence) {
+    public static DefaultMarker getMarker(@NonNull final Position position, @NonNull final MetaData metaData, final Style... styles) {
         return DefaultMarker.builder()
             .position(position)
-            .sequence(sequence)
+            .metaData(metaData)
+            .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])))
             .build();
     }
 }

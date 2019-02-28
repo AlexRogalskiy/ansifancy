@@ -42,7 +42,7 @@ public class MarkerException extends RuntimeException {
     private static final long serialVersionUID = 6535141661569846794L;
 
     /**
-     * Default {@link MarkerException} constructor with initial exception message
+     * Default {@link MarkerException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
@@ -52,7 +52,7 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
-     * Default {@link MarkerException} constructor with initial exception cause {@link Throwable}
+     * Default {@link MarkerException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
@@ -61,7 +61,7 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
-     * Default {@link MarkerException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link MarkerException} constructor with initial message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
@@ -71,20 +71,21 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
+     * Returns {@link MarkerException} instance by input marker {@link Marker}
+     *
+     * @param marker - initial input marker {@link Marker}
+     * @return {@link MarkerException} instance
+     */
+    public static final MarkerException unknownMarker(final Marker marker) {
+        return new MarkerException(String.format("ERROR: unknown marker={%s} detected", marker));
+    }
+
+    /**
      * Returns {@link MarkerException} instance by invalid (empty or null) marker {@link Marker}
      *
      * @return {@link MarkerException} instance
      */
     public static final MarkerException invalidMarker() {
         return new MarkerException("ERROR: invalid marker, cannot be NULL or empty.");
-    }
-
-    /**
-     * Returns {@link MarkerException} instance by invalid (empty or null) source
-     *
-     * @return {@link MarkerException} instance
-     */
-    public static final MarkerException invalidSource() {
-        return new MarkerException("ERROR: invalid source, cannot be NULL or empty.");
     }
 }

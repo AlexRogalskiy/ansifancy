@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.StyleParserException;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.StyleException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.*;
@@ -63,7 +63,7 @@ public class DefaultStyle implements Style {
     public static final Style BLINK = DefaultStyle.getStyle("blink", "blink style", DefaultPoint.BLINK);
     public static final Style REVERSE = DefaultStyle.getStyle("rev", "reverse style", DefaultPoint.REVERSE);
     public static final Style BLANK = DefaultStyle.getStyle("blank", "blank style", DefaultPoint.BLANK);
-    public static final Style OVER_STRIKE = DefaultStyle.getStyle("ostrike", "overstrike style", DefaultPoint.OVER_STRIKE);
+    public static final Style OVER_STRIKE = DefaultStyle.getStyle("ostrike", "overstrike style", DefaultPoint.OVERSTRIKE);
 
     /**
      * Default color styles
@@ -101,13 +101,13 @@ public class DefaultStyle implements Style {
     private Collection<Point> points;
 
     /**
-     * Returns current {@link DefaultSequence} updated by input array of styles {@link Style}
+     * Returns current {@link DefaultStyle} style updated by input array of styles {@link Style}
      *
      * @param points - initial input array of styles {@link Point}
-     * @return updated {@link DefaultSequence}
+     * @return updated {@link DefaultStyle} style
      */
     public DefaultStyle add(final Point... points) {
-        Arrays.asList(Optional.ofNullable(points).orElseThrow(StyleParserException::invalidPoint)).stream().forEach(getPoints()::add);
+        Arrays.asList(Optional.ofNullable(points).orElseThrow(StyleException::invalidPoint)).stream().forEach(getPoints()::add);
         return this;
     }
 
@@ -118,8 +118,8 @@ public class DefaultStyle implements Style {
      * @param dataCode - initial input data code {@link CharSequence}
      * @return updated {@link DefaultPoint} instance
      */
-    public DefaultStyle add(final CharSequence dataView, final CharSequence dataCode) {
-        getPoints().add(DefaultPoint.getPoint(dataView, dataCode));
+    public DefaultStyle add(final CharSequence dataView, final CharSequence dataCode, final Point.Type type) {
+        getPoints().add(DefaultPoint.getPoint(dataView, dataCode, type));
         return this;
     }
 
@@ -131,7 +131,7 @@ public class DefaultStyle implements Style {
      */
     public DefaultStyle inherit(final DefaultStyle style) {
         if (Objects.isNull(style)) {
-            throw StyleParserException.invalidStyle();
+            throw StyleException.invalidStyle();
         }
         getPoints().addAll(style.getPoints());
         return this;
@@ -144,7 +144,7 @@ public class DefaultStyle implements Style {
      */
     public String getCodePoints() {
         return getPoints().stream()
-            .map(Point::getDataCode)
+            .map(Point::getCode)
             .map(String::valueOf)
             .collect(Collectors.joining(StringUtils.EMPTY));
     }
@@ -156,7 +156,7 @@ public class DefaultStyle implements Style {
      */
     public String getSymbolPoints() {
         return getPoints().stream()
-            .map(Point::getDataSymbol)
+            .map(Point::getSymbol)
             .map(String::valueOf)
             .collect(Collectors.joining(StringUtils.EMPTY));
     }

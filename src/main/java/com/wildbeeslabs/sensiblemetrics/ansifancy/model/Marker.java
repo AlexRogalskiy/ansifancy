@@ -35,5 +35,7 @@ public interface Marker extends Serializable {
 
     Position getPosition();
 
-    <S extends Sequence> S getSequence();
+    MetaData getMetaData();
+
+    <S extends Iterable<? extends Style>> S getStyles();
 }

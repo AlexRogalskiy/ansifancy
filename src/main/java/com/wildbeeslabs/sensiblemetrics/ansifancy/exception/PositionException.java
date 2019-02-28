@@ -23,78 +23,70 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Style parser runtime exception {@link RuntimeException}
+ * Position runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class StyleParserException extends RuntimeException {
+public class PositionException extends RuntimeException {
 
     /**
      * Default explicit serialVersionUID for interoperability
      */
-    private static final long serialVersionUID = 2408356002846172868L;
+    private static final long serialVersionUID = 3382349137530920404L;
 
     /**
-     * Default {@link StyleParserException} constructor with initial exception message
+     * Default {@link PositionException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
-    public StyleParserException(final String message) {
+
+    public PositionException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link StyleParserException} constructor with initial exception cause {@link Throwable}
+     * Default {@link PositionException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
-    public StyleParserException(final Throwable cause) {
+    public PositionException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link StyleParserException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link PositionException} constructor with initial message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
      */
-    public StyleParserException(final String message, final Throwable cause) {
+    public PositionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link StyleParserException} instance by unknown point {@link Point}
+     * Returns {@link PositionException} instance by input position {@link Style}
      *
-     * @param point - initial input point {@Link Point}
-     * @return {@link StyleParserException} instance
+     * @param position - initial input position {@link Position}
+     * @return {@link PositionException} instance
      */
-    public static final StyleParserException unknownPoint(final Point point) {
-        return new StyleParserException(String.format("ERROR: unknown point={%s} detected", point));
+    public static final PositionException unknownPosition(final Position position) {
+        return new PositionException(String.format("ERROR: unknown position={%s} detected", position));
     }
 
     /**
-     * Returns {@link StyleParserException} instance by invalid (empty or null) point {@link Point}
+     * Returns {@link PositionException} instance by invalid (empty or null) position {@link Position}
      *
-     * @return {@link StyleParserException} instance
+     * @return {@link PositionException} instance
      */
-    public static final StyleParserException invalidPoint() {
-        return new StyleParserException(String.format("ERROR: invalid point, cannot be NULL or empty."));
-    }
-
-    /**
-     * Returns {@link StyleParserException} instance by invalid (empty or null) style {@link Style}
-     *
-     * @return {@link StyleParserException} instance
-     */
-    public static final StyleParserException invalidStyle() {
-        return new StyleParserException("ERROR: invalid style, cannot be NULL or empty.");
+    public static final PositionException invalidPosition() {
+        return new PositionException("ERROR: invalid position, cannot be NULL or empty.");
     }
 }

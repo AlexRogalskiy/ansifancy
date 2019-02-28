@@ -26,6 +26,7 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.DefaultCharSequenceParser;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl.MarkerProcessor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -62,7 +63,7 @@ public class DefaultDecorator<T extends CharSequence, R> {
     //public static final AnsiScape ansi = new AnsiScape();
 
     public R format(final T source, final Object... args) {
-        final Parser parser = new DefaultCharSequenceParser(getConfiguration(), source);
+        final Parser parser = new DefaultCharSequenceParser(getConfiguration(), new MarkerProcessor<>());
         return (R) String.format(getParser().parse(source).toString(), args);
     }
 }

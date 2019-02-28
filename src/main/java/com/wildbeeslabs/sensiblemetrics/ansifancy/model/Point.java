@@ -31,16 +31,21 @@ import java.io.Serializable;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Point extends Serializable {
+public interface Point extends CharSequence, Serializable {
 
     enum Type {
         ESCAPE_BEGIN,
-        ESCAPE_END
+        ESCAPE_END,
+        FOREGROUND_COLOR,
+        BACKGROUND_COLOR,
+        CURSOR_CONTROL,
+        DECORATION_CONTROL,
+        SERVICE_CONTROL
     }
 
     Type getType();
 
-    <T extends CharSequence> T getDataSymbol();
+    <T extends CharSequence> T getSymbol();
 
-    <T extends CharSequence> T getDataCode();
+    <T extends CharSequence> T getCode();
 }

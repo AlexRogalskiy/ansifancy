@@ -24,9 +24,9 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.MarkerException;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ParserException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
 import lombok.Data;
@@ -80,35 +80,35 @@ public class DefaultCharSequenceParser<R extends CharSequence> implements Parser
     @Override
     public R parse(final CharSequence value) {
         if (StringUtils.isEmpty(value)) {
-            throw MarkerException.invalidSource();
+            throw ParserException.invalidSource();
         }
         final StringBuilder buff = new StringBuilder();
         final List<Marker> markers = getProcessor().process(value);
-        final LinkedList<Sequence> ansiClasses = new LinkedList<>();
-        for (final Marker marker : markers) {
-            if (marker instanceof EscapeClassBegin) {
-                // Verify if the escape class is registered in the context
-                EscapeClassBegin begin = (EscapeClassBegin) token;
-                String escapeClassName = begin.getEscapeClassName();
-                AnsiClass ansiClass = ansiScapeContext.get(escapeClassName);
-                if (null == ansiClass) {
-                    throw unknownEscapeClass(escapeClassName);
-                }
-                buff.append(ansiClass.getCharSequences());
-                ansiClasses.add(ansiClass);
-            } else if (token instanceof FreeText) {
-                buff.append(((FreeText) token).getText());
-            } else if (token instanceof EscapeClassEnd) {
-                if (ansiClasses.isEmpty()) {
-                    throw invalidBracketSerquence(token.getStartIndex());
-                }
-                ansiClasses.removeLast();
-                buff.append(AnsiSequence.RESET.getSequence());
-                for (AnsiClass ansiClass : ansiClasses) {
-                    buff.append(ansiClass.getCharSequences());
-                }
-            }
-        }
+        final LinkedList<Style> ansiClasses = new LinkedList<>();
+//        for (final Marker marker : markers) {
+//            if (marker instanceof EscapeClassBegin) {
+//                // Verify if the escape class is registered in the context
+//                EscapeClassBegin begin = (EscapeClassBegin) token;
+//                String escapeClassName = begin.getEscapeClassName();
+//                AnsiClass ansiClass = ansiScapeContext.get(escapeClassName);
+//                if (null == ansiClass) {
+//                    throw unknownEscapeClass(escapeClassName);
+//                }
+//                buff.append(ansiClass.getCharSequences());
+//                ansiClasses.add(ansiClass);
+//            } else if (token instanceof FreeText) {
+//                buff.append(((FreeText) token).getText());
+//            } else if (token instanceof EscapeClassEnd) {
+//                if (ansiClasses.isEmpty()) {
+//                    throw invalidBracketSerquence(token.getStartIndex());
+//                }
+//                ansiClasses.removeLast();
+//                buff.append(AnsiSequence.RESET.getSequence());
+//                for (AnsiClass ansiClass : ansiClasses) {
+//                    buff.append(ansiClass.getCharSequences());
+//                }
+//            }
+//        }
         return (R) buff.toString();
     }
 }

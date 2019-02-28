@@ -24,6 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -42,7 +43,7 @@ public class ConfigurationException extends RuntimeException {
     private static final long serialVersionUID = 2802569224038657627L;
 
     /**
-     * Default {@link ConfigurationException} constructor with initial exception message
+     * Default {@link ConfigurationException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
@@ -52,7 +53,7 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Default {@link ConfigurationException} constructor with initial exception cause {@link Throwable}
+     * Default {@link ConfigurationException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
@@ -61,7 +62,7 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Default {@link ConfigurationException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link ConfigurationException} constructor with initial message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
@@ -71,11 +72,11 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Returns {@link ConfigurationException} instance by already registered meta data {@link MetaData}
+     * Returns {@link ConfigurationException} instance by already registered meta data {@link Style}
      *
      * @return {@link ConfigurationException} instance
      */
     public static final ConfigurationException alreadyDefined(final MetaData metaData) {
-        return new ConfigurationException(String.format("ERROR: already exists meta name={%s}, description={%s}, should be unique.", metaData.getName(), metaData.getDescription()));
+        return new ConfigurationException(String.format("ERROR: already exists meta data={%s}, should be unique.", metaData));
     }
 }

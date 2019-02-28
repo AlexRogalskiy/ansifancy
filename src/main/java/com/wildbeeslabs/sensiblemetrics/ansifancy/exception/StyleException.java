@@ -23,19 +23,19 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Marker parser runtime exception {@link RuntimeException}
+ * Style runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SequenceParserException extends RuntimeException {
+public class StyleException extends RuntimeException {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -43,58 +43,68 @@ public class SequenceParserException extends RuntimeException {
     private static final long serialVersionUID = 2408356002846172868L;
 
     /**
-     * Default {@link SequenceParserException} constructor with initial exception message
+     * Default {@link StyleException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
-    public SequenceParserException(final String message) {
+    public StyleException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link SequenceParserException} constructor with initial exception cause {@link Throwable}
+     * Default {@link StyleException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
-    public SequenceParserException(final Throwable cause) {
+    public StyleException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link SequenceParserException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link StyleException} constructor with initial message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
      */
-    public SequenceParserException(final String message, final Throwable cause) {
+    public StyleException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link SequenceParserException} instance by unknown style {@link Style}
+     * Returns {@link StyleException} instance by input point {@link Point}
      *
-     * @param style - initial input symbol style {@link Style}
-     * @return {@link SequenceParserException} instance
+     * @param point - initial input point {@link Point}
+     * @return {@link StyleException} instance
      */
-    public static final SequenceParserException unknownStyle(final Style style) {
-        return new SequenceParserException(String.format("ERROR: unknown style={%s} detected", style));
+    public static final StyleException unknownPoint(final Point point) {
+        return new StyleException(String.format("ERROR: unknown point={%s} detected", point));
     }
 
     /**
-     * Returns {@link SequenceParserException} instance by invalid (empty or null) style {@link Style}
+     * Returns {@link StyleException} instance by invalid (empty or null) point {@link Point}
      *
-     * @return {@link SequenceParserException} instance
+     * @return {@link StyleException} instance
      */
-    public static final SequenceParserException invalidStyle() {
-        return new SequenceParserException(String.format("ERROR: invalid stu;e, cannot be NULL or empty."));
+    public static final StyleException invalidPoint() {
+        return new StyleException(String.format("ERROR: invalid point, cannot be NULL or empty."));
     }
 
     /**
-     * Returns {@link SequenceParserException} instance by invalid (empty or null) symbol {@link Sequence}
+     * Returns {@link StyleException} instance by input style {@link Style}
      *
-     * @return {@link SequenceParserException} instance
+     * @param style - initial input style {@link Style}
+     * @return {@link StyleException} instance
      */
-    public static final SequenceParserException invalidSequence() {
-        return new SequenceParserException("ERROR: invalid sequence, cannot be NULL or empty.");
+    public static final StyleException unknownStyle(final Style style) {
+        return new StyleException(String.format("ERROR: unknown style={%s} detected", style));
+    }
+
+    /**
+     * Returns {@link StyleException} instance by invalid (empty or null) style {@link Style}
+     *
+     * @return {@link StyleException} instance
+     */
+    public static final StyleException invalidStyle() {
+        return new StyleException("ERROR: invalid style, cannot be NULL or empty.");
     }
 }
