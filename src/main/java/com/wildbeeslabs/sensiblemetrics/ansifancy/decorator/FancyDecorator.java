@@ -24,7 +24,6 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -33,7 +32,7 @@ import lombok.ToString;
  * Fancy decorator implementation {@link RuntimeException}
  */
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class FancyDecorator<T, R> {
@@ -44,7 +43,7 @@ public class FancyDecorator<T, R> {
         this.parser = parser;
     }
 
-    public static final AnsiScape ansi = new AnsiScape();
+    //public static final AnsiScape ansi = new AnsiScape();
 
     public R format(final T source, final Object... args) {
         //final Parser parser = new DefaultMarkerParser(context, source);

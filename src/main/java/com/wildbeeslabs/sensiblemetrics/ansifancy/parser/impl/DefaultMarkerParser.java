@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.AnsiFancyConfiguration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.FancyConfiguration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
 import lombok.Getter;
 
@@ -42,7 +42,7 @@ public class DefaultMarkerParser<T extends CharSequence, R extends CharSequence>
     private static final char CHR_ESCAPE_CLASS_END = '}';
 
     @Getter
-    private AnsiFancyConfiguration configuration = new AnsiFancyConfiguration();
+    private FancyConfiguration configuration = new FancyConfiguration();
 
     @Override
     public R parse(final T value) {

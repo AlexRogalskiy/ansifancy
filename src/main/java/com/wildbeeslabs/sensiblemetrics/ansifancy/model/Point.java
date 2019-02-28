@@ -26,14 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Point declaration
+ * Point interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 public interface Point extends Serializable {
 
-    <T extends CharSequence> T getCode();
+    <T extends CharSequence> T getDataView();
 
-    <T extends CharSequence> T getView();
+    <T extends CharSequence> T getDataCode();
 }

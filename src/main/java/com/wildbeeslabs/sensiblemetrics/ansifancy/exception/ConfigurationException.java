@@ -23,59 +23,59 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Position parser runtime exception {@link RuntimeException}
+ * Configuration runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class PositionParserException extends RuntimeException {
+public class ConfigurationException extends RuntimeException {
 
     /**
      * Default explicit serialVersionUID for interoperability
      */
-    private static final long serialVersionUID = 3382349137530920404L;
+    private static final long serialVersionUID = 2802569224038657627L;
 
     /**
-     * Default {@link PositionParserException} constructor with initial exception message
+     * Default {@link ConfigurationException} constructor with initial exception message
      *
      * @param message - initial input exception message {@link String}
      */
 
-    public PositionParserException(final String message) {
+    public ConfigurationException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link PositionParserException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link ConfigurationException} constructor with initial exception cause {@Link Throwable}
      *
      * @param cause - initial input exception cause {@Link Throwable}
      */
-    public PositionParserException(final Throwable cause) {
+    public ConfigurationException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link PositionParserException} constructor with initial exception message and cause {@link Throwable}
+     * Default {@link ConfigurationException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@Link Throwable}
      */
-    public PositionParserException(final String message, final Throwable cause) {
+    public ConfigurationException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link PositionParserException} instance by invalid (empty or null) position {@link Position}
+     * Returns {@link ConfigurationException} instance by already registered meta data {@link MetaData}
      *
-     * @return {@link PositionParserException} instance
+     * @return {@link ConfigurationException} instance
      */
-    public static final PositionParserException invalidPosition() {
-        return new PositionParserException("ERROR: invalid position, cannot be NULL or empty.");
+    public static final ConfigurationException alreadyDefined(final MetaData metaData) {
+        return new ConfigurationException(String.format("ERROR: already exists meta name={%s}, description={%s}, should be unique.", metaData.getName(), metaData.getDescription()));
     }
 }

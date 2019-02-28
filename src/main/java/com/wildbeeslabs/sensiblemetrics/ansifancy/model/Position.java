@@ -26,14 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Position declaration
+ * Position interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 public interface Position extends Serializable {
 
-    int start();
+    int getStart();
 
-    int end();
+    int getEnd();
 }

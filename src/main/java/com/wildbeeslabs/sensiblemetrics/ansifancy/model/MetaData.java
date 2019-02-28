@@ -26,14 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Meta data declaration
+ * Meta data interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 public interface MetaData extends Serializable {
 
-    String getTitle();
+    String getName();
 
-    String getContent();
+    String getDescription();
 }

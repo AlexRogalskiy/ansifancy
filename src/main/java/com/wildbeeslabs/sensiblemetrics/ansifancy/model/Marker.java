@@ -26,7 +26,7 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Marker declaration
+ * Marker interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -35,5 +35,5 @@ public interface Marker extends Serializable {
 
     Position getPosition();
 
-    <S extends Symbol> S getSymbol();
+    <S extends Sequence> S getSequence();
 }

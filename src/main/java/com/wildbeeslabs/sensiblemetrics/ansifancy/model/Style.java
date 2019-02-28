@@ -26,14 +26,16 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Style declaration
+ * Style interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 public interface Style extends Serializable {
 
-    String getForeColor();
+    String getTitle();
 
-    String getBackColor();
+    String getDescription();
+
+    <S extends Iterable<? extends Point>> S getPoints();
 }

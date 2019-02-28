@@ -23,13 +23,11 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
 import lombok.*;
 
 /**
- * Default marker implementation {@link Marker}
+ * Default meta data implementation {@link MetaData}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -39,33 +37,33 @@ import lombok.*;
 @Data
 @EqualsAndHashCode
 @ToString
-public class DefaultMarker implements Marker {
+public class DefaultMetaData implements MetaData {
 
     /**
      * Default explicit serialVersionUID for interoperability
      */
-    private static final long serialVersionUID = -1737463437481603468L;
+    private static final long serialVersionUID = -7923040070243220868L;
 
     /**
-     * Default marker position
+     * Default meta name
      */
-    private Position position;
+    private String name;
     /**
-     * Default marker sequence
+     * Default meta description
      */
-    private Sequence sequence;
+    private String description;
 
     /**
-     * Returns new {@link DefaultMarker} instance by input parameters
+     * Returns new {@link DefaultMetaData} instance by input parameters
      *
-     * @param position - initial input marker position {@link Position}
-     * @param sequence - initial input marker sequence {@link Sequence}
-     * @return new {@link DefaultMarker} instance
+     * @param name        - initial input meta name {@link String}
+     * @param description - initial input meta description {@link String}
+     * @return new {@link DefaultMetaData} instance
      */
-    public static DefaultMarker getMarker(@NonNull final Position position, @NonNull final Sequence sequence) {
-        return DefaultMarker.builder()
-            .position(position)
-            .sequence(sequence)
+    public static DefaultMetaData getMetaData(final String name, final String description) {
+        return DefaultMetaData.builder()
+            .name(name)
+            .description(description)
             .build();
     }
 }

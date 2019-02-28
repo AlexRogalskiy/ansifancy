@@ -24,15 +24,16 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Sequence;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Symbol;
 import lombok.*;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
- * Default symbol implementation {@link Symbol}
+ * Default symbol implementation {@link Sequence}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -42,31 +43,21 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
-public class DefaultSymbol implements Symbol {
+public class DefaultSequence implements Sequence {
 
     /**
      * Default explicit serialVersionUID for interoperability
      */
     private static final long serialVersionUID = -8851145060884769651L;
 
+    /**
+     * Default symbol meta data
+     */
     private MetaData metaData;
-    private Point point;
-    private List<Style> styles;
-
-    @Override
-    public MetaData getMetaData() {
-        return null;
-    }
-
-    @Override
-    public <P extends Point> P getPoint() {
-        return null;
-    }
-
-    @Override
-    public <S extends Iterable<? extends Style>> S getStyles() {
-        return null;
-    }
+    /**
+     * Default collection of styles
+     */
+    private Collection<? extends Style> styles;
 
     @Override
     public int length() {
@@ -81,5 +72,19 @@ public class DefaultSymbol implements Symbol {
     @Override
     public CharSequence subSequence(int start, int end) {
         return null;
+    }
+
+    /**
+     * Returns new {@link DefaultSequence} instance by input parameters
+     *
+     * @param metaData - initial input sequence meta data {@link MetaData}
+     * @param styles   - initial input array of styles {@link Style}
+     * @return new {@link DefaultSequence} instance
+     */
+    public static DefaultSequence getSequence(final MetaData metaData, final Style... styles) {
+        return DefaultSequence.builder()
+            .metaData(metaData)
+            .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])))
+            .build();
     }
 }

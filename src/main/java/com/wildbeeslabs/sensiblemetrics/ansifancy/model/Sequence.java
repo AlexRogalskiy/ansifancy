@@ -26,16 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Symbol declaration
+ * Sequence interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Symbol extends CharSequence, Serializable {
+public interface Sequence extends CharSequence, Serializable {
 
     MetaData getMetaData();
-
-    <P extends Point> P getPoint();
 
     <S extends Iterable<? extends Style>> S getStyles();
 }

@@ -23,12 +23,11 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
 import lombok.*;
 
 /**
- * Default position implementation {@link Marker}
+ * Default position implementation {@link Position}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -45,13 +44,26 @@ public class DefaultPosition implements Position {
      */
     private static final long serialVersionUID = 4745754960240147629L;
 
-    @Override
-    public int start() {
-        return 0;
-    }
+    /**
+     * Default start position
+     */
+    private int start;
+    /**
+     * Default end position
+     */
+    private int end;
 
-    @Override
-    public int end() {
-        return 0;
+    /**
+     * Returns new {@link DefaultPosition} instance by input parameters
+     *
+     * @param start - initial input start position
+     * @param end   - initial input end position
+     * @return new {@link DefaultPosition} instance
+     */
+    public static DefaultPosition getPosition(int start, int end) {
+        return DefaultPosition.builder()
+            .start(start)
+            .end(end)
+            .build();
     }
 }
