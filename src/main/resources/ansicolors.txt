@@ -1,4 +1,4 @@
-# ANSI color names
+### ANSI foreground colors
 Black: \u001b[30m
 Red: \u001b[31m
 Green: \u001b[32m
@@ -8,8 +8,218 @@ Magenta: \u001b[35m
 Cyan: \u001b[36m
 White: \u001b[37m
 
-Reset: \u001b[0m
+Bright Black: \u001b[30;1m
+Bright Red: \u001b[31;1m
+Bright Green: \u001b[32;1m
+Bright Yellow: \u001b[33;1m
+Bright Blue: \u001b[34;1m
+Bright Magenta: \u001b[35;1m
+Bright Cyan: \u001b[36;1m
+Bright White: \u001b[37;1m
 
+### ANSI background colors
+Background Black: \u001b[40m
+Background Red: \u001b[41m
+Background Green: \u001b[42m
+Background Yellow: \u001b[43m
+Background Blue: \u001b[44m
+Background Magenta: \u001b[45m
+Background Cyan: \u001b[46m
+Background White: \u001b[47m
+
+Background Bright Black: \u001b[40;1m
+Background Bright Red: \u001b[41;1m
+Background Bright Green: \u001b[42;1m
+Background Bright Yellow: \u001b[43;1m
+Background Bright Blue: \u001b[44;1m
+Background Bright Magenta: \u001b[45;1m
+Background Bright Cyan: \u001b[46;1m
+Background Bright White: \u001b[47;1m
+
+### ANSI controls
+0	Reset / Normal	all attributes off
+1	Bold or increased intensity
+2	Faint (decreased intensity)
+3	Italic	Not widely supported. Sometimes treated as inverse.
+4	Underline
+5	Slow Blink	less than 150 per minute
+6	Rapid Blink	MS-DOS ANSI.SYS; 150+ per minute; not widely supported
+7	reverse video	swap foreground and background colors
+8	Conceal	Not widely supported.
+9	Crossed-out	Characters legible, but marked for deletion.
+10	Primary(default) font
+11–19	Alternative font	Select alternative font {\displaystyle n-10} {\displaystyle n-10}
+20	Fraktur	Rarely supported
+21	Doubly underline or Bold off	Double-underline per ECMA-48.[22] See discussion
+22	Normal color or intensity	Neither bold nor faint
+23	Not italic, not Fraktur
+24	Underline off	Not singly or doubly underlined
+25	Blink off
+27	Inverse off
+28	Reveal	conceal off
+29	Not crossed out
+30–37	Set foreground color	See color table below
+38	Set foreground color	Next arguments are 5;n or 2;r;g;b, see below
+39	Default foreground color	implementation defined (according to standard)
+40–47	Set background color	See color table below
+48	Set background color	Next arguments are 5;n or 2;r;g;b, see below
+49	Default background color	implementation defined (according to standard)
+51	Framed
+52	Encircled
+53	Overlined
+54	Not framed or encircled
+55	Not overlined
+60	ideogram underline or right side line	Rarely supported
+61	ideogram double underline or double line on the right side
+62	ideogram overline or left side line
+63	ideogram double overline or double line on the left side
+64	ideogram stress marking
+65	ideogram attributes off	reset the effects of all of 60–64
+90–97	Set bright foreground color	aixterm (not in standard)
+100–107	Set bright background color	aixterm (not in standard)
+
+   ESC[ 38;5;<n> m Select foreground color
+   ESC[ 48;5;<n> m Select background color
+     0-  7:  standard colors (as in ESC [ 30–37 m)
+     8- 15:  high intensity colors (as in ESC [ 90–97 m)
+    16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
+   232-255:  grayscale from black to white in 24 steps
+
+Reset: \u001b[0m
+Bold: \u001b[1m
+Underline: \u001b[4m
+Reversed: \u001b[7m
+
+Up: \u001b[{n}A
+Down: \u001b[{n}B
+Right: \u001b[{n}C
+Left: \u001b[{n}D
+
+Clear Screen: \u001b[{n}J clears the screen
+n=0 clears from cursor until end of screen,
+n=1 clears from cursor to beginning of screen
+n=2 clears entire screen
+Clear Line: \u001b[{n}K clears the current line
+n=0 clears from cursor to end of line
+n=1 clears from cursor to start of line
+n=2 clears entire line
+
+Next Line: \u001b[{n}E moves cursor to beginning of line n lines down
+Prev Line: \u001b[{n}F moves cursor to beginning of line n lines down
+
+Set Column: \u001b[{n}G moves cursor to column n
+Set Position: \u001b[{n};{m}H moves cursor to row n column m
+
+Save Position: \u001b[{s} saves the current cursor position
+Save Position: \u001b[{u} restores the cursor to the last saved position
+
+### Examples
 print("\u001b[31mHelloWorld")
 print("\u001b[0m")
+print("\u001b[31mHello\u001b[0mWorld")
 
+print("\u001b[30m A \u001b[31m B \u001b[32m C \u001b[33m D \u001b[0m")
+print("\u001b[34m E \u001b[35m F \u001b[36m G \u001b[37m H \u001b[0m")
+
+import sys
+for i in range(0, 16):
+    for j in range(0, 16):
+        code = str(i * 16 + j)
+        sys.stdout.write(u"\u001b[38;5;" + code + "m " + code.ljust(4))
+    print u"\u001b[0m"
+
+print("\u001b[40m A \u001b[41m B \u001b[42m C \u001b[43m D \u001b[0m")
+print("\u001b[44m A \u001b[45m B \u001b[46m C \u001b[47m D \u001b[0m")
+print("\u001b[40;1m A \u001b[41;1m B \u001b[42;1m C \u001b[43;1m D \u001b[0m")
+print("\u001b[44;1m A \u001b[45;1m B \u001b[46;1m C \u001b[47;1m D \u001b[0m")
+
+import sys
+for i in range(0, 16):
+    for j in range(0, 16):
+        code = str(i * 16 + j)
+        sys.stdout.write(u"\u001b[48;5;" + code + "m " + code.ljust(4))
+    print u"\u001b[0m
+
+print u"\u001b[1m BOLD \u001b[0m\u001b[4m Underline \u001b[0m\u001b[7m Reversed \u001b[0m"
+
+print u"\u001b[1m\u001b[4m\u001b[7m BOLD Underline Reversed \u001b[0m"
+
+print u"\u001b[1m\u001b[31m Red Bold \u001b[0m"
+print u"\u001b[4m\u001b[44m Blue Background Underline \u001b[0m"
+
+import time, sys
+def loading():
+    print "Loading..."
+    for i in range(0, 100):
+        time.sleep(0.1)
+        sys.stdout.write(u"\u001b[1000D" + str(i + 1) + "%")
+        sys.stdout.flush()
+    print
+loading()
+
+import time, sys
+def loading():
+    print "Loading..."
+    for i in range(0, 100):
+        time.sleep(1)
+        sys.stdout.write(u"\u001b[1000D")
+        sys.stdout.flush()
+        time.sleep(1)
+        sys.stdout.write(str(i + 1) + "%")
+        sys.stdout.flush()
+    print
+loading()
+
+import time, sys
+def loading():
+    print "Loading..."
+    for i in range(0, 100):
+        time.sleep(0.1)
+        width = (i + 1) / 4
+        bar = "[" + "#" * width + " " * (25 - width) + "]"
+        sys.stdout.write(u"\u001b[1000D" +  bar)
+        sys.stdout.flush()
+    print
+loading()
+
+import time, sys, random
+def loading(count):
+    all_progress = [0] * count
+    sys.stdout.write("\n" * count) # Make sure we have space to draw the bars
+    while any(x < 100 for x in all_progress):
+        time.sleep(0.01)
+        # Randomly increment one of our progress values
+        unfinished = [(i, v) for (i, v) in enumerate(all_progress) if v < 100]
+        index, _ = random.choice(unfinished)
+        all_progress[index] += 1
+
+        # Draw the progress bars
+        sys.stdout.write(u"\u001b[1000D") # Move left
+        sys.stdout.write(u"\u001b[" + str(count) + "A") # Move up
+        for progress in all_progress:
+            width = progress / 4
+            print "[" + "#" * width + " " * (25 - width) + "]"
+loading()
+
+print "\x1b[48;5;110mHello World\x1b[39;49m"
+print "\033[48;5;110mHello World\033[39;49m"
+
+print "\x1b[48;5;110mHello World\x1b[39;49m"
+print "\033[48;5;110mHello World\033[39;49m"
+
+"\u001b[0mXXX\u001b[1;4mXXX\u001b[0m"
+"\u001b[0m\u001b[41mXXX\u001b[48;5;9mXXX\u001b[0m"
+
+ESC[ 38:5:<n> m Select foreground color
+ESC[ 48:5:<n> m Select background color
+ESC[ 38;2;<r>;<g>;<b> m Select RGB foreground color
+ESC[ 48;2;<r>;<g>;<b> m Select RGB background color
+
+ESC[ 38:2:<Color-Space-ID>:<r>:<g>:<b>:<unused>:<CS tolerance>:<Color-Space: 0="CIELUV"; 1="CIELAB">; m Select RGB foreground color
+ESC[ 48:2:<Color-Space-ID>:<r>:<g>:<b>:<unused>:<CS tolerance>:<Color-Space: 0="CIELUV"; 1="CIELAB">; m Select RGB background color
+
+make 2>&1 | sed -e 's/.*\bWARN.*/\x1b[7m&\x1b[0m/i' -e 's/.*\bERR.*/\x1b[93;41m&\x1b[0m/i'
+flasher () { while true; do printf \\e[?5h; sleep 0.1; printf \\e[?5l; read -s -n1 -t1 && break; done; }
+make ; flasher
+
+printf \\033c

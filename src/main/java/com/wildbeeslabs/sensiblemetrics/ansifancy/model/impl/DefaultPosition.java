@@ -45,25 +45,25 @@ public class DefaultPosition implements Position {
     private static final long serialVersionUID = 4745754960240147629L;
 
     /**
-     * Default start position
+     * Default row position
      */
-    private int start;
+    private int row;
     /**
-     * Default end position
+     * Default column position
      */
-    private int end;
+    private int column;
 
     /**
      * Returns new {@link DefaultPosition} instance by input parameters
      *
-     * @param start - initial input start position
-     * @param end   - initial input end position
+     * @param row    - initial input row position
+     * @param column - initial input column position
      * @return new {@link DefaultPosition} instance
      */
-    public static DefaultPosition getPosition(int start, int end) {
+    public static DefaultPosition getPosition(int row, int column) {
         return DefaultPosition.builder()
-            .start(start)
-            .end(end)
+            .row(row)
+            .column(column)
             .build();
     }
 }

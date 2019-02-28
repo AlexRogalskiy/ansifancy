@@ -33,7 +33,7 @@ import java.io.Serializable;
  */
 public interface Position extends Serializable {
 
-    int getStart();
+    int getRow();
 
-    int getEnd();
+    int getColumn();
 }
