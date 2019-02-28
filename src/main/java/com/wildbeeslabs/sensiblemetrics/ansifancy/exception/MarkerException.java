@@ -52,9 +52,9 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
-     * Default {@link MarkerException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link MarkerException} constructor with initial exception cause {@link Throwable}
      *
-     * @param cause - initial input exception cause {@Link Throwable}
+     * @param cause - initial input exception cause {@link Throwable}
      */
     public MarkerException(final Throwable cause) {
         super(cause);
@@ -64,7 +64,7 @@ public class MarkerException extends RuntimeException {
      * Default {@link MarkerException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
-     * @param cause   - initial input exception cause {@Link Throwable}
+     * @param cause   - initial input exception cause {@link Throwable}
      */
     public MarkerException(final String message, final Throwable cause) {
         super(message, cause);

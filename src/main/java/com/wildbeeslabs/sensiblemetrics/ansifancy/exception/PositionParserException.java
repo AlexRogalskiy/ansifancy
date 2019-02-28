@@ -52,9 +52,9 @@ public class PositionParserException extends RuntimeException {
     }
 
     /**
-     * Default {@link PositionParserException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link PositionParserException} constructor with initial exception cause {@link Throwable}
      *
-     * @param cause - initial input exception cause {@Link Throwable}
+     * @param cause - initial input exception cause {@link Throwable}
      */
     public PositionParserException(final Throwable cause) {
         super(cause);
@@ -64,7 +64,7 @@ public class PositionParserException extends RuntimeException {
      * Default {@link PositionParserException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
-     * @param cause   - initial input exception cause {@Link Throwable}
+     * @param cause   - initial input exception cause {@link Throwable}
      */
     public PositionParserException(final String message, final Throwable cause) {
         super(message, cause);

@@ -52,9 +52,9 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Default {@link ConfigurationException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link ConfigurationException} constructor with initial exception cause {@link Throwable}
      *
-     * @param cause - initial input exception cause {@Link Throwable}
+     * @param cause - initial input exception cause {@link Throwable}
      */
     public ConfigurationException(final Throwable cause) {
         super(cause);
@@ -64,7 +64,7 @@ public class ConfigurationException extends RuntimeException {
      * Default {@link ConfigurationException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
-     * @param cause   - initial input exception cause {@Link Throwable}
+     * @param cause   - initial input exception cause {@link Throwable}
      */
     public ConfigurationException(final String message, final Throwable cause) {
         super(message, cause);

@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode
 @ToString
@@ -103,7 +103,7 @@ public class DefaultStyle implements Style {
     /**
      * Returns current {@link DefaultSequence} updated by input array of styles {@link Style}
      *
-     * @param points - initial input array of styles {@link Point
+     * @param points - initial input array of styles {@link Point}
      * @return updated {@link DefaultSequence}
      */
     public DefaultStyle add(final Point... points) {

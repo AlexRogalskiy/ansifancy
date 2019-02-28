@@ -52,9 +52,9 @@ public class SequenceParserException extends RuntimeException {
     }
 
     /**
-     * Default {@link SequenceParserException} constructor with initial exception cause {@Link Throwable}
+     * Default {@link SequenceParserException} constructor with initial exception cause {@link Throwable}
      *
-     * @param cause - initial input exception cause {@Link Throwable}
+     * @param cause - initial input exception cause {@link Throwable}
      */
     public SequenceParserException(final Throwable cause) {
         super(cause);
@@ -64,7 +64,7 @@ public class SequenceParserException extends RuntimeException {
      * Default {@link SequenceParserException} constructor with initial exception message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
-     * @param cause   - initial input exception cause {@Link Throwable}
+     * @param cause   - initial input exception cause {@link Throwable}
      */
     public SequenceParserException(final String message, final Throwable cause) {
         super(message, cause);
@@ -73,7 +73,7 @@ public class SequenceParserException extends RuntimeException {
     /**
      * Returns {@link SequenceParserException} instance by unknown style {@link Style}
      *
-     * @param style - initial input symbol style {@Link Style}
+     * @param style - initial input symbol style {@link Style}
      * @return {@link SequenceParserException} instance
      */
     public static final SequenceParserException unknownStyle(final Style style) {

@@ -33,7 +33,7 @@ import lombok.*;
  * @version 1.0
  */
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode
 @ToString

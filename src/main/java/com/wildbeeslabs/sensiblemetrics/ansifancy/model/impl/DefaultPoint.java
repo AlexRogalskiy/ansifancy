@@ -35,7 +35,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
  * @version 1.0
  */
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode
 @ToString
@@ -86,7 +86,7 @@ public class DefaultPoint implements Point {
     /**
      * Default data view
      */
-    private CharSequence dataView;
+    private CharSequence dataSymbol;
 
     /**
      * Default data code
@@ -100,13 +100,13 @@ public class DefaultPoint implements Point {
      * @param dataCode - initial input data code {@link CharSequence}
      * @return new {@link DefaultPoint} instance
      */
-    public static DefaultPoint getPoint(@NonNull final CharSequence dataView, @NonNull final CharSequence dataCode) {
+    public static DefaultPoint getPoint(@NonNull final CharSequence dataView, final CharSequence dataCode) {
         if (isEmpty(dataCode)) {
             throw new IllegalArgumentException(String.format("ERROR: invalid escape sequence={%s}, should not be empty or null", dataView));
         }
         return DefaultPoint.builder()
             .dataCode(dataCode)
-            .dataView(String.format(DEFAULT_ESCAPE_FORMAT, dataView))
+            .dataSymbol(String.format(DEFAULT_ESCAPE_FORMAT, dataView))
             .build();
     }
 }
