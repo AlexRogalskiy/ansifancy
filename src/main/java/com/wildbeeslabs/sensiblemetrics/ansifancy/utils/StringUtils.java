@@ -46,6 +46,7 @@ public class StringUtils {
      * Default numeric pattern format
      */
     public static final String DEFAULT_FORMAT_PATTERN = "#.##";
+
     /**
      * Default decimal format instance {@link DecimalFormat}
      */
@@ -55,14 +56,33 @@ public class StringUtils {
         return new DecimalFormat(DEFAULT_FORMAT_PATTERN, decimalSymbols);
     });
 
+    /**
+     * Returns result string by input source string and default symbol delimiter
+     *
+     * @param value - initial input source string {@link String}
+     * @return result string {@link String}
+     */
     public static String getString(final String value) {
         return getString(DEFAULT_SYMBOL_PREFIX, value);
     }
 
+    /**
+     * Returns result string by input array of strings and empty symbol delimiter
+     *
+     * @param values - initial input array of strings
+     * @return result string {@link String}
+     */
     public static String getString(final String... values) {
         return getStringByDelimiter(org.apache.commons.lang3.StringUtils.EMPTY, values);
     }
 
+    /**
+     * Returns result string by input delimiter and array of strings
+     *
+     * @param delimiter - initial input string delimiter
+     * @param values    - initial input array of strings
+     * @return result string {@link String}
+     */
     public static String getStringByDelimiter(final String delimiter, final String... values) {
         return org.apache.commons.lang3.StringUtils.join(values, delimiter);
     }
@@ -100,5 +120,20 @@ public class StringUtils {
         Objects.requireNonNull(locale, "Locale should not be null");
         Objects.requireNonNull(message, "Message should not be null");
         return String.format(locale, message, args);
+    }
+
+    /**
+     * Returns substring {@link String} by input source string and start position
+     *
+     * @param source - initial input source string {@link String}
+     * @param start  - initial start position
+     * @return substring {@link String} by input source string
+     */
+    public static String substring(final String source, int start) {
+        final StringBuilder buff = new StringBuilder();
+        for (int i = start; i < source.length() && !Character.isSpaceChar(source.charAt(i)); i++) {
+            buff.append(source.charAt(i));
+        }
+        return buff.toString();
     }
 }
