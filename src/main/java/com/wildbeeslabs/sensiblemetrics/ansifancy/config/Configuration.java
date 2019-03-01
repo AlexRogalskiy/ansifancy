@@ -21,32 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
-
-import java.io.Serializable;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.config;
 
 /**
- * Point interface declaration
+ * Configuration interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Point extends CharSequence, Serializable {
-
-    enum Type {
-//        ESCAPE_BEGIN,
-//        ESCAPE_END,
-        FOREGROUND_COLOR,
-        BACKGROUND_COLOR,
-        CURSOR_CONTROL,
-        DECORATION_CONTROL,
-        SERVICE_CONTROL,
-        IDEOGRAM
-    }
-
-    Type getType();
-
-    <T extends CharSequence> T getSymbol();
-
-    <T extends CharSequence> T getCode();
+public interface Configuration {
 }

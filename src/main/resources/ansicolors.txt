@@ -106,13 +106,13 @@ n=2 clears entire line
 
 Next Line: \u001b[{n}E moves cursor to beginning of line n lines down
 Prev Line: \u001b[{n}F moves cursor to beginning of line n lines down
-
 Set Column: \u001b[{n}G moves cursor to column n
+
 Set Position: \u001b[{n};{m}H moves cursor to row n column m
 
 Save Position: \u001b[{s} saves the current cursor position
 Save Position: \u001b[{u} restores the cursor to the last saved position
-
+========================================================================================================================
 ### Examples
 print("\u001b[31mHelloWorld")
 print("\u001b[0m")

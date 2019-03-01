@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.Decorator;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.DefaultCharSequenceParser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl.MarkerProcessor;
@@ -31,39 +32,40 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.Objects;
+
 /**
- * Default decorator implementation
+ * Default decorator implementation {@link Decorator}
  */
 @Data
-//@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DefaultDecorator<T extends CharSequence, R> {
+public class CharSequenceDecorator<T extends CharSequence, R> implements Decorator<T, R> {
 
     /**
      * Default parser instance {@link Parser}
      */
     private final Parser<T, R> parser;
-    /**
-     * Default configuration instance {@link DefaultConfiguration}
-     */
-    private final DefaultConfiguration configuration;
 
     /**
-     * Default fancy decorator constructor with initial parser {@link Parser} and configuration {@link DefaultConfiguration}
+     * Default (@link CharSequenceDecorator) constructor by initial {@link Configuration} instance
      *
-     * @param parser        - initial input parser instance {@link Parser}
-     * @param configuration - initial input configuration instance {@link DefaultConfiguration}
+     * @param configuration - initial input {@link Configuration} instance
      */
-    public DefaultDecorator(final Parser<T, R> parser, final DefaultConfiguration configuration) {
-        this.parser = parser;
-        this.configuration = configuration;
+    public CharSequenceDecorator(final Configuration configuration) {
+        Objects.requireNonNull(configuration);
+        this.parser = new DefaultCharSequenceParser(configuration, new MarkerProcessor<>());
     }
 
-    //public static final AnsiScape ansi = new AnsiScape();
-
-    public R format(final T source, final Object... args) {
-        final Parser parser = new DefaultCharSequenceParser(getConfiguration(), new MarkerProcessor<>());
+    /**
+     * Returns decorated {@code R} value by input source {@code T} and array of objects
+     *
+     * @param source - initial input source {@code T} to be decorated
+     * @param args   - initial input array of objects {@link Object} to decorate by
+     * @return decorated value {@code R}
+     */
+    @Override
+    public R decorate(final T source, final Object... args) {
         return (R) String.format(getParser().parse(source).toString(), args);
     }
 }

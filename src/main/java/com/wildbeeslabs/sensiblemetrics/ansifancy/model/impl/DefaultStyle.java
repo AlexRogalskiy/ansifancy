@@ -58,9 +58,9 @@ public class DefaultStyle implements Style {
      */
     public static final Style RESET = DefaultStyle.getStyle("reset", "reset", DefaultPoint.RESET);
     public static final Style BOLD = DefaultStyle.getStyle("bold", "bold style", DefaultPoint.BOLD);
-    public static final Style DIM = DefaultStyle.getStyle("dim", "dim style", DefaultPoint.DIM);
-    public static final Style UNDER_LINE = DefaultStyle.getStyle("uline", "underline style", DefaultPoint.UNDER_LINE);
-    public static final Style BLINK = DefaultStyle.getStyle("blink", "blink style", DefaultPoint.BLINK);
+    public static final Style DIM = DefaultStyle.getStyle("dim", "dim style", DefaultPoint.FAINT);
+    public static final Style UNDER_LINE = DefaultStyle.getStyle("uline", "underline style", DefaultPoint.UNDERLINE);
+    public static final Style BLINK = DefaultStyle.getStyle("blink", "blink style", DefaultPoint.SLOW_BLINK);
     public static final Style REVERSE = DefaultStyle.getStyle("rev", "reverse style", DefaultPoint.REVERSE);
     public static final Style BLANK = DefaultStyle.getStyle("blank", "blank style", DefaultPoint.BLANK);
     public static final Style OVER_STRIKE = DefaultStyle.getStyle("ostrike", "overstrike style", DefaultPoint.OVERSTRIKE);
@@ -114,12 +114,13 @@ public class DefaultStyle implements Style {
     /**
      * Returns current {@link DefaultStyle} updated by {@link Point} instance
      *
-     * @param dataView - initial input  data view {@link CharSequence}
-     * @param dataCode - initial input data code {@link CharSequence}
+     * @param name   - initial input  data view {@link CharSequence}
+     * @param symbol - initial input  data view {@link CharSequence}
+     * @param code   - initial input data code {@link CharSequence}
      * @return updated {@link DefaultPoint} instance
      */
-    public DefaultStyle add(final CharSequence dataView, final CharSequence dataCode, final Point.Type type) {
-        getPoints().add(DefaultPoint.getPoint(dataView, dataCode, type));
+    public DefaultStyle add(final CharSequence name, final CharSequence symbol, final int code, final Point.Type type) {
+        getPoints().add(DefaultPoint.getPoint(name, symbol, code, type));
         return this;
     }
 

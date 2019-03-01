@@ -77,6 +77,6 @@ public class ConfigurationException extends RuntimeException {
      * @return {@link ConfigurationException} instance
      */
     public static final ConfigurationException alreadyDefined(final MetaData metaData) {
-        return new ConfigurationException(String.format("ERROR: already exists meta data={%s}, should be unique.", metaData));
+        return new ConfigurationException(String.format("ERROR: already defined meta data={%s}, should be unique.", metaData));
     }
 }

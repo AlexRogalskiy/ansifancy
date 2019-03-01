@@ -23,13 +23,16 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.DefaultConfiguration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ParserException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
@@ -43,33 +46,26 @@ import java.util.List;
  * @version 1.0
  */
 @Data
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class DefaultCharSequenceParser<R extends CharSequence> implements Parser<CharSequence, R> {
 
     /**
      * Default character escape symbols
      */
-    private static final char ESCAPE_SYMBOL = '`';
-    private static final char ESCAPE_CLASS_BEGIN_SYMBOL = '{';
-    private static final char ESCAPE_CLASS_END_SYMBOL = '}';
+    private static final char DEFAULT_ESCAPE_SYMBOL = '`';
+    private static final char DEFAULT_ESCAPE_CLASS_BEGIN_SYMBOL = '{';
+    private static final char DEFAULT_ESCAPE_CLASS_END_SYMBOL = '}';
 
     /**
-     * Default input configuration {@link DefaultConfiguration}
+     * Default configuration {@link Configuration}
      */
-    private final DefaultConfiguration configuration;
+    private final Configuration configuration;
     /**
-     * Default processor instance {@link Processor}
+     * Default processor {@link Processor}
      */
     private final Processor<CharSequence, Marker> processor;
-
-    /**
-     * Default parser constructor with input configuration {@link DefaultConfiguration}
-     *
-     * @param configuration - initial input configuration {@link DefaultConfiguration}
-     */
-    public DefaultCharSequenceParser(final DefaultConfiguration configuration, final Processor<CharSequence, Marker> processor) {
-        this.configuration = configuration;
-        this.processor = processor;
-    }
 
     /**
      * Returns parsed value {@code R} by input argument value {@code T}

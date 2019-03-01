@@ -21,32 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
-
-import java.io.Serializable;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 
 /**
- * Point interface declaration
+ * Decorator interface declaration
  *
+ * @param <T> type of input element to be decorated
+ * @param <R> type of input element to decorate by
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Point extends CharSequence, Serializable {
+@FunctionalInterface
+public interface Decorator<T, R> {
 
-    enum Type {
-//        ESCAPE_BEGIN,
-//        ESCAPE_END,
-        FOREGROUND_COLOR,
-        BACKGROUND_COLOR,
-        CURSOR_CONTROL,
-        DECORATION_CONTROL,
-        SERVICE_CONTROL,
-        IDEOGRAM
-    }
-
-    Type getType();
-
-    <T extends CharSequence> T getSymbol();
-
-    <T extends CharSequence> T getCode();
+    /**
+     * Returns decorated {@code R} value by input argument value {@code T}
+     *
+     * @param value - initial input argument value {@code T} to be decorated
+     * @param args  - initial input array of values {@link Object} to decorate by
+     * @return decorated value {@code R}
+     */
+    R decorate(final T value, final Object... args);
 }

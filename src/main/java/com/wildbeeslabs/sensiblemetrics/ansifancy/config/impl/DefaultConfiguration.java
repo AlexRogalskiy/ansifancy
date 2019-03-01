@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.config;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.config.impl;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ConfigurationException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.DefaultMarker;
@@ -40,12 +41,12 @@ import java.util.Set;
 import static java.util.Arrays.asList;
 
 /**
- * Default configuration
+ * Default configuration implementation
  */
 @Data
 @EqualsAndHashCode
 @ToString
-public class DefaultConfiguration {
+public class DefaultConfiguration implements Configuration {
 
     /**
      * Default marker map {@link Map}
