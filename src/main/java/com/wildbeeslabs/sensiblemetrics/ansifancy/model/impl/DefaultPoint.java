@@ -167,6 +167,8 @@ public class DefaultPoint implements Point {
     public static final Point RESET_FRAMED = getPoint("RESET_FRAMED", "RST_FRM", 54, Type.SERVICE_CONTROL);
     public static final Point RESET_OVERLINE = getPoint("RESET_OVERLINE", "RST_OLN", 55, Type.SERVICE_CONTROL);
     public static final Point RESET_IDEOGRAM = getPoint("RESET_IDEOGRAM", "RST_IDEO", 65, Type.SERVICE_CONTROL);
+    public static final Point RESET_FOREGROUND = getPoint("RESET_FOREGROUND", "RST_FG", 39, Type.SERVICE_CONTROL);
+    public static final Point RESET_BACKGROUND = getPoint("RESET_BACKGROUND", "RST_BG", 49, Type.SERVICE_CONTROL);
     /**
      * Default foreground color escape {@link Point} points
      */

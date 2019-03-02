@@ -49,164 +49,70 @@ public class Color implements Serializable {
     /**
      * The color white.  In the default sRGB space.
      */
-    public final static Color white = new Color(255, 255, 255);
-
-    /**
-     * The color white.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color WHITE = white;
-
-    /**
-     * The color light gray.  In the default sRGB space.
-     */
-    public final static Color lightGray = new Color(192, 192, 192);
-
-    /**
-     * The color light gray.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color LIGHT_GRAY = lightGray;
-
-    /**
-     * The color gray.  In the default sRGB space.
-     */
-    public final static Color gray = new Color(128, 128, 128);
-
-    /**
-     * The color gray.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color GRAY = gray;
-
-    /**
-     * The color dark gray.  In the default sRGB space.
-     */
-    public final static Color darkGray = new Color(64, 64, 64);
-
-    /**
-     * The color dark gray.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color DARK_GRAY = darkGray;
-
+    public final static Color WHITE = new Color(255, 255, 255);
     /**
      * The color black.  In the default sRGB space.
      */
-    public final static Color black = new Color(0, 0, 0);
-
-    /**
-     * The color black.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color BLACK = black;
-
-    /**
-     * The color red.  In the default sRGB space.
-     */
-    public final static Color red = new Color(255, 0, 0);
-
-    /**
-     * The color red.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color RED = red;
-
+    public final static Color BLACK = new Color(0, 0, 0);
     /**
      * The color pink.  In the default sRGB space.
      */
-    public final static Color pink = new Color(255, 175, 175);
-
-    /**
-     * The color pink.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color PINK = pink;
-
+    public final static Color PINK = new Color(255, 175, 175);
     /**
      * The color orange.  In the default sRGB space.
      */
-    public final static Color orange = new Color(255, 200, 0);
-
+    public final static Color ORANGE = new Color(255, 200, 0);
     /**
-     * The color orange.  In the default sRGB space.
-     *
-     * @since 1.4
+     * The color gray.  In the default sRGB space.
      */
-    public final static Color ORANGE = orange;
-
+    public final static Color GRAY = new Color(128, 128, 128);
+    public final static Color LIGHT_GRAY = new Color(192, 192, 192);
+    public final static Color DARK_GRAY = new Color(64, 64, 64);
     /**
-     * The color yellow.  In the default sRGB space.
+     * The color red.  In the default sRGB space.
      */
-    public final static Color yellow = new Color(255, 255, 0);
-
+    public final static Color RED = new Color(255, 0, 0);
+    public final static Color LIGHT_RED = new Color(255, 51, 0);
     /**
      * The color yellow.  In the default sRGB space.
-     *
-     * @since 1.4
      */
-    public final static Color YELLOW = yellow;
-
+    public final static Color YELLOW = new Color(255, 255, 0);
+    public final static Color LIGHT_YELLOW = new Color(255, 153, 51);
     /**
      * The color green.  In the default sRGB space.
      */
-    public final static Color green = new Color(0, 255, 0);
-
-    /**
-     * The color green.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color GREEN = green;
-
+    public final static Color GREEN = new Color(0, 255, 0);
+    public final static Color LIGHT_GREEN = new Color(51, 204, 51);
     /**
      * The color magenta.  In the default sRGB space.
      */
-    public final static Color magenta = new Color(255, 0, 255);
-
-    /**
-     * The color magenta.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color MAGENTA = magenta;
-
+    public final static Color MAGENTA = new Color(204, 0, 204);
+    public final static Color LIGHT_MAGENTA = new Color(255, 0, 255);
     /**
      * The color cyan.  In the default sRGB space.
      */
-    public final static Color cyan = new Color(0, 255, 255);
-
-    /**
-     * The color cyan.  In the default sRGB space.
-     *
-     * @since 1.4
-     */
-    public final static Color CYAN = cyan;
-
+    public final static Color CYAN = new Color(0, 153, 255);
+    public final static Color LIGHT_CYAN = new Color(0, 204, 255);
     /**
      * The color blue.  In the default sRGB space.
      */
-    public final static Color blue = new Color(0, 0, 255);
+    public final static Color BLUE = new Color(0, 0, 255);
+    public final static Color LIGHT_BLUE = new Color(26, 140, 255);
 
     /**
-     * The color blue.  In the default sRGB space.
-     *
-     * @since 1.4
+     * Default color transparency
      */
-    public final static Color BLUE = blue;
+    public interface Transparency {
+
+        int OPAQUE = 1;
+
+        int BITMASK = 2;
+
+        int TRANSLUCENT = 3;
+    }
 
     /**
      * The color value.
-     *
-     * @serial
-     * @see #getRGB
      */
     int value;
 
@@ -216,10 +122,6 @@ public class Color implements Serializable {
      * If <code>null</code> after object construction, this must be an
      * sRGB color constructed with 8-bit precision, so compute from the
      * <code>int</code> color value.
-     *
-     * @serial
-     * @see #getRGBColorComponents
-     * @see #getRGBComponents
      */
     private float frgbvalue[];
 
@@ -229,10 +131,6 @@ public class Color implements Serializable {
      * If <code>null</code> after object construction, this must be an
      * sRGB color constructed with 8-bit precision, so compute from the
      * <code>int</code> color value.
-     *
-     * @serial
-     * @see #getRGBColorComponents
-     * @see #getRGBComponents
      */
     private float fvalue[];
 
@@ -240,10 +138,6 @@ public class Color implements Serializable {
      * The alpha value as a <code>float</code> component.
      * If <code>frgbvalue</code> is <code>null</code>, this is not valid
      * data, so compute from the <code>int</code> color value.
-     *
-     * @serial
-     * @see #getRGBComponents
-     * @see #getComponents
      */
     private float falpha;
 
@@ -331,10 +225,6 @@ public class Color implements Serializable {
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  or <code>b</code> are outside of the range
      *                                  0 to 255, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getRGB
      */
     public Color(int r, int g, int b) {
         this(r, g, b, 255);
@@ -351,11 +241,6 @@ public class Color implements Serializable {
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>,
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0 to 255, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getAlpha
-     * @see #getRGB
      */
     @ConstructorProperties({"red", "green", "blue", "alpha"})
     public Color(int r, int g, int b, int a) {
@@ -375,11 +260,6 @@ public class Color implements Serializable {
      * defaulted to 255.
      *
      * @param rgb the combined RGB components
-     * @see java.awt.image.ColorModel#getRGBdefault
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getRGB
      */
     public Color(int rgb) {
         value = 0xff000000 | rgb;
@@ -395,12 +275,6 @@ public class Color implements Serializable {
      * @param rgba     the combined RGBA components
      * @param hasalpha <code>true</code> if the alpha bits are valid;
      *                 <code>false</code> otherwise
-     * @see java.awt.image.ColorModel#getRGBdefault
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getAlpha
-     * @see #getRGB
      */
     public Color(int rgba, boolean hasalpha) {
         if (hasalpha) {
@@ -423,10 +297,6 @@ public class Color implements Serializable {
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  or <code>b</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getRGB
      */
     public Color(float r, float g, float b) {
         this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5));
@@ -452,11 +322,6 @@ public class Color implements Serializable {
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @see #getAlpha
-     * @see #getRGB
      */
     public Color(float r, float g, float b, float a) {
         this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5), (int) (a * 255 + 0.5));
@@ -473,7 +338,6 @@ public class Color implements Serializable {
      * space.
      *
      * @return the red component.
-     * @see #getRGB
      */
     public int getRed() {
         return (getRGB() >> 16) & 0xFF;
@@ -484,7 +348,6 @@ public class Color implements Serializable {
      * space.
      *
      * @return the green component.
-     * @see #getRGB
      */
     public int getGreen() {
         return (getRGB() >> 8) & 0xFF;
@@ -495,7 +358,6 @@ public class Color implements Serializable {
      * space.
      *
      * @return the blue component.
-     * @see #getRGB
      */
     public int getBlue() {
         return (getRGB() >> 0) & 0xFF;
@@ -505,7 +367,6 @@ public class Color implements Serializable {
      * Returns the alpha component in the range 0-255.
      *
      * @return the alpha component.
-     * @see #getRGB
      */
     public int getAlpha() {
         return (getRGB() >> 24) & 0xff;
@@ -518,11 +379,6 @@ public class Color implements Serializable {
      *
      * @return the RGB value of the color in the default sRGB
      * <code>ColorModel</code>.
-     * @see java.awt.image.ColorModel#getRGBdefault
-     * @see #getRed
-     * @see #getGreen
-     * @see #getBlue
-     * @since JDK1.0
      */
     public int getRGB() {
         return value;
@@ -546,8 +402,6 @@ public class Color implements Serializable {
      * @return a new <code>Color</code> object that is
      * a brighter version of this <code>Color</code>
      * with the same {@code alpha} value.
-     * @see java.awt.Color#darker
-     * @since JDK1.0
      */
     public Color brighter() {
         int r = getRed();
@@ -590,8 +444,6 @@ public class Color implements Serializable {
      * @return a new <code>Color</code> object that is
      * a darker version of this <code>Color</code>
      * with the same {@code alpha} value.
-     * @see java.awt.Color#brighter
-     * @since JDK1.0
      */
     public Color darker() {
         return new Color(Math.max((int) (getRed() * FACTOR), 0),
@@ -611,8 +463,6 @@ public class Color implements Serializable {
      * @throws NumberFormatException if the specified string cannot
      *                               be interpreted as a decimal,
      *                               octal, or hexadecimal integer.
-     * @see java.lang.Integer#decode
-     * @since JDK1.1
      */
     public static Color decode(String nm) throws NumberFormatException {
         Integer intval = Integer.decode(nm);
@@ -634,10 +484,6 @@ public class Color implements Serializable {
      * @param nm the name of the color property
      * @return the <code>Color</code> converted from the system
      * property.
-     * @see java.lang.System#getProperty(java.lang.String)
-     * @see java.lang.Integer#getInteger(java.lang.String)
-     * @see java.awt.Color#Color(int)
-     * @since JDK1.0
      */
     public static Color getColor(String nm) {
         return getColor(nm, null);
@@ -659,10 +505,6 @@ public class Color implements Serializable {
      * @param v  the default <code>Color</code>
      * @return the <code>Color</code> converted from the system
      * property, or the specified <code>Color</code>.
-     * @see java.lang.System#getProperty(java.lang.String)
-     * @see java.lang.Integer#getInteger(java.lang.String)
-     * @see java.awt.Color#Color(int)
-     * @since JDK1.0
      */
     public static Color getColor(String nm, Color v) {
         Integer intval = Integer.getInteger(nm);
@@ -690,10 +532,6 @@ public class Color implements Serializable {
      * @return the <code>Color</code> converted from the system
      * property or the <code>Color</code> converted from
      * the specified integer.
-     * @see java.lang.System#getProperty(java.lang.String)
-     * @see java.lang.Integer#getInteger(java.lang.String)
-     * @see java.awt.Color#Color(int)
-     * @since JDK1.0
      */
     public static Color getColor(String nm, int v) {
         Integer intval = Integer.getInteger(nm);
@@ -724,10 +562,6 @@ public class Color implements Serializable {
      * @param brightness the brightness of the color
      * @return the RGB value of the color with the indicated hue,
      * saturation, and brightness.
-     * @see java.awt.Color#getRGB()
-     * @see java.awt.Color#Color(int)
-     * @see java.awt.image.ColorModel#getRGBdefault()
-     * @since JDK1.0
      */
     public static int HSBtoRGB(float hue, float saturation, float brightness) {
         int r = 0, g = 0, b = 0;
@@ -793,10 +627,6 @@ public class Color implements Serializable {
      * @return an array of three elements containing the hue, saturation,
      * and brightness (in that order), of the color with
      * the indicated red, green, and blue components.
-     * @see java.awt.Color#getRGB()
-     * @see java.awt.Color#Color(int)
-     * @see java.awt.image.ColorModel#getRGBdefault()
-     * @since JDK1.0
      */
     public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals) {
         float hue, saturation, brightness;
@@ -852,7 +682,6 @@ public class Color implements Serializable {
      * @param b the brightness of the color
      * @return a <code>Color</code> object with the specified hue,
      * saturation, and brightness.
-     * @since JDK1.0
      */
     public static Color getHSBColor(float h, float s, float b) {
         return new Color(HSBtoRGB(h, s, b));
@@ -994,7 +823,6 @@ public class Color implements Serializable {
      * required to implement the <code>Paint</code> interface.
      *
      * @return this <code>Color</code> object's transparency mode.
-     * @see Transparency
      */
     public int getTransparency() {
         int alpha = getAlpha();
@@ -1005,17 +833,5 @@ public class Color implements Serializable {
         } else {
             return Transparency.TRANSLUCENT;
         }
-    }
-
-    /**
-     * Default transparency implementation
-     */
-    public interface Transparency {
-
-        int OPAQUE = 1;
-
-        int BITMASK = 2;
-
-        int TRANSLUCENT = 3;
     }
 }
