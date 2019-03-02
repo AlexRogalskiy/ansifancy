@@ -259,7 +259,7 @@ public class DefaultPoint implements Point {
      * @param name   - initial input name {@link CharSequence}
      * @param symbol - initial input code {@link CharSequence}
      * @param color  - initial input color {@link Color}
-     * @param type   - initial input color type {@link Type}
+     * @param type   - initial input color type
      * @return new {@link Point} instance
      */
     public static Point getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final Type type) {
@@ -341,7 +341,7 @@ public class DefaultPoint implements Point {
      * @param name     - initial input name {@link CharSequence}
      * @param symbol   - initial input symbol {@link CharSequence}
      * @param position - initial input cursor position
-     * @param type     - initial input cursor type {@link CursorPositionType}
+     * @param type     - initial input cursor type
      * @return new {@link Point} instance
      */
     public static Point getCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int position, final CursorPositionType type) {

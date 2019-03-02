@@ -107,7 +107,7 @@ public class DefaultStyle implements Style {
      * @return updated {@link DefaultStyle} style
      */
     public DefaultStyle add(final Point... points) {
-        Arrays.asList(Optional.ofNullable(points).orElseThrow(StyleException::invalidPoint)).stream().forEach(getPoints()::add);
+        Arrays.asList(Optional.ofNullable(points).orElseGet(() -> new Point[0])).stream().forEach(getPoints()::add);
         return this;
     }
 
