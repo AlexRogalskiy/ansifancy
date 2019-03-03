@@ -30,6 +30,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * String utilities
@@ -46,6 +47,56 @@ public class StringUtils {
      * Default numeric pattern format
      */
     public static final String DEFAULT_FORMAT_PATTERN = "#.##";
+
+    /**
+     * Default regular expression (only alpha-numeric characters)
+     */
+    public static final String DEFAULT_ALPHANUMERIC_PATTERN = "[^a-zA-Z0-9]";
+
+    /**
+     * Default brackets wrapper {@link Function}
+     */
+    public static final Function<Object, String> wrapInBrackets = s -> "[ " + s + " ]";
+
+    /**
+     * Default quotes wrapper {@link Function}
+     */
+    public static final Function<Object, String> wrapInQuotes = s -> "\" " + s + " \"";
+
+    /**
+     * Returns string value {@link String} with replaced values by pattern
+     *
+     * @param initialValue - initial input argument value {@link String} to be processed
+     * @param pattern      - initial input pattern value {@link String} to be replaced by
+     * @param replaceValue - initial input value {@link String} to replace by pattern
+     * @return formatted string value stripped default regex pattern {@link String}
+     */
+    public static String replaceAll(final String initialValue, final String pattern, final String replaceValue) {
+        Objects.requireNonNull(initialValue);
+        Objects.requireNonNull(pattern);
+        return initialValue.replaceAll(pattern, replaceValue);
+    }
+
+    /**
+     * Returns string value sanitized by default regex pattern {@link String}
+     *
+     * @param initialValue - initial input argument value {@link String} to be processed
+     * @param pattern      - initial input pattern value {@link String} to be replaced by
+     * @return formatted string stripped by default regex pattern {@link String}
+     */
+    public static String sanitize(final String initialValue, final String pattern) {
+        return replaceAll(initialValue, pattern, org.apache.commons.lang3.StringUtils.EMPTY).trim();
+    }
+
+    /**
+     * Returns string value sanitized by default regex pattern {@link String}
+     *
+     * @param initialValue - initial argument value {@link String} to be processed
+     * @return formatted string value stripped by default regex pattern {@link String}
+     */
+    public static String sanitize(final String initialValue) {
+        return sanitize(initialValue, DEFAULT_ALPHANUMERIC_PATTERN);
+    }
 
     /**
      * Default decimal format instance {@link DecimalFormat}
@@ -135,5 +186,16 @@ public class StringUtils {
             buff.append(source.charAt(i));
         }
         return buff.toString();
+    }
+
+    /**
+     * Returns string stripped from ANSI characters
+     *
+     * @param value - initial input string to be stripped
+     * @return stripped string
+     */
+    public static String stripAnsiChars(final String value) {
+        Objects.requireNonNull(value);
+        return sanitize(value, "[\\u001b\\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]");
     }
 }

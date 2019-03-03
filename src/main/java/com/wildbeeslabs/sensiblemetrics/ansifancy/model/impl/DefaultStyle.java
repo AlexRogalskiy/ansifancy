@@ -27,7 +27,7 @@ import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.StyleException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
 import lombok.*;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -119,7 +119,7 @@ public class DefaultStyle implements Style {
      * @param code   - initial input data code {@link CharSequence}
      * @return updated {@link DefaultPoint} instance
      */
-    public DefaultStyle add(final CharSequence name, final CharSequence symbol, final int code, final Point.Type type) {
+    public DefaultStyle add(final CharSequence name, final CharSequence symbol, final int code, final Point.PointType type) {
         getPoints().add(DefaultPoint.getPoint(name, symbol, code, type));
         return this;
     }

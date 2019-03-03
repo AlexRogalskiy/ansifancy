@@ -25,7 +25,6 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.helpers;
 
 import lombok.*;
 
-import java.beans.ConstructorProperties;
 import java.io.Serializable;
 
 /**
@@ -242,7 +241,6 @@ public class Color implements Serializable {
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0 to 255, inclusive
      */
-    @ConstructorProperties({"red", "green", "blue", "alpha"})
     public Color(int r, int g, int b, int a) {
         value = ((a & 0xFF) << 24) |
             ((r & 0xFF) << 16) |

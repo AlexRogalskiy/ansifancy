@@ -131,88 +131,88 @@ public class DefaultPoint implements Point {
     /**
      * Default decoration escape {@link Point} points
      */
-    public static final Point BOLD = getPoint("BOLD", "BLD", 1, Type.DECORATION_CONTROL);
-    public static final Point FAINT = getPoint("FAINT", "FNT", 2, Type.DECORATION_CONTROL);
-    public static final Point INVERSE = getPoint("INVERSE", "INV", 3, Type.DECORATION_CONTROL);
-    public static final Point UNDERLINE = getPoint("UNDERLINE", "ULN", 4, Type.DECORATION_CONTROL);
-    public static final Point SLOW_BLINK = getPoint("SLOW_BLINK", "S_BLK", 5, Type.DECORATION_CONTROL);
-    public static final Point RAPID_BLINK = getPoint("RAPID_BLINK", "R_BLK", 6, Type.DECORATION_CONTROL);
-    public static final Point REVERSE = getPoint("REVERSE", "REV", 7, Type.DECORATION_CONTROL);
-    public static final Point BLANK = getPoint("BLANK", "BLN", 8, Type.DECORATION_CONTROL);
-    public static final Point OVERSTRIKE = getPoint("OVERSTRIKE", "OSTRK", 9, Type.DECORATION_CONTROL);
-    public static final Point FRAMED = getPoint("FRAMED", "FRM", 51, Type.DECORATION_CONTROL);
-    public static final Point CIRCLED = getPoint("CIRCLED", "CRC", 52, Type.DECORATION_CONTROL);
-    public static final Point OVERLINE = getPoint("OVERLINE", "OLN", 53, Type.DECORATION_CONTROL);
+    public static final Point BOLD = getPoint("BOLD", "BLD", 1, PointType.DECORATION_CONTROL);
+    public static final Point FAINT = getPoint("FAINT", "FNT", 2, PointType.DECORATION_CONTROL);
+    public static final Point INVERSE = getPoint("INVERSE", "INV", 3, PointType.DECORATION_CONTROL);
+    public static final Point UNDERLINE = getPoint("UNDERLINE", "ULN", 4, PointType.DECORATION_CONTROL);
+    public static final Point SLOW_BLINK = getPoint("SLOW_BLINK", "S_BLK", 5, PointType.DECORATION_CONTROL);
+    public static final Point RAPID_BLINK = getPoint("RAPID_BLINK", "R_BLK", 6, PointType.DECORATION_CONTROL);
+    public static final Point REVERSE = getPoint("REVERSE", "REV", 7, PointType.DECORATION_CONTROL);
+    public static final Point BLANK = getPoint("BLANK", "BLN", 8, PointType.DECORATION_CONTROL);
+    public static final Point OVERSTRIKE = getPoint("OVERSTRIKE", "OSTRK", 9, PointType.DECORATION_CONTROL);
+    public static final Point FRAMED = getPoint("FRAMED", "FRM", 51, PointType.DECORATION_CONTROL);
+    public static final Point CIRCLED = getPoint("CIRCLED", "CRC", 52, PointType.DECORATION_CONTROL);
+    public static final Point OVERLINE = getPoint("OVERLINE", "OLN", 53, PointType.DECORATION_CONTROL);
     /**
      * Default ideogram escape {@link Point} points
      */
-    public static final Point RIGHT_SIDE_LINE = getPoint("RIGHT_SIDE_LINE", "R_SD_LN", 60, Type.IDEOGRAM);
-    public static final Point RIGHT_SIDE_DOUBLE_LINE = getPoint("RIGHT_SIDE_DOUBLE_LINE", "R_SD_DLN", 61, Type.IDEOGRAM);
-    public static final Point LEFT_SIDE_LINE = getPoint("LEFT_SIDE_LINE", "L_SD_LN", 62, Type.IDEOGRAM);
-    public static final Point LEFT_SIDE_DOUBLE_LINE = getPoint("LEFT_SIDE_DOUBLE_LINE", "L_SD_DLN", 63, Type.IDEOGRAM);
-    public static final Point STRESS_MARKING = getPoint("STRESS_MARKING", "STRSS", 64, Type.IDEOGRAM);
+    public static final Point RIGHT_SIDE_LINE = getPoint("RIGHT_SIDE_LINE", "R_SD_LN", 60, PointType.IDEOGRAM);
+    public static final Point RIGHT_SIDE_DOUBLE_LINE = getPoint("RIGHT_SIDE_DOUBLE_LINE", "R_SD_DLN", 61, PointType.IDEOGRAM);
+    public static final Point LEFT_SIDE_LINE = getPoint("LEFT_SIDE_LINE", "L_SD_LN", 62, PointType.IDEOGRAM);
+    public static final Point LEFT_SIDE_DOUBLE_LINE = getPoint("LEFT_SIDE_DOUBLE_LINE", "L_SD_DLN", 63, PointType.IDEOGRAM);
+    public static final Point STRESS_MARKING = getPoint("STRESS_MARKING", "STRSS", 64, PointType.IDEOGRAM);
     /**
      * Default service escape {@link Point} points
      */
-    public static final Point RESET = getPoint("RESET", "RST", 0, Type.SERVICE_CONTROL);
-    public static final Point FRAKTUR = getPoint("FRAKTUR", "FRKTR", 20, Type.SERVICE_CONTROL);
-    public static final Point RESET_BOLD = getPoint("RESET_BOLD", "RST_BLD", 21, Type.SERVICE_CONTROL);
-    public static final Point RESET_COLOR = getPoint("RESET_COLOR", "RST_CLR", 22, Type.SERVICE_CONTROL);
-    public static final Point RESET_ITALIC = getPoint("RESET_ITALIC", "RST_IT", 23, Type.SERVICE_CONTROL);
-    public static final Point RESET_UNDERLINE = getPoint("RESET_UNDERLINE", "RST_ULN", 24, Type.SERVICE_CONTROL);
-    public static final Point RESET_BLINK = getPoint("RESET_BLINK", "RST_BLNK", 25, Type.SERVICE_CONTROL);
-    public static final Point RESET_INVERSE = getPoint("RESET_INVERSE", "RST_INV", 27, Type.SERVICE_CONTROL);
-    public static final Point RESET_BLANK = getPoint("RESET_BLANK", "RST_BLNK", 28, Type.SERVICE_CONTROL);
-    public static final Point RESET_STRIKE = getPoint("RESET_STRIKE", "RST_STRK", 29, Type.SERVICE_CONTROL);
-    public static final Point RESET_FRAMED = getPoint("RESET_FRAMED", "RST_FRM", 54, Type.SERVICE_CONTROL);
-    public static final Point RESET_OVERLINE = getPoint("RESET_OVERLINE", "RST_OLN", 55, Type.SERVICE_CONTROL);
-    public static final Point RESET_IDEOGRAM = getPoint("RESET_IDEOGRAM", "RST_IDEO", 65, Type.SERVICE_CONTROL);
-    public static final Point RESET_FOREGROUND = getPoint("RESET_FOREGROUND", "RST_FG", 39, Type.SERVICE_CONTROL);
-    public static final Point RESET_BACKGROUND = getPoint("RESET_BACKGROUND", "RST_BG", 49, Type.SERVICE_CONTROL);
+    public static final Point RESET = getPoint("RESET", "RST", 0, PointType.SERVICE_CONTROL);
+    public static final Point FRAKTUR = getPoint("FRAKTUR", "FRKTR", 20, PointType.SERVICE_CONTROL);
+    public static final Point RESET_BOLD = getPoint("RESET_BOLD", "RST_BLD", 21, PointType.SERVICE_CONTROL);
+    public static final Point RESET_COLOR = getPoint("RESET_COLOR", "RST_CLR", 22, PointType.SERVICE_CONTROL);
+    public static final Point RESET_ITALIC = getPoint("RESET_ITALIC", "RST_IT", 23, PointType.SERVICE_CONTROL);
+    public static final Point RESET_UNDERLINE = getPoint("RESET_UNDERLINE", "RST_ULN", 24, PointType.SERVICE_CONTROL);
+    public static final Point RESET_BLINK = getPoint("RESET_BLINK", "RST_BLNK", 25, PointType.SERVICE_CONTROL);
+    public static final Point RESET_INVERSE = getPoint("RESET_INVERSE", "RST_INV", 27, PointType.SERVICE_CONTROL);
+    public static final Point RESET_BLANK = getPoint("RESET_BLANK", "RST_BLNK", 28, PointType.SERVICE_CONTROL);
+    public static final Point RESET_STRIKE = getPoint("RESET_STRIKE", "RST_STRK", 29, PointType.SERVICE_CONTROL);
+    public static final Point RESET_FRAMED = getPoint("RESET_FRAMED", "RST_FRM", 54, PointType.SERVICE_CONTROL);
+    public static final Point RESET_OVERLINE = getPoint("RESET_OVERLINE", "RST_OLN", 55, PointType.SERVICE_CONTROL);
+    public static final Point RESET_IDEOGRAM = getPoint("RESET_IDEOGRAM", "RST_IDEO", 65, PointType.SERVICE_CONTROL);
+    public static final Point RESET_FOREGROUND = getPoint("RESET_FOREGROUND", "RST_FG", 39, PointType.SERVICE_CONTROL);
+    public static final Point RESET_BACKGROUND = getPoint("RESET_BACKGROUND", "RST_BG", 49, PointType.SERVICE_CONTROL);
     /**
      * Default foreground color escape {@link Point} points
      */
-    public static final Point BlACK_FOREGROUND = getPoint("BlACK_FOREGROUND", "BLACK_FG", 30, Type.FOREGROUND_COLOR);
-    public static final Point RED_FOREGROUND = getPoint("RED_FOREGROUND", "RED_FG", 31, Type.FOREGROUND_COLOR);
-    public static final Point GREEN_FOREGROUND = getPoint("GREEN_FOREGROUND", "GREEN_FG", 32, Type.FOREGROUND_COLOR);
-    public static final Point YELLOW_FOREGROUND = getPoint("YELLOW_FOREGROUND", "YELLOW_FG", 33, Type.FOREGROUND_COLOR);
-    public static final Point BLUE_FOREGROUND = getPoint("BLUE_FOREGROUND", "BLUE_FG", 34, Type.FOREGROUND_COLOR);
-    public static final Point MAGENTA_FOREGROUND = getPoint("MAGENTA_FOREGROUND", "MAGENTA_FG", 35, Type.FOREGROUND_COLOR);
-    public static final Point CYAN_FOREGROUND = getPoint("CYAN_FOREGROUND", "CYAN_FG", 36, Type.FOREGROUND_COLOR);
-    public static final Point WHITE_FOREGROUND = getPoint("WHITE_FOREGROUND", "WHITE_FG", 37, Type.FOREGROUND_COLOR);
+    public static final Point BlACK_FOREGROUND = getPoint("BlACK_FOREGROUND", "BLACK_FG", 30, PointType.FOREGROUND_COLOR);
+    public static final Point RED_FOREGROUND = getPoint("RED_FOREGROUND", "RED_FG", 31, PointType.FOREGROUND_COLOR);
+    public static final Point GREEN_FOREGROUND = getPoint("GREEN_FOREGROUND", "GREEN_FG", 32, PointType.FOREGROUND_COLOR);
+    public static final Point YELLOW_FOREGROUND = getPoint("YELLOW_FOREGROUND", "YELLOW_FG", 33, PointType.FOREGROUND_COLOR);
+    public static final Point BLUE_FOREGROUND = getPoint("BLUE_FOREGROUND", "BLUE_FG", 34, PointType.FOREGROUND_COLOR);
+    public static final Point MAGENTA_FOREGROUND = getPoint("MAGENTA_FOREGROUND", "MAGENTA_FG", 35, PointType.FOREGROUND_COLOR);
+    public static final Point CYAN_FOREGROUND = getPoint("CYAN_FOREGROUND", "CYAN_FG", 36, PointType.FOREGROUND_COLOR);
+    public static final Point WHITE_FOREGROUND = getPoint("WHITE_FOREGROUND", "WHITE_FG", 37, PointType.FOREGROUND_COLOR);
     /**
      * Default foreground bright color escape {@link Point} points
      */
-    public static final Point BRIGHT_BLACK_FOREGROUND = getBrightColorPoint("BRIGHT_BLACK_FOREGROUND", "BR_BLACK_FG", 30, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_RED_FOREGROUND = getBrightColorPoint("BRIGHT_RED_FOREGROUND", "BR_RED_FG", 31, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_GREEN_FOREGROUND = getBrightColorPoint("BRIGHT_GREEN_FOREGROUND", "BR_GREEN_FG", 32, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_YELLOW_FOREGROUND = getBrightColorPoint("BRIGHT_YELLOW_FOREGROUND", "BR_YELLOW_FG", 33, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_BLUE_FOREGROUND = getBrightColorPoint("BRIGHT_BLUE_FOREGROUND", "BR_BLUE_FG", 34, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_MAGENTA_FOREGROUND = getBrightColorPoint("BRIGHT_MAGENTA_FOREGROUND", "BR_MAGENTA_FG", 35, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_CYAN_FOREGROUND = getBrightColorPoint("BRIGHT_CYAN_FOREGROUND", "BR_CYAN_FG", 36, Type.FOREGROUND_COLOR);
-    public static final Point BRIGHT_WHITE_FOREGROUND = getBrightColorPoint("BRIGHT_WHITE_FOREGROUND", "BR_WHITE_FG", 37, Type.FOREGROUND_COLOR);
+    public static final Point BRIGHT_BLACK_FOREGROUND = getBrightColorPoint("BRIGHT_BLACK_FOREGROUND", "BR_BLACK_FG", 30, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_RED_FOREGROUND = getBrightColorPoint("BRIGHT_RED_FOREGROUND", "BR_RED_FG", 31, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_GREEN_FOREGROUND = getBrightColorPoint("BRIGHT_GREEN_FOREGROUND", "BR_GREEN_FG", 32, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_YELLOW_FOREGROUND = getBrightColorPoint("BRIGHT_YELLOW_FOREGROUND", "BR_YELLOW_FG", 33, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_BLUE_FOREGROUND = getBrightColorPoint("BRIGHT_BLUE_FOREGROUND", "BR_BLUE_FG", 34, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_MAGENTA_FOREGROUND = getBrightColorPoint("BRIGHT_MAGENTA_FOREGROUND", "BR_MAGENTA_FG", 35, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_CYAN_FOREGROUND = getBrightColorPoint("BRIGHT_CYAN_FOREGROUND", "BR_CYAN_FG", 36, PointType.FOREGROUND_COLOR);
+    public static final Point BRIGHT_WHITE_FOREGROUND = getBrightColorPoint("BRIGHT_WHITE_FOREGROUND", "BR_WHITE_FG", 37, PointType.FOREGROUND_COLOR);
     /**
      * Default background color escape {@link Point} points
      */
-    public static final Point BLACK_BACKGROUND = getPoint("BLACK_BACKGROUND", "BLACK_BG", 40, Type.BACKGROUND_COLOR);
-    public static final Point RED_BACKGROUND = getPoint("RED_BACKGROUND", "RED_BG", 41, Type.BACKGROUND_COLOR);
-    public static final Point GREEN_BACKGROUND = getPoint("GREEN_BACKGROUND", "GREEN_BG", 44, Type.BACKGROUND_COLOR);
-    public static final Point YELLOW_BACKGROUND = getPoint("YELLOW_BACKGROUND", "YELLOW_BG", 43, Type.BACKGROUND_COLOR);
-    public static final Point BLUE_BACKGROUND = getPoint("BLUE_BACKGROUND", "BLUE_BG", 44, Type.BACKGROUND_COLOR);
-    public static final Point MAGENTA_BACKGROUND = getPoint("MAGENTA_BACKGROUND", "MAGENTA_BG", 45, Type.BACKGROUND_COLOR);
-    public static final Point CYAN_BACKGROUND = getPoint("CYAN_BACKGROUND", "CYAN_BG", 46, Type.BACKGROUND_COLOR);
-    public static final Point WHITE_BACKGROUND = getPoint("WHITE_BACKGROUND", "WHITE_BG", 47, Type.BACKGROUND_COLOR);
+    public static final Point BLACK_BACKGROUND = getPoint("BLACK_BACKGROUND", "BLACK_BG", 40, PointType.BACKGROUND_COLOR);
+    public static final Point RED_BACKGROUND = getPoint("RED_BACKGROUND", "RED_BG", 41, PointType.BACKGROUND_COLOR);
+    public static final Point GREEN_BACKGROUND = getPoint("GREEN_BACKGROUND", "GREEN_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final Point YELLOW_BACKGROUND = getPoint("YELLOW_BACKGROUND", "YELLOW_BG", 43, PointType.BACKGROUND_COLOR);
+    public static final Point BLUE_BACKGROUND = getPoint("BLUE_BACKGROUND", "BLUE_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final Point MAGENTA_BACKGROUND = getPoint("MAGENTA_BACKGROUND", "MAGENTA_BG", 45, PointType.BACKGROUND_COLOR);
+    public static final Point CYAN_BACKGROUND = getPoint("CYAN_BACKGROUND", "CYAN_BG", 46, PointType.BACKGROUND_COLOR);
+    public static final Point WHITE_BACKGROUND = getPoint("WHITE_BACKGROUND", "WHITE_BG", 47, PointType.BACKGROUND_COLOR);
     /**
      * Default background bright color escape {@link Point} points
      */
-    public static final Point BRIGHT_BLACK_BACKGROUND = getBrightColorPoint("BRIGHT_BLACK_BACKGROUND", "BR_BLACK_BG", 40, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_RED_BACKGROUND = getBrightColorPoint("BRIGHT_RED_BACKGROUND", "BR_RED_BG", 41, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_GREEN_BACKGROUND = getBrightColorPoint("BRIGHT_GREEN_BACKGROUND", "BR_GREEN_BG", 44, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_YELLOW_BACKGROUND = getBrightColorPoint("BRIGHT_YELLOW_BACKGROUND", "BR_YELLOW_BG", 43, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_BLUE_BACKGROUND = getBrightColorPoint("BRIGHT_BLUE_BACKGROUND", "BR_BLUE_BG", 44, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_MAGENTA_BACKGROUND = getBrightColorPoint("BRIGHT_MAGENTA_BACKGROUND", "BR_MAGENTA_BG", 45, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_CYAN_BACKGROUND = getBrightColorPoint("BRIGHT_CYAN_BACKGROUND", "BR_CYAN_BG", 46, Type.BACKGROUND_COLOR);
-    public static final Point BRIGHT_WHITE_BACKGROUND = getBrightColorPoint("BRIGHT_WHITE_BACKGROUND", "BR_WHITE_BG", 47, Type.BACKGROUND_COLOR);
+    public static final Point BRIGHT_BLACK_BACKGROUND = getBrightColorPoint("BRIGHT_BLACK_BACKGROUND", "BR_BLACK_BG", 40, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_RED_BACKGROUND = getBrightColorPoint("BRIGHT_RED_BACKGROUND", "BR_RED_BG", 41, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_GREEN_BACKGROUND = getBrightColorPoint("BRIGHT_GREEN_BACKGROUND", "BR_GREEN_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_YELLOW_BACKGROUND = getBrightColorPoint("BRIGHT_YELLOW_BACKGROUND", "BR_YELLOW_BG", 43, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_BLUE_BACKGROUND = getBrightColorPoint("BRIGHT_BLUE_BACKGROUND", "BR_BLUE_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_MAGENTA_BACKGROUND = getBrightColorPoint("BRIGHT_MAGENTA_BACKGROUND", "BR_MAGENTA_BG", 45, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_CYAN_BACKGROUND = getBrightColorPoint("BRIGHT_CYAN_BACKGROUND", "BR_CYAN_BG", 46, PointType.BACKGROUND_COLOR);
+    public static final Point BRIGHT_WHITE_BACKGROUND = getBrightColorPoint("BRIGHT_WHITE_BACKGROUND", "BR_WHITE_BG", 47, PointType.BACKGROUND_COLOR);
 
     /**
      * Default point name
@@ -232,7 +232,7 @@ public class DefaultPoint implements Point {
     /**
      * Default point type
      */
-    private Type type;
+    private PointType type;
 
     /**
      * Returns new {@link Point} instance by input data parameters
@@ -243,7 +243,7 @@ public class DefaultPoint implements Point {
      * @param type   - initial input type
      * @return new {@link Point} instance
      */
-    public static Point getPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final Type type) {
+    public static Point getPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
         if (isEmpty(symbol)) {
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
@@ -264,7 +264,7 @@ public class DefaultPoint implements Point {
      * @param type   - initial input color type
      * @return new {@link Point} instance
      */
-    public static Point getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final Type type) {
+    public static Point getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final PointType type) {
         if (isEmpty(symbol)) {
             Color co;
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
@@ -293,7 +293,7 @@ public class DefaultPoint implements Point {
             .name(name)
             .symbol(symbol)
             .code(String.format(DEFAULT_FOREGROUND_COLOR_ESCAPE_FORMAT, code))
-            .type(Type.FOREGROUND_COLOR)
+            .type(PointType.FOREGROUND_COLOR)
             .build();
     }
 
@@ -313,7 +313,7 @@ public class DefaultPoint implements Point {
             .name(name)
             .symbol(symbol)
             .code(String.format(DEFAULT_BACKGROUND_COLOR_ESCAPE_FORMAT, code))
-            .type(Type.BACKGROUND_COLOR)
+            .type(PointType.BACKGROUND_COLOR)
             .build();
     }
 
@@ -325,7 +325,7 @@ public class DefaultPoint implements Point {
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link Point} instance
      */
-    private static Point getBrightColorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final Type type) {
+    private static Point getBrightColorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
         if (isEmpty(symbol)) {
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
@@ -354,7 +354,7 @@ public class DefaultPoint implements Point {
             .name(name)
             .symbol(symbol)
             .code(String.format(DEFAULT_CURSOR_ESCAPE_FORMAT, position, type))
-            .type(Type.CURSOR_CONTROL)
+            .type(PointType.CURSOR_CONTROL)
             .build();
     }
 
@@ -375,7 +375,7 @@ public class DefaultPoint implements Point {
             .name(name)
             .symbol(symbol)
             .code(String.format(DEFAULT_CURSOR_POSITION_ESCAPE_FORMAT, row, column, CursorPositionType.H))
-            .type(Type.CURSOR_CONTROL)
+            .type(PointType.CURSOR_CONTROL)
             .build();
     }
 
@@ -395,7 +395,7 @@ public class DefaultPoint implements Point {
             .name(name)
             .symbol(symbol)
             .code(String.format(DEFAULT_CURSOR_SERVICE_ESCAPE_FORMAT, code))
-            .type(Type.CURSOR_CONTROL)
+            .type(PointType.CURSOR_CONTROL)
             .build();
     }
 

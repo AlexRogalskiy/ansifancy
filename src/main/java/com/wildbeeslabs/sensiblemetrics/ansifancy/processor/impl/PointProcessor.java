@@ -44,7 +44,31 @@ public class PointProcessor<T> implements Processor<T, Point> {
      * @return {@link Iterable} collection of processed values {@link Point}
      */
     @Override
-    public <S extends Iterable<? extends Point>> S process(T value) {
+    public <S extends Iterable<? extends Point>> S process(final T value) {
+        //        for (final Marker marker : markers) {
+//            if (marker instanceof EscapeClassBegin) {
+//                // Verify if the escape class is registered in the context
+//                EscapeClassBegin begin = (EscapeClassBegin) token;
+//                String escapeClassName = begin.getEscapeClassName();
+//                AnsiClass ansiClass = ansiScapeContext.get(escapeClassName);
+//                if (null == ansiClass) {
+//                    throw unknownEscapeClass(escapeClassName);
+//                }
+//                buff.append(ansiClass.getCharSequences());
+//                ansiClasses.add(ansiClass);
+//            } else if (token instanceof FreeText) {
+//                buff.append(((FreeText) token).getText());
+//            } else if (token instanceof EscapeClassEnd) {
+//                if (ansiClasses.isEmpty()) {
+//                    throw invalidBracketSerquence(token.getStartIndex());
+//                }
+//                ansiClasses.removeLast();
+//                buff.append(AnsiSequence.RESET.getSequence());
+//                for (AnsiClass ansiClass : ansiClasses) {
+//                    buff.append(ansiClass.getCharSequences());
+//                }
+//            }
+//        }
         return null;
     }
 }

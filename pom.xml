@@ -126,13 +126,13 @@
         <main.basedir>${project.basedir}/../..</main.basedir>
         <profileProperties>src/test/resource/test.properties</profileProperties>
 
-        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
 
         <unit-tests.skip>true</unit-tests.skip>
         <integration-tests.skip>true</integration-tests.skip>
@@ -269,6 +269,7 @@
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.1.1</version>
                     <configuration>
+                        <outputDirectory>${project.build.directory}/modules</outputDirectory>
                         <archive>
                             <manifest>
                                 <addClasspath>true</addClasspath>
@@ -290,8 +291,8 @@
                                 <goal>copy-dependencies</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
-                                <includeScope>compile</includeScope>
+                                <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                                <includeScope>runtime</includeScope>
                                 <excludeScope>test</excludeScope>
                                 <overWriteReleases>false</overWriteReleases>
                                 <overWriteSnapshots>false</overWriteSnapshots>
@@ -306,6 +307,13 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
                         <executable>true</executable>
                         <showDeprecation>true</showDeprecation>
                         <debug>true</debug>
@@ -315,7 +323,6 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <encoding>${project.reporting.outputEncoding}</encoding>
-                        <compilerArgument>-parameters</compilerArgument>
                     </configuration>
                     <executions>
                         <execution>
@@ -329,6 +336,13 @@
                             </configuration>
                         </execution>
                     </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>7.0</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -377,10 +391,18 @@
                     <version>3.0.0-M2</version>
                     <configuration>
                         <skipTests>${unit-tests.skip}</skipTests>
+                        <forkCount>0</forkCount>
                         <excludes>
                             <exclude>**/*IT.java</exclude>
                         </excludes>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.ow2.asm</groupId>
+                            <artifactId>asm</artifactId>
+                            <version>7.0</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
@@ -470,19 +492,19 @@
                     </executions>
                 </plugin>
 
-                <!-- Cobertura plugins -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.7</version>
-                    <configuration>
-                        <formats>
-                            <format>html</format>
-                            <format>xml</format>
-                        </formats>
-                        <check/>
-                    </configuration>
-                </plugin>
+                <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-site-plugin</artifactId>-->
+                <!--<version>3.7.1</version>-->
+                <!--<executions>-->
+                <!--<execution>-->
+                <!--<phase>prepare-package</phase>-->
+                <!--<goals>-->
+                <!--<goal>site</goal>-->
+                <!--</goals>-->
+                <!--</execution>-->
+                <!--</executions>-->
+                <!--</plugin>-->
 
                 <!-- Test plugins -->
                 <plugin>
@@ -534,6 +556,18 @@
 
     <repositories>
         <repository>
+            <id>projectlombok.org</id>
+            <name>Lombok repository</name>
+            <url>https://projectlombok.org/edge-releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+        <repository>
             <id>central</id>
             <name>Maven Repository Switchboard</name>
             <layout>default</layout>
@@ -548,6 +582,7 @@
         </repository>
         <repository>
             <id>central-maven</id>
+            <name>Maven central repository</name>
             <url>http://central.maven.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -559,6 +594,7 @@
         </repository>
         <repository>
             <id>JBoss repository</id>
+            <name>Jboss repository</name>
             <url>http://repository.jboss.com/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -570,6 +606,7 @@
         </repository>
         <repository>
             <id>JBOSS</id>
+            <name>Jboss release repository</name>
             <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -581,6 +618,7 @@
         </repository>
         <repository>
             <id>repo-maven</id>
+            <name>Maven apache repository</name>
             <url>https://repo.maven.apache.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -642,6 +680,8 @@
                         <version>3.0.1</version>
                         <configuration>
                             <additionalJOption>-Xdoclint:none</additionalJOption>
+                            <useStandardDocletOptions>true</useStandardDocletOptions>
+                            <overview>${project.basedir}/src/main/javadoc/overview.html</overview>
                         </configuration>
                         <executions>
                             <execution>
@@ -775,6 +815,27 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>update-sourcepath-for-lombok</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.8.0</version>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-sourcepath</arg>
+                                <arg>
+                                    ${project.basedir}/src/main/java${path.separator}${project.basedir}/target/generated-sources/annotations${path.separator}/
+                                </arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <pluginRepositories>
@@ -870,7 +931,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Logging library dependencies -->

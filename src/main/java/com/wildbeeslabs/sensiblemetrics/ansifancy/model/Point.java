@@ -26,15 +26,18 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Point interface declaration
+ * Point interface declaration {@link CharSequence}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 public interface Point extends CharSequence, Serializable {
 
-    enum Type {
-//        ESCAPE_BEGIN,
+    /**
+     * Default point types
+     */
+    enum PointType {
+        //        ESCAPE_BEGIN,
 //        ESCAPE_END,
         FOREGROUND_COLOR,
         BACKGROUND_COLOR,
@@ -44,7 +47,7 @@ public interface Point extends CharSequence, Serializable {
         IDEOGRAM
     }
 
-    Type getType();
+    PointType getType();
 
     <T extends CharSequence> T getSymbol();
 

@@ -21,23 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
-import java.io.Serializable;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Position interface declaration
- *
- * @author Alexander Rogalskiy
- * @version 1.0
+ * Number utilities
  */
-public interface Position extends Serializable {
+@Slf4j
+@UtilityClass
+public class NumberUtils {
 
-    int getRow();
-
-    int getColumn();
-
-    int getDepth();
-
-    double length();
+    /**
+     * Returns int value by input double value
+     *
+     * @param value - initial input double value
+     * @return int value
+     */
+    public static int toInt(double value) {
+        return Double.valueOf(value).intValue();
+    }
 }
