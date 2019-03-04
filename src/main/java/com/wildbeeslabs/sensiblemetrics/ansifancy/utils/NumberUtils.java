@@ -42,4 +42,16 @@ public class NumberUtils {
     public static int toInt(double value) {
         return Double.valueOf(value).intValue();
     }
+
+    /**
+     * Returns binary flag based on input value and default range to check by
+     *
+     * @param value      - initial input value to check
+     * @param lowerBound - initial input lower bound of range
+     * @param upperBound - initial input upper bound of range
+     * @return true - if input value in range, false - otherwise
+     */
+    public static boolean inRange(final double value, final double lowerBound, final double upperBound) {
+        return (value >= lowerBound || value <= upperBound);
+    }
 }

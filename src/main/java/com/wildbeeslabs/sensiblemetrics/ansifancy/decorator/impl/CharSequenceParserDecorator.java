@@ -23,11 +23,12 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.ConfigurationIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.DecoratorIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.ParserIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.CharSequenceParser;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl.MarkerProcessor;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -35,37 +36,38 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * Default decorator implementation {@link DecoratorIF}
+ * Default parser decorator implementation {@link DecoratorIF}
  */
 @Data
 @EqualsAndHashCode
 @ToString
-public class CharSequenceDecorator<T extends CharSequence, R> implements DecoratorIF<T, R> {
+public class CharSequenceParserDecorator<R extends CharSequence> implements DecoratorIF<CharSequence, R> {
 
     /**
      * Default parser instance {@link ParserIF}
      */
-    private final ParserIF<T, R> parser;
+    private final ParserIF<CharSequence, R> parser;
 
     /**
-     * Default (@link CharSequenceDecorator) constructor by initial {@link Configuration} instance
+     * Default {@link CharSequenceParserDecorator} constructor by initial {@link ConfigurationIF} instance
      *
-     * @param configuration - initial input {@link Configuration} instance
+     * @param configuration - initial input {@link ConfigurationIF} instance
      */
-    public CharSequenceDecorator(final Configuration configuration) {
-        Objects.requireNonNull(configuration);
-        this.parser = new CharSequenceParser(configuration, new MarkerProcessor<>());
+    public CharSequenceParserDecorator(final ConfigurationIF configuration, final ProcessorIF<CharSequence, MarkerIF> processor) {
+        Objects.requireNonNull(configuration, "Should not be null or empty");
+        Objects.requireNonNull(processor, "Should not be null or empty");
+        this.parser = new CharSequenceParser(configuration, processor);
     }
 
     /**
-     * Returns value {@code R} decorated by input source {@code T} and array of objects
+     * Returns value {@code R} decorated by input source {@code T} and array of parameters
      *
-     * @param source - initial input source {@code T} to be decorated
-     * @param args   - initial input array of objects {@link Object} to decorate by
+     * @param source - initial input source {@code T} to be parsed
+     * @param args   - initial input array of objects {@link Object} to parse by
      * @return decorated value {@code R}
      */
     @Override
-    public R decorate(final T source, final Object... args) {
+    public R decorate(final CharSequence source, final Object... args) {
         return (R) String.format(getParser().parse(source).toString(), args);
     }
 }

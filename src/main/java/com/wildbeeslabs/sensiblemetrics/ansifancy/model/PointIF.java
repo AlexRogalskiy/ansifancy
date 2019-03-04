@@ -34,11 +34,9 @@ import java.io.Serializable;
 public interface PointIF extends Serializable {
 
     /**
-     * Default point types
+     * Default point type
      */
     enum PointType {
-        //        ESCAPE_BEGIN,
-//        ESCAPE_END,
         FOREGROUND_COLOR,
         BACKGROUND_COLOR,
         CURSOR_CONTROL,
@@ -47,9 +45,26 @@ public interface PointIF extends Serializable {
         IDEOGRAM
     }
 
+    /**
+     * Returns {@link PointType} of point
+     *
+     * @return {@link PointType} of point
+     */
     PointType getType();
 
+    /**
+     * Returns point symbol {@code T}
+     *
+     * @param <T> type of character symbol
+     * @return point symbol {@code T}
+     */
     <T extends CharSequence> T getSymbol();
 
+    /**
+     * Returns point code {@code T}
+     *
+     * @param <T> type of character code
+     * @return point code {@code T}
+     */
     <T extends CharSequence> T getCode();
 }

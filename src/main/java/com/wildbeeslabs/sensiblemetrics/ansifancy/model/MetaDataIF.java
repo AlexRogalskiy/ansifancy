@@ -33,7 +33,17 @@ import java.io.Serializable;
  */
 public interface MetaDataIF extends Serializable {
 
+    /**
+     * Returns meta data name {@link String}
+     *
+     * @return meta data name {@link String}
+     */
     String getName();
 
+    /**
+     * Returns meta data description {@link String}
+     *
+     * @return meta data description {@link String}
+     */
     String getDescription();
 }

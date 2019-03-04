@@ -24,10 +24,10 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.config;
 
 /**
- * Configuration interface declaration
+ * ConfigurationIF interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Configuration {
+public interface ConfigurationIF {
 }

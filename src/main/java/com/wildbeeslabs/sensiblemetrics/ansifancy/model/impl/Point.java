@@ -93,7 +93,9 @@ public class Point implements PointIF {
      * Default cursor clear type
      */
     enum CursorClearType {
-        END, BEGIN, ALL
+        END,
+        BEGIN,
+        ALL
     }
 
     /**
@@ -271,7 +273,7 @@ public class Point implements PointIF {
         return Point.builder()
             .name(name)
             .symbol(symbol)
-            .code(String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRed(), color.getGreen(), color.getBlue()))
+            .code(String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRedComponent(), color.getGreenComponent(), color.getBlueComponent()))
             .type(type)
             .build();
     }

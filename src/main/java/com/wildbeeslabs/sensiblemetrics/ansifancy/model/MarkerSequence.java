@@ -33,5 +33,12 @@ import java.io.Serializable;
  */
 public interface MarkerSequence extends CharSequence, Serializable {
 
+    /**
+     * Returns {@link CharSequence} value by input array of styles {@link StyleIF}
+     *
+     * @param <S>    type of style instance
+     * @param styles - initial input array of styles {@link StyleIF}
+     * @return {@link CharSequence} value
+     */
     <S extends StyleIF> CharSequence style(final S... styles);
 }

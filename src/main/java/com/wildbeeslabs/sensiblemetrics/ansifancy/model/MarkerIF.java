@@ -33,9 +33,25 @@ import java.io.Serializable;
  */
 public interface MarkerIF extends Serializable {
 
+    /**
+     * Returns {@link PositionIF} instance
+     *
+     * @return {@link PositionIF} instance
+     */
     PositionIF getPosition();
 
+    /**
+     * Returns {@link MetaDataIF} instance
+     *
+     * @return {@link MetaDataIF} instance
+     */
     MetaDataIF getMetaData();
 
+    /**
+     * Returns {@code S} collection of {@link StyleIF} instances
+     *
+     * @param <S> type of item collection {@link Iterable}
+     * @return collection of {@link StyleIF} instances
+     */
     <S extends Iterable<? extends StyleIF>> S getStyles();
 }

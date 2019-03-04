@@ -23,9 +23,12 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Default color implementation
@@ -46,597 +49,500 @@ public class Color implements Serializable {
     private static final long serialVersionUID = -8240773927637633603L;
 
     /**
-     * The color white.  In the default sRGB space.
+     * Default color brightness factor
      */
-    public final static Color WHITE = new Color(255, 255, 255);
+    private static final double DEFAULT_COLOR_FACTOR = 0.7;
+
     /**
-     * The color black.  In the default sRGB space.
+     * Default color components channel names
      */
-    public final static Color BLACK = new Color(0, 0, 0);
+    private static final String DEFAULT_COLOR_APLHA_CHANNEL_NAME = "Alpha";
+    private static final String DEFAULT_COLOR_RED_CHANNEL_NAME = "Red";
+    private static final String DEFAULT_COLOR_GREEN_CHANNEL_NAME = "Green";
+    private static final String DEFAULT_COLOR_BLUE_CHANNEL_NAME = "Blue";
     /**
-     * The color pink.  In the default sRGB space.
+     * Default RGB min color bound
      */
-    public final static Color PINK = new Color(255, 175, 175);
+    public static final int DEFAULT_RGB_MIN_BOUND = 0;
     /**
-     * The color orange.  In the default sRGB space.
+     * Default RGB max color bound
      */
-    public final static Color ORANGE = new Color(255, 200, 0);
+    public static final int DEFAULT_RGB_MAX_BOUND = 0xFF;
     /**
-     * The color gray.  In the default sRGB space.
+     * Default HSB min color bound
      */
-    public final static Color GRAY = new Color(128, 128, 128);
+    public static final float DEFAULT_HSB_MIN_BOUND = 0x00;
+    /**
+     * Default HSB max color bound
+     */
+    public static final float DEFAULT_HSB_MAX_BOUND = 1.0f;
+
+    /**
+     * Default RGB color namespace values
+     */
+    public final static Color WHITE = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color BLACK = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color PINK = new Color(DEFAULT_RGB_MAX_BOUND, 175, 175);
+    public final static Color ORANGE = new Color(DEFAULT_RGB_MAX_BOUND, 200, DEFAULT_RGB_MIN_BOUND);
+    public final static Color GRAY = new Color(DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2);
     public final static Color LIGHT_GRAY = new Color(192, 192, 192);
     public final static Color DARK_GRAY = new Color(64, 64, 64);
-    /**
-     * The color red.  In the default sRGB space.
-     */
-    public final static Color RED = new Color(255, 0, 0);
-    public final static Color LIGHT_RED = new Color(255, 51, 0);
-    /**
-     * The color yellow.  In the default sRGB space.
-     */
-    public final static Color YELLOW = new Color(255, 255, 0);
-    public final static Color LIGHT_YELLOW = new Color(255, 153, 51);
-    /**
-     * The color green.  In the default sRGB space.
-     */
-    public final static Color GREEN = new Color(0, 255, 0);
+    public final static Color RED = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color LIGHT_RED = new Color(DEFAULT_RGB_MAX_BOUND, 51, DEFAULT_RGB_MIN_BOUND);
+    public final static Color YELLOW = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color LIGHT_YELLOW = new Color(DEFAULT_RGB_MAX_BOUND, 153, 51);
+    public final static Color GREEN = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
     public final static Color LIGHT_GREEN = new Color(51, 204, 51);
-    /**
-     * The color magenta.  In the default sRGB space.
-     */
-    public final static Color MAGENTA = new Color(204, 0, 204);
-    public final static Color LIGHT_MAGENTA = new Color(255, 0, 255);
-    /**
-     * The color cyan.  In the default sRGB space.
-     */
-    public final static Color CYAN = new Color(0, 153, 255);
-    public final static Color LIGHT_CYAN = new Color(0, 204, 255);
-    /**
-     * The color blue.  In the default sRGB space.
-     */
-    public final static Color BLUE = new Color(0, 0, 255);
-    public final static Color LIGHT_BLUE = new Color(26, 140, 255);
+    public final static Color MAGENTA = new Color(204, DEFAULT_RGB_MIN_BOUND, 204);
+    public final static Color LIGHT_MAGENTA = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color CYAN = new Color(DEFAULT_RGB_MIN_BOUND, 153, DEFAULT_RGB_MAX_BOUND);
+    public final static Color LIGHT_CYAN = new Color(DEFAULT_RGB_MIN_BOUND, 204, DEFAULT_RGB_MAX_BOUND);
+    public final static Color BLUE = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color LIGHT_BLUE = new Color(26, 140, DEFAULT_RGB_MAX_BOUND);
 
     /**
-     * Default color transparency
+     * Default predicate to check RGB color namespace component value
+     *
+     * @param value - initial input color component to be checked
+     * @return true - if color component is in range, false - otherwise
      */
-    public interface Transparency {
+    private static final Predicate<Float> DEFAULT_RGB_COLOR_CHECK = value -> NumberUtils.inRange(value, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
 
-        int OPAQUE = 1;
+    /**
+     * Default predicate to check HSB color namespace component value
+     *
+     * @param value - initial input color component to be checked
+     * @return true - if color component is in range, false - otherwise
+     */
+    private static final Predicate<Float> DEFAULT_HSB_COLOR_CHECK = value -> NumberUtils.inRange(value, DEFAULT_HSB_MIN_BOUND, DEFAULT_HSB_MAX_BOUND);
 
-        int BITMASK = 2;
+    /**
+     * Default transparency color type
+     */
+    enum TransparencyColorType {
+        OPAQUE(1),
+        BITMASK(2),
+        TRANSLUCENT(3);
 
-        int TRANSLUCENT = 3;
+        /**
+         * Default transparency type value
+         */
+        private int value;
+
+        /**
+         * Default transparency color constructor with input type
+         *
+         * @param value - initial input transparency color type
+         */
+        TransparencyColorType(int value) {
+            this.value = value;
+        }
     }
 
     /**
-     * The color value.
+     * Default composite color value
      */
-    int value;
+    private int value;
 
     /**
-     * The color value in the default sRGB <code>ColorSpace</code> as
-     * <code>float</code> components (no alpha).
-     * If <code>null</code> after object construction, this must be an
-     * sRGB color constructed with 8-bit precision, so compute from the
-     * <code>int</code> color value.
+     * Default RGB namespace color value
      */
-    private float frgbvalue[];
+    private float rgbValues[];
 
     /**
-     * The color value in the native <code>ColorSpace</code> as
-     * <code>float</code> components (no alpha).
-     * If <code>null</code> after object construction, this must be an
-     * sRGB color constructed with 8-bit precision, so compute from the
-     * <code>int</code> color value.
+     * Default HSB namespace color value
      */
-    private float fvalue[];
+    private float hsbValues[];
 
     /**
-     * The alpha value as a <code>float</code> component.
-     * If <code>frgbvalue</code> is <code>null</code>, this is not valid
-     * data, so compute from the <code>int</code> color value.
+     * Default color alpha channel
      */
-    private float falpha;
+    private float alpha;
 
     /**
-     * Checks the color integer components supplied for validity.
+     * Checks RBG namespace color components supplied for validity
      * Throws an {@link IllegalArgumentException} if the value is out of
      * range.
      *
-     * @param r the Red component
-     * @param g the Green component
-     * @param b the Blue component
+     * @param red   - initial input RGB red component
+     * @param green - initial input RGB green component
+     * @param blue  - initial input RGB blue component
+     * @param alpha - initial input RGB alpha component
      **/
-    private static void testColorValueRange(int r, int g, int b, int a) {
-        boolean rangeError = false;
-        String badComponentString = "";
-
-        if (a < 0 || a > 255) {
-            rangeError = true;
-            badComponentString = badComponentString + " Alpha";
-        }
-        if (r < 0 || r > 255) {
-            rangeError = true;
-            badComponentString = badComponentString + " Red";
-        }
-        if (g < 0 || g > 255) {
-            rangeError = true;
-            badComponentString = badComponentString + " Green";
-        }
-        if (b < 0 || b > 255) {
-            rangeError = true;
-            badComponentString = badComponentString + " Blue";
-        }
-        if (rangeError == true) {
-            throw new IllegalArgumentException("Color parameter outside of expected range:"
-                + badComponentString);
-        }
+    public static void testRGBColor(int red, int green, int blue, int alpha) {
+        testColor(red, green, blue, alpha, DEFAULT_RGB_COLOR_CHECK);
     }
 
     /**
-     * Checks the color <code>float</code> components supplied for
-     * validity.
+     * Checks HSB namespace color components supplied for validity
      * Throws an <code>IllegalArgumentException</code> if the value is out
      * of range.
      *
-     * @param r the Red component
-     * @param g the Green component
-     * @param b the Blue component
+     * @param red   - initial input HSB red component
+     * @param green - initial input HSB green component
+     * @param blue  - initial input HSB blue component
+     * @param alpha - initial input HSB alpha component
      **/
-    private static void testColorValueRange(float r, float g, float b, float a) {
-        boolean rangeError = false;
-        String badComponentString = "";
-        if (a < 0.0 || a > 1.0) {
-            rangeError = true;
-            badComponentString = badComponentString + " Alpha";
-        }
-        if (r < 0.0 || r > 1.0) {
-            rangeError = true;
-            badComponentString = badComponentString + " Red";
-        }
-        if (g < 0.0 || g > 1.0) {
-            rangeError = true;
-            badComponentString = badComponentString + " Green";
-        }
-        if (b < 0.0 || b > 1.0) {
-            rangeError = true;
-            badComponentString = badComponentString + " Blue";
-        }
-        if (rangeError == true) {
-            throw new IllegalArgumentException("Color parameter outside of expected range:"
-                + badComponentString);
+    public static void testHSBColor(float red, float green, float blue, float alpha) {
+        testColor(red, green, blue, alpha, DEFAULT_HSB_COLOR_CHECK);
+    }
+
+    /**
+     * Checks color of input color components supplied for validity
+     * Throws an {@link IllegalArgumentException} if the value is out of
+     * range.
+     *
+     * @param red            - initial input red component of the color
+     * @param green          - initial input green component of the color
+     * @param blue           - initial input blue component of the color
+     * @param alpha          - initial input alpha component of the color
+     * @param colorPredicate - initial input color predicate {@link Predicate}
+     **/
+    private static void testColor(float red, float green, float blue, float alpha, final Predicate<Float> colorPredicate) {
+        final StringBuilder errorMessageBuilder = new StringBuilder();
+        boolean hasRangeError = testColorComponent(red, DEFAULT_COLOR_APLHA_CHANNEL_NAME, errorMessageBuilder, colorPredicate) &&
+            testColorComponent(red, DEFAULT_COLOR_RED_CHANNEL_NAME, errorMessageBuilder, colorPredicate) &&
+            testColorComponent(red, DEFAULT_COLOR_GREEN_CHANNEL_NAME, errorMessageBuilder, colorPredicate) &&
+            testColorComponent(red, DEFAULT_COLOR_BLUE_CHANNEL_NAME, errorMessageBuilder, colorPredicate);
+        if (hasRangeError) {
+            throw new IllegalArgumentException(String.format("ERROR: invalid namespace color range: {%s}", errorMessageBuilder.toString()));
         }
     }
 
     /**
-     * Creates an opaque sRGB color with the specified red, green,
-     * and blue values in the range (0 - 255).
-     * The actual color used in rendering depends
-     * on finding the best match given the color space
-     * available for a given output device.
-     * Alpha is defaulted to 255.
+     * Returns binary flag based on input value to check, error message {@link String}, message builder {@link StringBuilder} and color range predicate {@link Predicate}
      *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
+     * @param value               - initial input value to check
+     * @param errorMessage        - initial input error message {@link String}
+     * @param errorMessageBuilder - initial input error message builder {@link StringBuilder}
+     * @param colorRangePredicate - initial input color range predicate {@link Predicate}
+     * @return true - if input value matches predicate, false - otherwise
+     */
+    private static boolean testColorComponent(float value, final String errorMessage, final StringBuilder errorMessageBuilder, final Predicate<Float> colorRangePredicate) {
+        if (colorRangePredicate.negate().test(value)) {
+            errorMessageBuilder.append(errorMessage);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Default {@link Color} constructor with input RGB color namespace parameters (red, green, and blue values in range (0 - 255) and alpha by default to 255)
+     *
+     * @param red   - initial input RGB red component
+     * @param green - initial input RGB green component
+     * @param blue  - initial input RGB blue component
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  or <code>b</code> are outside of the range
      *                                  0 to 255, inclusive
      */
-    public Color(int r, int g, int b) {
-        this(r, g, b, 255);
+    public Color(int red, int green, int blue) {
+        this(red, green, blue, DEFAULT_RGB_MAX_BOUND);
     }
 
     /**
-     * Creates an sRGB color with the specified red, green, blue, and alpha
-     * values in the range (0 - 255).
+     * Default {@link Color} constructor with input RGB color namespace parameters
      *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
-     * @param a the alpha component
+     * @param red   - initial input red component
+     * @param green - initial input green component
+     * @param blue  - initial input blue component
+     * @param alpha - initial input alpha component
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>,
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0 to 255, inclusive
      */
-    public Color(int r, int g, int b, int a) {
-        value = ((a & 0xFF) << 24) |
-            ((r & 0xFF) << 16) |
-            ((g & 0xFF) << 8) |
-            ((b & 0xFF) << 0);
-        testColorValueRange(r, g, b, a);
+    public Color(int red, int green, int blue, int alpha) {
+        this.value = (
+            (alpha & DEFAULT_RGB_MAX_BOUND) << 24) |
+            ((red & DEFAULT_RGB_MAX_BOUND) << 16) |
+            ((green & DEFAULT_RGB_MAX_BOUND) << 8) |
+            ((blue & DEFAULT_RGB_MAX_BOUND) << 0);
+        this.testRGBColor(red, green, blue, alpha);
     }
 
     /**
-     * Creates an opaque sRGB color with the specified combined RGB value
-     * consisting of the red component in bits 16-23, the green component
-     * in bits 8-15, and the blue component in bits 0-7.  The actual color
-     * used in rendering depends on finding the best match given the
-     * color space available for a particular output device.  Alpha is
-     * defaulted to 255.
+     * Default {@link Color} constructor with input RGB color namespace argument (red channel in bits 16-23, the green channel
+     * in bits 8-15, and the blue channel in bits 0-7 and alpha channel (by default))
      *
-     * @param rgb the combined RGB components
+     * @param rgb - initial input RGB color namespace composite value
      */
     public Color(int rgb) {
-        value = 0xff000000 | rgb;
+        this.value = 0xFF000000 | rgb;
     }
 
     /**
-     * Creates an sRGB color with the specified combined RGBA value consisting
-     * of the alpha component in bits 24-31, the red component in bits 16-23,
-     * the green component in bits 8-15, and the blue component in bits 0-7.
-     * If the <code>hasalpha</code> argument is <code>false</code>, alpha
-     * is defaulted to 255.
+     * Default {@link Color} constructor with input RGB color namespace composite argument (red channel in bits 16-23, the green channel
+     * in bits 8-15, and the blue channel in bits 0-7 and alpha channel (by default))
      *
-     * @param rgba     the combined RGBA components
-     * @param hasalpha <code>true</code> if the alpha bits are valid;
-     *                 <code>false</code> otherwise
+     * @param rgb       - initial input RGB color namespace composite value
+     * @param withAlpha - <code>true</code> if the alpha bits are valid;
+     *                  <code>false</code> otherwise
      */
-    public Color(int rgba, boolean hasalpha) {
-        if (hasalpha) {
-            value = rgba;
-        } else {
-            value = 0xff000000 | rgba;
-        }
+    public Color(int rgb, boolean withAlpha) {
+        this.value = (withAlpha) ? rgb : (0xFF000000 | rgb);
     }
 
     /**
-     * Creates an opaque sRGB color with the specified red, green, and blue
-     * values in the range (0.0 - 1.0).  Alpha is defaulted to 1.0.  The
-     * actual color used in rendering depends on finding the best
-     * match given the color space available for a particular output
-     * device.
+     * Default {@link Color} constructor with input HSB color namespace arguments (with specified red, green, and blue values in range (0.0 - 1.0) and alpha by default to 1.0)
      *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
+     * @param red   - initial input red component
+     * @param green - initial input green component
+     * @param blue  - initial input blue component
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  or <code>b</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
      */
-    public Color(float r, float g, float b) {
-        this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5));
-        testColorValueRange(r, g, b, 1.0f);
-        frgbvalue = new float[3];
-        frgbvalue[0] = r;
-        frgbvalue[1] = g;
-        frgbvalue[2] = b;
-        falpha = 1.0f;
-        fvalue = frgbvalue;
+    public Color(float red, float green, float blue) {
+        this((int) (red * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
+            (int) (green * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
+            (int) (blue * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2));
+        this.testHSBColor(red, green, blue, DEFAULT_HSB_MAX_BOUND);
+        this.hsbValues = new float[3];
+        this.hsbValues[0] = red;
+        this.hsbValues[1] = green;
+        this.hsbValues[2] = blue;
+        this.alpha = DEFAULT_HSB_MAX_BOUND;
     }
 
     /**
-     * Creates an sRGB color with the specified red, green, blue, and
-     * alpha values in the range (0.0 - 1.0).  The actual color
-     * used in rendering depends on finding the best match given the
-     * color space available for a particular output device.
+     * Default {@link Color} constructor with input HSB namespace color arguments (with specified red, green, and blue values in range (0.0 - 1.0) and alpha by default to 1.0)
      *
-     * @param r the red component
-     * @param g the green component
-     * @param b the blue component
-     * @param a the alpha component
+     * @param red   - initial input red component
+     * @param green - initial input green component
+     * @param blue  - initial input blue component
+     * @param alpha - initial input alpha component
      * @throws IllegalArgumentException if <code>r</code>, <code>g</code>
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
      */
-    public Color(float r, float g, float b, float a) {
-        this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5), (int) (a * 255 + 0.5));
-        frgbvalue = new float[3];
-        frgbvalue[0] = r;
-        frgbvalue[1] = g;
-        frgbvalue[2] = b;
-        falpha = a;
-        fvalue = frgbvalue;
+    public Color(float red, float green, float blue, float alpha) {
+        this((int) (red * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
+            (int) (green * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
+            (int) (blue * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
+            (int) (alpha * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2));
+        this.hsbValues = new float[3];
+        this.hsbValues[0] = red;
+        this.hsbValues[1] = green;
+        this.hsbValues[2] = blue;
+        this.alpha = alpha;
     }
 
     /**
-     * Returns the red component in the range 0-255 in the default sRGB
-     * space.
+     * Returns red component in RGB color namespace
      *
-     * @return the red component.
+     * @return red component
      */
-    public int getRed() {
-        return (getRGB() >> 16) & 0xFF;
+    public int getRedComponent() {
+        return (this.getRGBColor() >> 16) & DEFAULT_RGB_MAX_BOUND;
     }
 
     /**
-     * Returns the green component in the range 0-255 in the default sRGB
-     * space.
+     * Returns green component in RGB color namespace
      *
-     * @return the green component.
+     * @return green component
      */
-    public int getGreen() {
-        return (getRGB() >> 8) & 0xFF;
+    public int getGreenComponent() {
+        return (this.getRGBColor() >> 8) & DEFAULT_RGB_MAX_BOUND;
     }
 
     /**
-     * Returns the blue component in the range 0-255 in the default sRGB
-     * space.
+     * Returns blue component in RGB color namespace
      *
-     * @return the blue component.
+     * @return blue component
      */
-    public int getBlue() {
-        return (getRGB() >> 0) & 0xFF;
+    public int getBlueComponent() {
+        return (this.getRGBColor() >> 0) & DEFAULT_RGB_MAX_BOUND;
     }
 
     /**
-     * Returns the alpha component in the range 0-255.
+     * Returns alpha component in RGB color namespace
      *
-     * @return the alpha component.
+     * @return alpha component
      */
-    public int getAlpha() {
-        return (getRGB() >> 24) & 0xff;
+    public int getAlphaComponent() {
+        return (this.getRGBColor() >> 24) & DEFAULT_RGB_MAX_BOUND;
     }
 
     /**
-     * Returns the RGB value representing the color in the default sRGB
-     * (Bits 24-31 are alpha, 16-23 are red, 8-15 are green, 0-7 are
-     * blue).
+     * Returns composite color in RGB color namespace
      *
      * @return the RGB value of the color in the default sRGB
      * <code>ColorModel</code>.
      */
-    public int getRGB() {
-        return value;
+    public int getRGBColor() {
+        return this.value;
     }
 
-    private static final double FACTOR = 0.7;
-
     /**
-     * Creates a new <code>Color</code> that is a brighter version of this
-     * <code>Color</code>.
-     * <p>
-     * This method applies an arbitrary scale factor to each of the three RGB
-     * components of this <code>Color</code> to create a brighter version
-     * of this <code>Color</code>.
-     * The {@code alpha} value is preserved.
-     * Although <code>brighter</code> and
-     * <code>darker</code> are inverse operations, the results of a
-     * series of invocations of these two methods might be inconsistent
-     * because of rounding errors.
+     * Creates new {@link Color} instance that is a brighter version of current {@link Color} instance
      *
-     * @return a new <code>Color</code> object that is
-     * a brighter version of this <code>Color</code>
-     * with the same {@code alpha} value.
+     * @return new {@link Color} instance
      */
     public Color brighter() {
-        int r = getRed();
-        int g = getGreen();
-        int b = getBlue();
-        int alpha = getAlpha();
+        int red = this.getRedComponent();
+        int green = this.getGreenComponent();
+        int blue = this.getBlueComponent();
+        int alpha = this.getAlphaComponent();
 
-        /* From 2D group:
-         * 1. black.brighter() should return grey
-         * 2. applying brighter to blue will always return blue, brighter
-         * 3. non pure color (non zero rgb) will eventually return white
-         */
-        int i = (int) (1.0 / (1.0 - FACTOR));
-        if (r == 0 && g == 0 && b == 0) {
+        int i = (int) (DEFAULT_HSB_MAX_BOUND / (DEFAULT_HSB_MAX_BOUND - DEFAULT_COLOR_FACTOR));
+        if (red == 0 && green == 0 && blue == 0) {
             return new Color(i, i, i, alpha);
         }
-        if (r > 0 && r < i) r = i;
-        if (g > 0 && g < i) g = i;
-        if (b > 0 && b < i) b = i;
+        if (red > 0 && red < i) red = i;
+        if (green > 0 && green < i) green = i;
+        if (blue > 0 && blue < i) blue = i;
 
-        return new Color(Math.min((int) (r / FACTOR), 255),
-            Math.min((int) (g / FACTOR), 255),
-            Math.min((int) (b / FACTOR), 255),
+        return new Color(
+            Math.min((int) (red / DEFAULT_COLOR_FACTOR), DEFAULT_RGB_MAX_BOUND),
+            Math.min((int) (green / DEFAULT_COLOR_FACTOR), DEFAULT_RGB_MAX_BOUND),
+            Math.min((int) (blue / DEFAULT_COLOR_FACTOR), DEFAULT_RGB_MAX_BOUND),
             alpha);
     }
 
     /**
-     * Creates a new <code>Color</code> that is a darker version of this
-     * <code>Color</code>.
-     * <p>
-     * This method applies an arbitrary scale factor to each of the three RGB
-     * components of this <code>Color</code> to create a darker version of
-     * this <code>Color</code>.
-     * The {@code alpha} value is preserved.
-     * Although <code>brighter</code> and
-     * <code>darker</code> are inverse operations, the results of a series
-     * of invocations of these two methods might be inconsistent because
-     * of rounding errors.
+     * Creates new {@link Color} instance that is a darker version of current {@link Color} instance
      *
-     * @return a new <code>Color</code> object that is
-     * a darker version of this <code>Color</code>
-     * with the same {@code alpha} value.
+     * @return new {@link Color} instance
      */
     public Color darker() {
-        return new Color(Math.max((int) (getRed() * FACTOR), 0),
-            Math.max((int) (getGreen() * FACTOR), 0),
-            Math.max((int) (getBlue() * FACTOR), 0),
-            getAlpha());
+        return new Color(
+            Math.max((this.getRedComponent() * DEFAULT_RGB_MAX_BOUND), DEFAULT_RGB_MIN_BOUND),
+            Math.max((this.getGreenComponent() * DEFAULT_RGB_MAX_BOUND), DEFAULT_RGB_MIN_BOUND),
+            Math.max((this.getBlueComponent() * DEFAULT_RGB_MAX_BOUND), DEFAULT_RGB_MIN_BOUND),
+            getAlphaComponent());
     }
 
     /**
-     * Converts a <code>String</code> to an integer and returns the
-     * specified opaque <code>Color</code>. This method handles string
-     * formats that are used to represent octal and hexadecimal numbers.
+     * Returns new {@link Color} instance to represent octal and hexadecimal numbers
      *
-     * @param nm a <code>String</code> that represents
-     *           an opaque color as a 24-bit integer
-     * @return the new <code>Color</code> object.
+     * @param namespace - initial input color namespace
+     * @return new {@link Color} instance
      * @throws NumberFormatException if the specified string cannot
      *                               be interpreted as a decimal,
      *                               octal, or hexadecimal integer.
      */
-    public static Color decode(String nm) throws NumberFormatException {
-        Integer intval = Integer.decode(nm);
+    public static Color decode(final String namespace) throws NumberFormatException {
+        int i = Integer.decode(namespace).intValue();
+        return new Color(
+            (i >> 16) & DEFAULT_RGB_MAX_BOUND,
+            (i >> 8) & DEFAULT_RGB_MAX_BOUND,
+            i & DEFAULT_RGB_MAX_BOUND);
+    }
+
+    /**
+     * Returns new {@link Color} instance by input color namespace
+     *
+     * @param namespace - initial input color namespace
+     * @return new {@link Color} instance
+     */
+    public static Color getColor(final String namespace) {
+        return getColor(namespace, null);
+    }
+
+    /**
+     * Returns new {@link Color} instance by input color namespace and default {@link Color} instance
+     *
+     * @param namespace - initial input color namespace
+     * @param value     - initial input {@link Color} value
+     * @return new {@link Color} instance
+     */
+    public static Color getColor(final String namespace, final Color value) {
+        final Integer intval = Integer.getInteger(namespace);
+        if (Objects.isNull(intval)) return value;
         int i = intval.intValue();
-        return new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF);
+        return new Color(
+            (i >> 16) & DEFAULT_RGB_MAX_BOUND,
+            (i >> 8) & DEFAULT_RGB_MAX_BOUND,
+            i & DEFAULT_RGB_MAX_BOUND);
     }
 
     /**
-     * Finds a color in the system properties.
-     * <p>
-     * The argument is treated as the name of a system property to
-     * be obtained. The string value of this property is then interpreted
-     * as an integer which is then converted to a <code>Color</code>
-     * object.
-     * <p>
-     * If the specified property is not found or could not be parsed as
-     * an integer then <code>null</code> is returned.
+     * Returns new {@link Color} instance by input color namespace and default color composite value
      *
-     * @param nm the name of the color property
-     * @return the <code>Color</code> converted from the system
-     * property.
+     * @param namespace - initial input color namespace
+     * @param value     - initial input composite color value
+     * @return new {@link Color} instance
      */
-    public static Color getColor(String nm) {
-        return getColor(nm, null);
+    public static Color getColor(final String namespace, int value) {
+        final Integer intval = Integer.getInteger(namespace);
+        int i = (Objects.nonNull(intval)) ? intval.intValue() : value;
+        return new Color(
+            (i >> 16) & DEFAULT_RGB_MAX_BOUND,
+            (i >> 8) & DEFAULT_RGB_MAX_BOUND,
+            (i >> 0) & DEFAULT_RGB_MAX_BOUND);
     }
 
     /**
-     * Finds a color in the system properties.
-     * <p>
-     * The first argument is treated as the name of a system property to
-     * be obtained. The string value of this property is then interpreted
-     * as an integer which is then converted to a <code>Color</code>
-     * object.
-     * <p>
-     * If the specified property is not found or cannot be parsed as
-     * an integer then the <code>Color</code> specified by the second
-     * argument is returned instead.
+     * Converts from HSB to RGB color namespace by input color components (hue, saturation, brightness)
      *
-     * @param nm the name of the color property
-     * @param v  the default <code>Color</code>
-     * @return the <code>Color</code> converted from the system
-     * property, or the specified <code>Color</code>.
+     * @param hue        - initial input hue component of the color
+     * @param saturation - initial input saturation component of the color
+     * @param brightness - initial input brightness component of the color
+     * @return the RGB value of the color by indicated hue, saturation, and brightness components
      */
-    public static Color getColor(String nm, Color v) {
-        Integer intval = Integer.getInteger(nm);
-        if (intval == null) {
-            return v;
-        }
-        int i = intval.intValue();
-        return new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF);
-    }
-
-    /**
-     * Finds a color in the system properties.
-     * <p>
-     * The first argument is treated as the name of a system property to
-     * be obtained. The string value of this property is then interpreted
-     * as an integer which is then converted to a <code>Color</code>
-     * object.
-     * <p>
-     * If the specified property is not found or could not be parsed as
-     * an integer then the integer value <code>v</code> is used instead,
-     * and is converted to a <code>Color</code> object.
-     *
-     * @param nm the name of the color property
-     * @param v  the default color value, as an integer
-     * @return the <code>Color</code> converted from the system
-     * property or the <code>Color</code> converted from
-     * the specified integer.
-     */
-    public static Color getColor(String nm, int v) {
-        Integer intval = Integer.getInteger(nm);
-        int i = (intval != null) ? intval.intValue() : v;
-        return new Color((i >> 16) & 0xFF, (i >> 8) & 0xFF, (i >> 0) & 0xFF);
-    }
-
-    /**
-     * Converts the components of a color, as specified by the HSB
-     * model, to an equivalent set of values for the default RGB model.
-     * <p>
-     * The <code>saturation</code> and <code>brightness</code> components
-     * should be floating-point values between zero and one
-     * (numbers in the range 0.0-1.0).  The <code>hue</code> component
-     * can be any floating-point number.  The floor of this number is
-     * subtracted from it to create a fraction between 0 and 1.  This
-     * fractional number is then multiplied by 360 to produce the hue
-     * angle in the HSB color model.
-     * <p>
-     * The integer that is returned by <code>HSBtoRGB</code> encodes the
-     * value of a color in bits 0-23 of an integer value that is the same
-     * format used by the method {@link #getRGB() getRGB}.
-     * This integer can be supplied as an argument to the
-     * <code>Color</code> constructor that takes a single integer argument.
-     *
-     * @param hue        the hue component of the color
-     * @param saturation the saturation of the color
-     * @param brightness the brightness of the color
-     * @return the RGB value of the color with the indicated hue,
-     * saturation, and brightness.
-     */
-    public static int HSBtoRGB(float hue, float saturation, float brightness) {
+    public static int convertFromHSBToRGB(float hue, float saturation, float brightness) {
         int r = 0, g = 0, b = 0;
         if (saturation == 0) {
-            r = g = b = (int) (brightness * 255.0f + 0.5f);
+            r = g = b = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
         } else {
             float h = (hue - (float) Math.floor(hue)) * 6.0f;
             float f = h - (float) java.lang.Math.floor(h);
-            float p = brightness * (1.0f - saturation);
-            float q = brightness * (1.0f - saturation * f);
-            float t = brightness * (1.0f - (saturation * (1.0f - f)));
+            float p = brightness * (DEFAULT_HSB_MAX_BOUND - saturation);
+            float q = brightness * (DEFAULT_HSB_MAX_BOUND - saturation * f);
+            float t = brightness * (DEFAULT_HSB_MAX_BOUND - (saturation * (DEFAULT_HSB_MAX_BOUND - f)));
             switch ((int) h) {
                 case 0:
-                    r = (int) (brightness * 255.0f + 0.5f);
-                    g = (int) (t * 255.0f + 0.5f);
-                    b = (int) (p * 255.0f + 0.5f);
+                    r = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (t * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
                 case 1:
-                    r = (int) (q * 255.0f + 0.5f);
-                    g = (int) (brightness * 255.0f + 0.5f);
-                    b = (int) (p * 255.0f + 0.5f);
+                    r = (int) (q * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
                 case 2:
-                    r = (int) (p * 255.0f + 0.5f);
-                    g = (int) (brightness * 255.0f + 0.5f);
-                    b = (int) (t * 255.0f + 0.5f);
+                    r = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (t * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
                 case 3:
-                    r = (int) (p * 255.0f + 0.5f);
-                    g = (int) (q * 255.0f + 0.5f);
-                    b = (int) (brightness * 255.0f + 0.5f);
+                    r = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (q * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
                 case 4:
-                    r = (int) (t * 255.0f + 0.5f);
-                    g = (int) (p * 255.0f + 0.5f);
-                    b = (int) (brightness * 255.0f + 0.5f);
+                    r = (int) (t * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
                 case 5:
-                    r = (int) (brightness * 255.0f + 0.5f);
-                    g = (int) (p * 255.0f + 0.5f);
-                    b = (int) (q * 255.0f + 0.5f);
+                    r = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    g = (int) (p * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
+                    b = (int) (q * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
                     break;
             }
         }
-        return 0xff000000 | (r << 16) | (g << 8) | (b << 0);
+        return 0xFF000000 | (r << 16) | (g << 8) | (b << 0);
     }
 
     /**
-     * Converts the components of a color, as specified by the default RGB
-     * model, to an equivalent set of values for hue, saturation, and
-     * brightness that are the three components of the HSB model.
-     * <p>
-     * If the <code>hsbvals</code> argument is <code>null</code>, then a
-     * new array is allocated to return the result. Otherwise, the method
-     * returns the array <code>hsbvals</code>, with the values put into
-     * that array.
+     * Converts from RGB to HSB color namespace by input color components (red, green, blue)
      *
-     * @param r       the red component of the color
-     * @param g       the green component of the color
-     * @param b       the blue component of the color
-     * @param hsbvals the array used to return the
-     *                three HSB values, or <code>null</code>
-     * @return an array of three elements containing the hue, saturation,
-     * and brightness (in that order), of the color with
-     * the indicated red, green, and blue components.
+     * @param red   - initial input red component of the color
+     * @param green - initial input green component of the color
+     * @param blue  - initial input blue component of the color
+     * @return an array of three elements containing the hue, saturation and brightness of the color
      */
-    public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals) {
+    public static float[] convertFromRGBToHSB(int red, int green, int blue) {
         float hue, saturation, brightness;
-        if (hsbvals == null) {
-            hsbvals = new float[3];
-        }
-        int cmax = (r > g) ? r : g;
-        if (b > cmax) cmax = b;
-        int cmin = (r < g) ? r : g;
-        if (b < cmin) cmin = b;
+        float[] hsbvals = new float[3];
+        int cmax = (red > green) ? red : green;
+        if (blue > cmax) cmax = blue;
+        int cmin = (red < green) ? red : green;
+        if (blue < cmin) cmin = blue;
 
-        brightness = ((float) cmax) / 255.0f;
+        brightness = ((float) cmax) / DEFAULT_RGB_MAX_BOUND;
         if (cmax != 0)
             saturation = ((float) (cmax - cmin)) / ((float) cmax);
         else
@@ -644,18 +550,18 @@ public class Color implements Serializable {
         if (saturation == 0)
             hue = 0;
         else {
-            float redc = ((float) (cmax - r)) / ((float) (cmax - cmin));
-            float greenc = ((float) (cmax - g)) / ((float) (cmax - cmin));
-            float bluec = ((float) (cmax - b)) / ((float) (cmax - cmin));
-            if (r == cmax)
+            float redc = ((float) (cmax - red)) / ((float) (cmax - cmin));
+            float greenc = ((float) (cmax - green)) / ((float) (cmax - cmin));
+            float bluec = ((float) (cmax - blue)) / ((float) (cmax - cmin));
+            if (red == cmax)
                 hue = bluec - greenc;
-            else if (g == cmax)
+            else if (green == cmax)
                 hue = 2.0f + redc - bluec;
             else
                 hue = 4.0f + greenc - redc;
             hue = hue / 6.0f;
             if (hue < 0)
-                hue = hue + 1.0f;
+                hue = hue + DEFAULT_HSB_MAX_BOUND;
         }
         hsbvals[0] = hue;
         hsbvals[1] = saturation;
@@ -664,123 +570,72 @@ public class Color implements Serializable {
     }
 
     /**
-     * Creates a <code>Color</code> object based on the specified values
-     * for the HSB color model.
-     * <p>
-     * The <code>s</code> and <code>b</code> components should be
-     * floating-point values between zero and one
-     * (numbers in the range 0.0-1.0).  The <code>h</code> component
-     * can be any floating-point number.  The floor of this number is
-     * subtracted from it to create a fraction between 0 and 1.  This
-     * fractional number is then multiplied by 360 to produce the hue
-     * angle in the HSB color model.
+     * Returns new {@link Color} instance based on specified values of HSB color namespace model
      *
-     * @param h the hue component
-     * @param s the saturation of the color
-     * @param b the brightness of the color
-     * @return a <code>Color</code> object with the specified hue,
-     * saturation, and brightness.
+     * @param h - initial input hue component of the color
+     * @param s - initial input saturation component of the color
+     * @param b - initial input brightness component of the color
+     * @return a <code>Color</code> object with the specified hue, saturation, and brightness.
      */
     public static Color getHSBColor(float h, float s, float b) {
-        return new Color(HSBtoRGB(h, s, b));
+        return new Color(convertFromHSBToRGB(h, s, b));
     }
 
     /**
-     * Returns a <code>float</code> array containing the color and alpha
-     * components of the <code>Color</code>, as represented in the default
-     * sRGB color space.
-     * If <code>compArray</code> is <code>null</code>, an array of length
-     * 4 is created for the return value.  Otherwise,
-     * <code>compArray</code> must have length 4 or greater,
-     * and it is filled in with the components and returned.
+     * Returns <code>float</code> array containing the color and alpha components of current {@link Color} instance
      *
-     * @param compArray an array that this method fills with
-     *                  color and alpha components and returns
-     * @return the RGBA components in a <code>float</code> array.
+     * @return <code>float</code> array of color components
      */
-    public float[] getRGBComponents(float[] compArray) {
-        float[] f;
-        if (compArray == null) {
-            f = new float[4];
+    public float[] getRGBAComponents() {
+        final float[] f = new float[4];
+        if (Objects.isNull(this.rgbValues)) {
+            f[0] = ((float) this.getRedComponent()) / DEFAULT_RGB_MAX_BOUND;
+            f[1] = ((float) this.getGreenComponent()) / DEFAULT_RGB_MAX_BOUND;
+            f[2] = ((float) this.getBlueComponent()) / DEFAULT_RGB_MAX_BOUND;
+            f[3] = ((float) this.getAlphaComponent()) / DEFAULT_RGB_MAX_BOUND;
         } else {
-            f = compArray;
-        }
-        if (frgbvalue == null) {
-            f[0] = ((float) getRed()) / 255f;
-            f[1] = ((float) getGreen()) / 255f;
-            f[2] = ((float) getBlue()) / 255f;
-            f[3] = ((float) getAlpha()) / 255f;
-        } else {
-            f[0] = frgbvalue[0];
-            f[1] = frgbvalue[1];
-            f[2] = frgbvalue[2];
-            f[3] = falpha;
+            f[0] = this.rgbValues[0];
+            f[1] = this.rgbValues[1];
+            f[2] = this.rgbValues[2];
+            f[3] = this.alpha;
         }
         return f;
     }
 
     /**
-     * Returns a <code>float</code> array containing only the color
-     * components of the <code>Color</code>, in the default sRGB color
-     * space.  If <code>compArray</code> is <code>null</code>, an array of
-     * length 3 is created for the return value.  Otherwise,
-     * <code>compArray</code> must have length 3 or greater, and it is
-     * filled in with the components and returned.
+     * Returns <code>float</code> array containing the color components of current {@link Color} instance
      *
-     * @param compArray an array that this method fills with color
-     *                  components and returns
-     * @return the RGB components in a <code>float</code> array.
+     * @return <code>float</code> array of color components
      */
-    public float[] getRGBColorComponents(float[] compArray) {
-        float[] f;
-        if (compArray == null) {
-            f = new float[3];
+    public float[] getRGBComponents() {
+        final float[] f = new float[3];
+        if (Objects.isNull(this.rgbValues)) {
+            f[0] = ((float) this.getRedComponent()) / DEFAULT_RGB_MAX_BOUND;
+            f[1] = ((float) this.getGreenComponent()) / DEFAULT_RGB_MAX_BOUND;
+            f[2] = ((float) this.getBlueComponent()) / DEFAULT_RGB_MAX_BOUND;
         } else {
-            f = compArray;
-        }
-        if (frgbvalue == null) {
-            f[0] = ((float) getRed()) / 255f;
-            f[1] = ((float) getGreen()) / 255f;
-            f[2] = ((float) getBlue()) / 255f;
-        } else {
-            f[0] = frgbvalue[0];
-            f[1] = frgbvalue[1];
-            f[2] = frgbvalue[2];
+            f[0] = this.rgbValues[0];
+            f[1] = this.rgbValues[1];
+            f[2] = this.rgbValues[2];
         }
         return f;
     }
 
     /**
-     * Returns a <code>float</code> array containing the color and alpha
-     * components of the <code>Color</code>, in the
-     * <code>ColorSpace</code> of the <code>Color</code>.
-     * If <code>compArray</code> is <code>null</code>, an array with
-     * length equal to the number of components in the associated
-     * <code>ColorSpace</code> plus one is created for
-     * the return value.  Otherwise, <code>compArray</code> must have at
-     * least this length and it is filled in with the components and
-     * returned.
+     * Returns <code>float</code> array containing the color and alpha components of current {@link Color} instance
      *
-     * @param compArray an array that this method fills with the color and
-     *                  alpha components of this <code>Color</code> in its
-     *                  <code>ColorSpace</code> and returns
-     * @return the color and alpha components in a <code>float</code>
-     * array.
+     * @return <code>float</code> array of color components
      */
-    public float[] getComponents(float[] compArray) {
-        if (fvalue == null)
-            return getRGBComponents(compArray);
-        float[] f;
-        int n = fvalue.length;
-        if (compArray == null) {
-            f = new float[n + 1];
-        } else {
-            f = compArray;
+    public float[] getRGBAColorComponents() {
+        if (Objects.isNull(this.rgbValues)) {
+            return this.getRGBAComponents();
         }
+        final float[] f = new float[4];
+        int n = this.rgbValues.length;
         for (int i = 0; i < n; i++) {
-            f[i] = fvalue[i];
+            f[i] = this.rgbValues[i];
         }
-        f[n] = falpha;
+        f[n] = this.alpha;
         return f;
     }
 
@@ -788,48 +643,33 @@ public class Color implements Serializable {
      * Returns a <code>float</code> array containing only the color
      * components of the <code>Color</code>, in the
      * <code>ColorSpace</code> of the <code>Color</code>.
-     * If <code>compArray</code> is <code>null</code>, an array with
-     * length equal to the number of components in the associated
-     * <code>ColorSpace</code> is created for
-     * the return value.  Otherwise, <code>compArray</code> must have at
-     * least this length and it is filled in with the components and
-     * returned.
      *
-     * @param compArray an array that this method fills with the color
-     *                  components of this <code>Color</code> in its
-     *                  <code>ColorSpace</code> and returns
-     * @return the color components in a <code>float</code> array.
+     * @return <code>float</code> array of color components
      */
-    public float[] getColorComponents(float[] compArray) {
-        if (fvalue == null)
-            return getRGBColorComponents(compArray);
-        float[] f;
-        int n = fvalue.length;
-        if (compArray == null) {
-            f = new float[n];
-        } else {
-            f = compArray;
+    public float[] getRGBColorComponents() {
+        if (Objects.isNull(this.rgbValues)) {
+            return this.getRGBComponents();
         }
+        final float[] f = new float[3];
+        int n = this.rgbValues.length;
         for (int i = 0; i < n; i++) {
-            f[i] = fvalue[i];
+            f[i] = this.rgbValues[i];
         }
         return f;
     }
 
     /**
-     * Returns the transparency mode for this <code>Color</code>.  This is
-     * required to implement the <code>Paint</code> interface.
+     * Returns {@link TransparencyColorType} type for current <code>Color</code> instance
      *
-     * @return this <code>Color</code> object's transparency mode.
+     * @return {@link TransparencyColorType} type
      */
-    public int getTransparency() {
-        int alpha = getAlpha();
-        if (alpha == 0xff) {
-            return Transparency.OPAQUE;
-        } else if (alpha == 0) {
-            return Transparency.BITMASK;
-        } else {
-            return Transparency.TRANSLUCENT;
+    public TransparencyColorType getTransparencyComponent() {
+        int alpha = this.getAlphaComponent();
+        if (Objects.equals(DEFAULT_RGB_MAX_BOUND, alpha)) {
+            return TransparencyColorType.OPAQUE;
+        } else if (Objects.equals(DEFAULT_RGB_MIN_BOUND, alpha)) {
+            return TransparencyColorType.BITMASK;
         }
+        return TransparencyColorType.TRANSLUCENT;
     }
 }

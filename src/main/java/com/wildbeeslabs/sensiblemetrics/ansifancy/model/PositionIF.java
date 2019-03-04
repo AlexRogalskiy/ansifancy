@@ -33,11 +33,31 @@ import java.io.Serializable;
  */
 public interface PositionIF extends Serializable {
 
+    /**
+     * Returns row position
+     *
+     * @return row position
+     */
     int getRow();
 
+    /**
+     * Returns column position
+     *
+     * @return column position
+     */
     int getColumn();
 
+    /**
+     * Returns depth position
+     *
+     * @return depth position
+     */
     int getDepth();
 
+    /**
+     * Returns position vector length
+     *
+     * @return vector length by position
+     */
     double length();
 }

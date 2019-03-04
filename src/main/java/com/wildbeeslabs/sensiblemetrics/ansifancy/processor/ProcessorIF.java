@@ -37,7 +37,7 @@ public interface ProcessorIF<T, R> {
     /**
      * Returns {@link Iterable} collection of processed values {@code R} by input argument value {@code T}
      *
-     * @param value - initial input argument value {@code T}
+     * @param value - initial input argument {@code T} to process by
      * @return {@link Iterable} collection of processed values {@code R}
      */
     <S extends Iterable<? extends R>> S process(final T value);

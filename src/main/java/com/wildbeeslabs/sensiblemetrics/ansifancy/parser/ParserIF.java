@@ -38,7 +38,7 @@ public interface ParserIF<T, R> {
     /**
      * Returns parsed value {@code R} by input argument value {@code T}
      *
-     * @param value - initial input argument value {@code T}
+     * @param value - initial input argument value {@code T} to parse by
      * @return parsed value {@code R}
      */
     R parse(final T value);

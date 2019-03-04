@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Configuration runtime exception {@link RuntimeException}
+ * ConfigurationIF runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -77,6 +77,6 @@ public class ConfigurationException extends RuntimeException {
      * @return {@link ConfigurationException} instance
      */
     public static final ConfigurationException alreadyDefined(final MetaDataIF metaData) {
-        return new ConfigurationException(String.format("ERROR: already defined meta data={%s}, should be unique.", metaData));
+        return new ConfigurationException(String.format("ERROR: already defined meta name={%s}, meta description={%s}, should be unique.", metaData.getName(), metaData.getDescription()));
     }
 }

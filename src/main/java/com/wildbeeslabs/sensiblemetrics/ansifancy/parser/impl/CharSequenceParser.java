@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.ConfigurationIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ParserException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
@@ -54,14 +54,14 @@ public class CharSequenceParser<R extends CharSequence> implements ParserIF<Char
     /**
      * Default character escape symbols
      */
-    private static final char DEFAULT_ESCAPE_SYMBOL = '`';
-    private static final char DEFAULT_ESCAPE_CLASS_BEGIN_SYMBOL = '{';
-    private static final char DEFAULT_ESCAPE_CLASS_END_SYMBOL = '}';
+    private static final char DEFAULT_CHAR_ESCAPE_SYMBOL = '`';
+    private static final char DEFAULT_CHAR_ESCAPE_CLASS_BEGIN_SYMBOL = '{';
+    private static final char DEFAULT_CHAR_ESCAPE_CLASS_END_SYMBOL = '}';
 
     /**
-     * Default configuration {@link Configuration}
+     * Default configuration {@link ConfigurationIF}
      */
-    private final Configuration configuration;
+    private final ConfigurationIF configuration;
     /**
      * Default processor {@link ProcessorIF}
      */
