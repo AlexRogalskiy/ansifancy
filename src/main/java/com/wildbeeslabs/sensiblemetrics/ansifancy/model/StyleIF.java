@@ -21,24 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.processor;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+
+import java.io.Serializable;
 
 /**
- * Processor interface declaration
+ * Style interface declaration
  *
- * @param <T> type of input element to be processed
  * @author Alexander Rogalskiy
- * @version 1.1
- * @since 1.0
+ * @version 1.0
  */
-@FunctionalInterface
-public interface Processor<T, R> {
+public interface StyleIF extends Serializable {
 
-    /**
-     * Returns {@link Iterable} collection of processed values {@code R} by input argument value {@code T}
-     *
-     * @param value - initial input argument value {@code T}
-     * @return {@link Iterable} collection of processed values {@code R}
-     */
-    <S extends Iterable<? extends R>> S process(final T value);
+    String getTitle();
+
+    String getDescription();
+
+    <S extends Iterable<? extends PointIF>> S getPoints();
 }

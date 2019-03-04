@@ -23,29 +23,29 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PointIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
 import lombok.NoArgsConstructor;
 
 /**
- * Default {@link Point} processor implementation {@link Processor}
+ * Default {@link PointIF} processor implementation {@link ProcessorIF}
  *
  * @param <T> type of element to be processed
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 @NoArgsConstructor
-public class PointProcessor<T> implements Processor<T, Point> {
+public class PointProcessor<T> implements ProcessorIF<T, PointIF> {
 
     /**
-     * Returns {@link Iterable} collection of processed values {@link Point} by input argument value {@code T}
+     * Returns {@link Iterable} collection of processed values {@link PointIF} by input argument value {@code T}
      *
      * @param value - initial input argument value {@code T}
-     * @return {@link Iterable} collection of processed values {@link Point}
+     * @return {@link Iterable} collection of processed values {@link PointIF}
      */
     @Override
-    public <S extends Iterable<? extends Point>> S process(final T value) {
-        //        for (final Marker marker : markers) {
+    public <S extends Iterable<? extends PointIF>> S process(final T value) {
+        //        for (final MarkerSequence marker : markers) {
 //            if (marker instanceof EscapeClassBegin) {
 //                // Verify if the escape class is registered in the context
 //                EscapeClassBegin begin = (EscapeClassBegin) token;

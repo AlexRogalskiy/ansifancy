@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 
 /**
- * Decorator interface declaration
+ * DecoratorIF interface declaration
  *
  * @param <T> type of input element to be decorated
  * @param <R> type of input element to decorate by
@@ -32,7 +32,7 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
  * @version 1.0
  */
 @FunctionalInterface
-public interface Decorator<T, R> {
+public interface DecoratorIF<T, R> {
 
     /**
      * Returns decorated {@code R} value by input argument value {@code T}

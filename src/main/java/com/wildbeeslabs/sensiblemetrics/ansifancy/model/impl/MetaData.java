@@ -21,35 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import java.io.Serializable;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
+import lombok.*;
 
 /**
- * Point interface declaration {@link CharSequence}
+ * Default meta data implementation {@link MetaDataIF}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Point extends CharSequence, Serializable {
+@Builder
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode
+@ToString
+public class MetaData implements MetaDataIF {
 
     /**
-     * Default point types
+     * Default explicit serialVersionUID for interoperability
      */
-    enum PointType {
-        //        ESCAPE_BEGIN,
-//        ESCAPE_END,
-        FOREGROUND_COLOR,
-        BACKGROUND_COLOR,
-        CURSOR_CONTROL,
-        DECORATION_CONTROL,
-        SERVICE_CONTROL,
-        IDEOGRAM
+    private static final long serialVersionUID = -7923040070243220868L;
+
+    /**
+     * Default meta name
+     */
+    private String name;
+    /**
+     * Default meta description
+     */
+    private String description;
+
+    /**
+     * Returns new {@link MetaData} instance by input parameters
+     *
+     * @param name        - initial input meta name {@link String}
+     * @param description - initial input meta description {@link String}
+     * @return new {@link MetaData} instance
+     */
+    public static MetaData getMetaData(final String name, final String description) {
+        return MetaData.builder()
+            .name(name)
+            .description(description)
+            .build();
     }
-
-    PointType getType();
-
-    <T extends CharSequence> T getSymbol();
-
-    <T extends CharSequence> T getCode();
 }

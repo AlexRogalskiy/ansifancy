@@ -21,49 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
-import lombok.*;
+import java.io.Serializable;
 
 /**
- * Default meta data implementation {@link MetaData}
+ * Position interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-@Builder
-@AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
-public class DefaultMetaData implements MetaData {
+public interface PositionIF extends Serializable {
 
-    /**
-     * Default explicit serialVersionUID for interoperability
-     */
-    private static final long serialVersionUID = -7923040070243220868L;
+    int getRow();
 
-    /**
-     * Default meta name
-     */
-    private String name;
-    /**
-     * Default meta description
-     */
-    private String description;
+    int getColumn();
 
-    /**
-     * Returns new {@link DefaultMetaData} instance by input parameters
-     *
-     * @param name        - initial input meta name {@link String}
-     * @param description - initial input meta description {@link String}
-     * @return new {@link DefaultMetaData} instance
-     */
-    public static DefaultMetaData getMetaData(final String name, final String description) {
-        return DefaultMetaData.builder()
-            .name(name)
-            .description(description)
-            .build();
-    }
+    int getDepth();
+
+    double length();
 }

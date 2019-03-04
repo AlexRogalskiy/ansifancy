@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
 import lombok.*;
 
 import java.util.Objects;
@@ -31,7 +31,7 @@ import java.util.Objects;
 import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils.toInt;
 
 /**
- * Default position implementation {@link Position}
+ * Default position implementation {@link PositionIF}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -41,7 +41,7 @@ import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils.toInt
 @Data
 @EqualsAndHashCode
 @ToString
-public class DefaultPosition implements Position {
+public class Position implements PositionIF {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -61,38 +61,74 @@ public class DefaultPosition implements Position {
      */
     private int depth;
 
-    public DefaultPosition division(int rowOffset, int colOffset) {
-        if (0 == rowOffset || 0 == colOffset) {
-            throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, rowOffset={%s}, colOffset={%s}", rowOffset, colOffset));
+    /**
+     * Returns updated {@link PositionIF} instance by input position scale parameters division
+     *
+     * @param rowScale - initial input row scale
+     * @param colScale - initial input column scale
+     * @return updated {@link PositionIF} instance
+     */
+    public Position divide(int rowScale, int colScale) {
+        if (0 == rowScale || 0 == colScale) {
+            throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, rowOffset={%s}, colOffset={%s}", rowScale, colScale));
         }
-        setRow(getRow() / rowOffset);
-        setColumn(getColumn() / colOffset);
+        setRow(getRow() / rowScale);
+        setColumn(getColumn() / colScale);
         return this;
     }
 
-    public DefaultPosition multiply(int rowOffset, int colOffset) {
-        setRow(getRow() * rowOffset);
-        setColumn(getColumn() * colOffset);
+    /**
+     * Returns updated {@link PositionIF} instance by input position scale parameters multiplication
+     *
+     * @param rowScale - initial input row scale
+     * @param colScale - initial input column scale
+     * @return updated {@link PositionIF} instance
+     */
+    public Position multiply(int rowScale, int colScale) {
+        setRow(getRow() * rowScale);
+        setColumn(getColumn() * colScale);
         return this;
     }
 
-    public DefaultPosition shift(int rowOffset, int colOffset) {
+    /**
+     * Returns updated {@link PositionIF} instance by input position offset parameters shift
+     *
+     * @param rowOffset - initial input row offset
+     * @param colOffset - initial input column offset
+     * @return updated {@link PositionIF} instance
+     */
+    public Position shift(int rowOffset, int colOffset) {
         setRow(getRow() + rowOffset);
         setColumn(getColumn() + colOffset);
         return this;
     }
 
-    public DefaultPosition negate() {
+    /**
+     * Returns updated {@link PositionIF} instance by current position parameters inversion
+     *
+     * @return updated {@link PositionIF} instance
+     */
+    public PositionIF negate() {
         setRow(-getRow());
         setColumn(-getColumn());
         return this;
     }
 
+    /**
+     * Returns {@link PositionIF} length by current position parameters
+     *
+     * @return vector length
+     */
     public double length() {
         return Math.sqrt(getRow() * getRow() + getColumn() * getColumn());
     }
 
-    public DefaultPosition normalize() {
+    /**
+     * Returns updated {@link PositionIF} instance by normalizing current position parameters
+     *
+     * @return updated {@link PositionIF} instance
+     */
+    public PositionIF normalize() {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -102,7 +138,13 @@ public class DefaultPosition implements Position {
         return this;
     }
 
-    public DefaultPosition rotate(double angle) {
+    /**
+     * Returns updated {@link PositionIF} instance by current position parameters rotation on input angle
+     *
+     * @param angle - initial input angle to rotate by
+     * @return updated {@link PositionIF} instance
+     */
+    public PositionIF rotate(double angle) {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -126,6 +168,11 @@ public class DefaultPosition implements Position {
         return this;
     }
 
+    /**
+     * Rotates current position on input angle {@code axis-Ox}
+     *
+     * @param angle - initial input angle to rotate by
+     */
     private void rotateX(double angle) {
         int vy = getRow(), vz = getDepth();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
@@ -133,6 +180,11 @@ public class DefaultPosition implements Position {
         setDepth(toInt(vy * sinVal + vz * cosVal));
     }
 
+    /**
+     * Rotates current position on input angle {@code axis-Oy}
+     *
+     * @param angle - initial input angle value to rotate by
+     */
     private void rotateY(double angle) {
         int vx = getColumn(), vz = getDepth();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
@@ -140,6 +192,11 @@ public class DefaultPosition implements Position {
         setDepth(toInt(-vx * sinVal + vz * cosVal));
     }
 
+    /**
+     * Rotates current position on input angle {@code axis-Oz}
+     *
+     * @param angle - initial input angle value to rotate by
+     */
     private void rotateZ(double angle) {
         int vx = getColumn(), vy = getRow();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
@@ -147,21 +204,39 @@ public class DefaultPosition implements Position {
         setRow(toInt(vx * sinVal + vy * cosVal));
     }
 
-    public DefaultPosition vector(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+    /**
+     * Returns new {@link PositionIF} instance of vectors product by input {@link PositionIF} argument
+     *
+     * @param position - initial input {@link PositionIF} value to calculate by
+     * @return updated {@link Position} instance
+     */
+    public PositionIF vector(final PositionIF position) {
+        Objects.requireNonNull(position, "PositionIF should not be null");
         int vx = getColumn() * position.getDepth() - getDepth() * position.getRow();
         int vy = getDepth() * position.getColumn() - getColumn() * position.getDepth();
         int vz = getColumn() * position.getRow() - getRow() * position.getColumn();
-        return new DefaultPosition(vx, vy, vz);
+        return new Position(vx, vy, vz);
     }
 
-    public int scalar(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+    /**
+     * Returns scalar product of position vectors by input {@link PositionIF} argument
+     *
+     * @param position - initial input {@link PositionIF} value to calculate by
+     * @return updated {@link Position} instance
+     */
+    public int scalar(final PositionIF position) {
+        Objects.requireNonNull(position, "PositionIF should not be null");
         return getColumn() * position.getColumn() + getRow() * position.getRow() + getDepth() * position.getDepth();
     }
 
-    public double distace(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+    /**
+     * Returns euclid distance of position vectors by input {@link PositionIF} argument
+     *
+     * @param position - initial input {@link PositionIF} value to calculate by
+     * @return euclid distance
+     */
+    public double distance(final PositionIF position) {
+        Objects.requireNonNull(position, "PositionIF should not be null");
         int resX = (getColumn() - position.getColumn()) * (getColumn() - position.getColumn());
         int resY = (getRow() - position.getRow()) * (getRow() - position.getRow());
         int resZ = (getDepth() - position.getDepth()) * (getDepth() - position.getDepth());
@@ -169,8 +244,14 @@ public class DefaultPosition implements Position {
         return (res > 0 ? Math.sqrt(res) : 0);
     }
 
-    public double angle(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+    /**
+     * Returns angle between position vectors by input {@link PositionIF} argument
+     *
+     * @param position - initial input {@link PositionIF} value to calculate by
+     * @return angle value
+     */
+    public double angle(final PositionIF position) {
+        Objects.requireNonNull(position, "PositionIF should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -179,25 +260,25 @@ public class DefaultPosition implements Position {
     }
 
     /**
-     * Returns new {@link DefaultPosition} instance by input offset parameters
+     * Returns new {@link PositionIF} instance by input position offset parameters
      *
      * @param rowOffset - initial input row offset
      * @param colOffset - initial input column offset
-     * @return new {@link DefaultPosition} instance
+     * @return new {@link PositionIF} instance
      */
-    public DefaultPosition offset(int rowOffset, int colOffset) {
-        return new DefaultPosition(getRow() + rowOffset, getColumn() + colOffset, getDepth());
+    public PositionIF offset(int rowOffset, int colOffset) {
+        return new Position(getRow() + rowOffset, getColumn() + colOffset, getDepth());
     }
 
     /**
-     * Returns new {@link DefaultPosition} instance by input parameters
+     * Returns new {@link PositionIF} instance by input position parameters
      *
      * @param row    - initial input row position
      * @param column - initial input column position
-     * @return new {@link DefaultPosition} instance
+     * @return new {@link PositionIF} instance
      */
-    public static DefaultPosition getPosition(int row, int column) {
-        return DefaultPosition.builder()
+    public static PositionIF getPosition(int row, int column) {
+        return Position.builder()
             .row(row)
             .column(column)
             .build();

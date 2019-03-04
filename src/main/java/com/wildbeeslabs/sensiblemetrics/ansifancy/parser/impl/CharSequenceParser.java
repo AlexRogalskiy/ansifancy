@@ -25,10 +25,10 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ParserException;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.ParserIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,7 +39,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Default parser implementation {@link Parser}
+ * Default parser implementation {@link ParserIF}
  *
  * @param <R> type of element to be parsed to
  * @author Alexander Rogalskiy
@@ -49,7 +49,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class DefaultCharSequenceParser<R extends CharSequence> implements Parser<CharSequence, R> {
+public class CharSequenceParser<R extends CharSequence> implements ParserIF<CharSequence, R> {
 
     /**
      * Default character escape symbols
@@ -63,9 +63,9 @@ public class DefaultCharSequenceParser<R extends CharSequence> implements Parser
      */
     private final Configuration configuration;
     /**
-     * Default processor {@link Processor}
+     * Default processor {@link ProcessorIF}
      */
-    private final Processor<CharSequence, Marker> processor;
+    private final ProcessorIF<CharSequence, MarkerSequence> processor;
 
     /**
      * Returns parsed value {@code R} by input argument value {@code T}
@@ -79,9 +79,9 @@ public class DefaultCharSequenceParser<R extends CharSequence> implements Parser
             throw ParserException.invalidSource();
         }
         final StringBuilder buff = new StringBuilder();
-        final List<Marker> markers = getProcessor().process(value);
-        final LinkedList<Style> ansiClasses = new LinkedList<>();
-//        for (final Marker marker : markers) {
+        final List<MarkerSequence> markers = getProcessor().process(value);
+        final LinkedList<StyleIF> ansiClasses = new LinkedList<>();
+//        for (final MarkerSequence marker : markers) {
 //            if (marker instanceof EscapeClassBegin) {
 //                // Verify if the escape class is registered in the context
 //                EscapeClassBegin begin = (EscapeClassBegin) token;

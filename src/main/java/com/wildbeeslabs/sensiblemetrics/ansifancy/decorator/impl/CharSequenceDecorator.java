@@ -24,9 +24,9 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.Decorator;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.Parser;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.DefaultCharSequenceParser;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.DecoratorIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.ParserIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.CharSequenceParser;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl.MarkerProcessor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,17 +35,17 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * Default decorator implementation {@link Decorator}
+ * Default decorator implementation {@link DecoratorIF}
  */
 @Data
 @EqualsAndHashCode
 @ToString
-public class CharSequenceDecorator<T extends CharSequence, R> implements Decorator<T, R> {
+public class CharSequenceDecorator<T extends CharSequence, R> implements DecoratorIF<T, R> {
 
     /**
-     * Default parser instance {@link Parser}
+     * Default parser instance {@link ParserIF}
      */
-    private final Parser<T, R> parser;
+    private final ParserIF<T, R> parser;
 
     /**
      * Default (@link CharSequenceDecorator) constructor by initial {@link Configuration} instance
@@ -54,11 +54,11 @@ public class CharSequenceDecorator<T extends CharSequence, R> implements Decorat
      */
     public CharSequenceDecorator(final Configuration configuration) {
         Objects.requireNonNull(configuration);
-        this.parser = new DefaultCharSequenceParser(configuration, new MarkerProcessor<>());
+        this.parser = new CharSequenceParser(configuration, new MarkerProcessor<>());
     }
 
     /**
-     * Returns decorated {@code R} value by input source {@code T} and array of objects
+     * Returns value {@code R} decorated by input source {@code T} and array of objects
      *
      * @param source - initial input source {@code T} to be decorated
      * @param args   - initial input array of objects {@link Object} to decorate by

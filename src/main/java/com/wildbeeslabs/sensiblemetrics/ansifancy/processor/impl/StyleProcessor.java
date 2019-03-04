@@ -23,28 +23,28 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.Processor;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
 import lombok.NoArgsConstructor;
 
 /**
- * Default {@link Style} processor implementation {@link Processor}
+ * Default {@link StyleIF} processor implementation {@link ProcessorIF}
  *
  * @param <T> type of element to be processed
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 @NoArgsConstructor
-public class StyleProcessor<T> implements Processor<T, Style> {
+public class StyleProcessor<T> implements ProcessorIF<T, StyleIF> {
 
     /**
-     * Returns {@link Iterable} collection of processed values {@link Style} by input argument value {@code T}
+     * Returns {@link Iterable} collection of processed values {@link StyleIF} by input argument value {@code T}
      *
      * @param value - initial input argument value {@code T}
-     * @return {@link Iterable} collection of processed values {@link Style}
+     * @return {@link Iterable} collection of processed values {@link StyleIF}
      */
     @Override
-    public <S extends Iterable<? extends Style>> S process(final T value) {
+    public <S extends Iterable<? extends StyleIF>> S process(final T value) {
         return null;
     }
 }

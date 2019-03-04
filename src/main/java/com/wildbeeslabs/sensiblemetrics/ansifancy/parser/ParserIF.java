@@ -21,19 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
-
-import java.io.Serializable;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.parser;
 
 /**
- * Meta data interface declaration
+ * ParserIF interface declaration
  *
+ * @param <T> type of input element to be converted from
+ * @param <R> type of input element to be converted to
  * @author Alexander Rogalskiy
- * @version 1.0
+ * @version 1.1
+ * @since 1.0
  */
-public interface MetaData extends Serializable {
+@FunctionalInterface
+public interface ParserIF<T, R> {
 
-    String getName();
-
-    String getDescription();
+    /**
+     * Returns parsed value {@code R} by input argument value {@code T}
+     *
+     * @param value - initial input argument value {@code T}
+     * @return parsed value {@code R}
+     */
+    R parse(final T value);
 }

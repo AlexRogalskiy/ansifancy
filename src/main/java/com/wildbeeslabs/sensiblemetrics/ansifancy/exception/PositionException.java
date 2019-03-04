@@ -23,14 +23,14 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Position runtime exception {@link RuntimeException}
+ * PositionIF runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -72,17 +72,17 @@ public class PositionException extends RuntimeException {
     }
 
     /**
-     * Returns {@link PositionException} instance by input position {@link Style}
+     * Returns {@link PositionException} instance by input position {@link StyleIF}
      *
-     * @param position - initial input position {@link Position}
+     * @param position - initial input position {@link PositionIF}
      * @return {@link PositionException} instance
      */
-    public static final PositionException unknownPosition(final Position position) {
+    public static final PositionException unknownPosition(final PositionIF position) {
         return new PositionException(String.format("ERROR: unknown position={%s} detected", position));
     }
 
     /**
-     * Returns {@link PositionException} instance by invalid (empty or null) position {@link Position}
+     * Returns {@link PositionException} instance by invalid (empty or null) position {@link PositionIF}
      *
      * @return {@link PositionException} instance
      */

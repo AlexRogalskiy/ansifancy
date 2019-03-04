@@ -26,18 +26,14 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 import java.io.Serializable;
 
 /**
- * Position interface declaration
+ * Meta data interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface Position extends Serializable {
+public interface MetaDataIF extends Serializable {
 
-    int getRow();
+    String getName();
 
-    int getColumn();
-
-    int getDepth();
-
-    double length();
+    String getDescription();
 }

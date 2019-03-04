@@ -23,8 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -72,11 +72,11 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Returns {@link ConfigurationException} instance by already registered meta data {@link Style}
+     * Returns {@link ConfigurationException} instance by already registered meta data {@link StyleIF}
      *
      * @return {@link ConfigurationException} instance
      */
-    public static final ConfigurationException alreadyDefined(final MetaData metaData) {
+    public static final ConfigurationException alreadyDefined(final MetaDataIF metaData) {
         return new ConfigurationException(String.format("ERROR: already defined meta data={%s}, should be unique.", metaData));
     }
 }

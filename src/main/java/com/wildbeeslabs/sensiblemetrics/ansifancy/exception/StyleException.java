@@ -23,14 +23,14 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Point;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PointIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Style runtime exception {@link RuntimeException}
+ * StyleIF runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -71,17 +71,17 @@ public class StyleException extends RuntimeException {
     }
 
     /**
-     * Returns {@link StyleException} instance by input point {@link Point}
+     * Returns {@link StyleException} instance by input point {@link PointIF}
      *
-     * @param point - initial input point {@link Point}
+     * @param point - initial input point {@link PointIF}
      * @return {@link StyleException} instance
      */
-    public static final StyleException unknownPoint(final Point point) {
+    public static final StyleException unknownPoint(final PointIF point) {
         return new StyleException(String.format("ERROR: unknown point={%s} detected", point));
     }
 
     /**
-     * Returns {@link StyleException} instance by invalid (empty or null) point {@link Point}
+     * Returns {@link StyleException} instance by invalid (empty or null) point {@link PointIF}
      *
      * @return {@link StyleException} instance
      */
@@ -90,17 +90,17 @@ public class StyleException extends RuntimeException {
     }
 
     /**
-     * Returns {@link StyleException} instance by input style {@link Style}
+     * Returns {@link StyleException} instance by input style {@link StyleIF}
      *
-     * @param style - initial input style {@link Style}
+     * @param style - initial input style {@link StyleIF}
      * @return {@link StyleException} instance
      */
-    public static final StyleException unknownStyle(final Style style) {
+    public static final StyleException unknownStyle(final StyleIF style) {
         return new StyleException(String.format("ERROR: unknown style={%s} detected", style));
     }
 
     /**
-     * Returns {@link StyleException} instance by invalid (empty or null) style {@link Style}
+     * Returns {@link StyleException} instance by invalid (empty or null) style {@link StyleIF}
      *
      * @return {@link StyleException} instance
      */

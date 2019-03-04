@@ -23,10 +23,10 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Marker;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaData;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Position;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.Style;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.*;
 
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Default marker implementation {@link Marker}
+ * Marker sequence implementation {@link MarkerSequence}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -44,7 +44,7 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode
 @ToString
-public class DefaultMarker implements Marker {
+public class Marker implements MarkerSequence {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -54,40 +54,55 @@ public class DefaultMarker implements Marker {
     /**
      * Default marker position
      */
-    private Position position;
+    private PositionIF position;
     /**
      * Default symbol meta data
      */
-    private MetaData metaData;
+    private MetaDataIF metaData;
     /**
      * Default collection of styles
      */
-    private Collection<Style> styles;
+    private Collection<StyleIF> styles;
 
     /**
-     * Returns updated {@link DefaultMarker} marker by input array of styles {@link Style}
+     * Returns updated {@link Marker} marker by input array of styles {@link StyleIF}
      *
-     * @param styles - initial input array of styles {@link Style}
-     * @return updated {@link DefaultMarker} marker
+     * @param styles - initial input array of styles {@link StyleIF}
+     * @return updated {@link Marker} marker
      */
-    public DefaultMarker add(final Style... styles) {
-        Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])).stream().forEach(getStyles()::add);
+    public Marker add(final StyleIF... styles) {
+        Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])).stream().forEach(getStyles()::add);
         return this;
     }
 
     /**
-     * Returns new {@link DefaultMarker} instance by input parameters
+     * Returns new {@link Marker} instance by input parameters
      *
-     * @param position - initial input marker position {@link Position}
-     * @param metaData - initial input meta data {@link MetaData}
-     * @param styles   - initial array of styles {@link Style}
-     * @return new {@link DefaultMarker} instance
+     * @param position - initial input marker position {@link PositionIF}
+     * @param metaData - initial input meta data {@link MetaDataIF}
+     * @param styles   - initial array of styles {@link StyleIF}
+     * @return new {@link Marker} instance
      */
-    public static DefaultMarker getMarker(@NonNull final Position position, @NonNull final MetaData metaData, final Style... styles) {
-        return DefaultMarker.builder()
+    public static Marker getMarker(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
+        return Marker.builder()
             .position(position)
             .metaData(metaData)
-            .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])))
+            .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])))
             .build();
+    }
+
+    @Override
+    public int length() {
+        return 0;
+    }
+
+    @Override
+    public char charAt(int index) {
+        return 0;
+    }
+
+    @Override
+    public CharSequence subSequence(int start, int end) {
+        return null;
     }
 }
