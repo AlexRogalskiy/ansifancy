@@ -25,7 +25,7 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.config.Configuration;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ParserException;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.ParserIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
@@ -65,7 +65,7 @@ public class CharSequenceParser<R extends CharSequence> implements ParserIF<Char
     /**
      * Default processor {@link ProcessorIF}
      */
-    private final ProcessorIF<CharSequence, MarkerSequence> processor;
+    private final ProcessorIF<CharSequence, MarkerIF> processor;
 
     /**
      * Returns parsed value {@code R} by input argument value {@code T}
@@ -79,9 +79,9 @@ public class CharSequenceParser<R extends CharSequence> implements ParserIF<Char
             throw ParserException.invalidSource();
         }
         final StringBuilder buff = new StringBuilder();
-        final List<MarkerSequence> markers = getProcessor().process(value);
+        final List<MarkerIF> markers = getProcessor().process(value);
         final LinkedList<StyleIF> ansiClasses = new LinkedList<>();
-//        for (final MarkerSequence marker : markers) {
+//        for (final MarkerIF marker : markers) {
 //            if (marker instanceof EscapeClassBegin) {
 //                // Verify if the escape class is registered in the context
 //                EscapeClassBegin begin = (EscapeClassBegin) token;

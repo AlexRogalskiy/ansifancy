@@ -45,7 +45,7 @@ public class PointProcessor<T> implements ProcessorIF<T, PointIF> {
      */
     @Override
     public <S extends Iterable<? extends PointIF>> S process(final T value) {
-        //        for (final MarkerSequence marker : markers) {
+        //        for (final MarkerIF marker : markers) {
 //            if (marker instanceof EscapeClassBegin) {
 //                // Verify if the escape class is registered in the context
 //                EscapeClassBegin begin = (EscapeClassBegin) token;

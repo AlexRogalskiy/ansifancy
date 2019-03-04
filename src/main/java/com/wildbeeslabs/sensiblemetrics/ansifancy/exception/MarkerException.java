@@ -23,13 +23,13 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * MarkerSequence runtime exception {@link RuntimeException}
+ * MarkerIF runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -71,17 +71,17 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
-     * Returns {@link MarkerException} instance by input marker {@link MarkerSequence}
+     * Returns {@link MarkerException} instance by input marker {@link MarkerIF}
      *
-     * @param marker - initial input marker {@link MarkerSequence}
+     * @param marker - initial input marker {@link MarkerIF}
      * @return {@link MarkerException} instance
      */
-    public static final MarkerException unknownMarker(final MarkerSequence marker) {
+    public static final MarkerException unknownMarker(final MarkerIF marker) {
         return new MarkerException(String.format("ERROR: unknown marker={%s} detected", marker));
     }
 
     /**
-     * Returns {@link MarkerException} instance by invalid (empty or null) marker {@link MarkerSequence}
+     * Returns {@link MarkerException} instance by invalid (empty or null) marker {@link MarkerIF}
      *
      * @return {@link MarkerException} instance
      */

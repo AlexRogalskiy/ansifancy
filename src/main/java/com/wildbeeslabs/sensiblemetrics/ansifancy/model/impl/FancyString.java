@@ -21,17 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import java.io.Serializable;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
- * Marker sequence interface declaration
+ * Fancy string implementation {@link MarkerSequence}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface MarkerSequence extends CharSequence, Serializable {
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
+public class FancyString implements MarkerSequence {
 
-    <S extends StyleIF> CharSequence style(final S... styles);
+    /**
+     * Default explicit serialVersionUID for interoperability
+     */
+    private static final long serialVersionUID = -6957211742749459460L;
+
+    @Override
+    public <S extends StyleIF> CharSequence style(final S... styles) {
+        return null;
+    }
+
+    @Override
+    public int length() {
+        return 0;
+    }
+
+    @Override
+    public char charAt(int index) {
+        return 0;
+    }
+
+    @Override
+    public CharSequence subSequence(int start, int end) {
+        return null;
+    }
 }

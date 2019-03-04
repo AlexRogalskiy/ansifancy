@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Marker sequence implementation {@link MarkerSequence}
+ * Marker sequence implementation {@link MarkerIF}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -44,7 +44,7 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Marker implements MarkerSequence {
+public class Marker implements MarkerIF {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -84,25 +84,10 @@ public class Marker implements MarkerSequence {
      * @return new {@link Marker} instance
      */
     public static Marker getMarker(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
-        return Marker.builder()
+        return com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Marker.builder()
             .position(position)
             .metaData(metaData)
             .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])))
             .build();
-    }
-
-    @Override
-    public int length() {
-        return 0;
-    }
-
-    @Override
-    public char charAt(int index) {
-        return 0;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return null;
     }
 }

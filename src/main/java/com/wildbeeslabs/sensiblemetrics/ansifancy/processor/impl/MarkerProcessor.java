@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
 import lombok.NoArgsConstructor;
 
@@ -31,24 +31,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Default {@link MarkerSequence} processor implementation {@link ProcessorIF}
+ * Default {@link MarkerIF} processor implementation {@link ProcessorIF}
  *
  * @param <T> type of element to be parsed
  * @author Alexander Rogalskiy
  * @version 1.0
  */
 @NoArgsConstructor
-public class MarkerProcessor<T> implements ProcessorIF<T, MarkerSequence> {
+public class MarkerProcessor<T> implements ProcessorIF<T, MarkerIF> {
 
     /**
-     * Returns {@link Iterable} collection of processed values {@link MarkerSequence} by input argument value {@code T}
+     * Returns {@link Iterable} collection of processed values {@link MarkerIF} by input argument value {@code T}
      *
      * @param value - initial input argument value {@code T}
-     * @return {@link Iterable} collection of processed values {@link MarkerSequence}
+     * @return {@link Iterable} collection of processed values {@link MarkerIF}
      */
     @Override
-    public <R extends Iterable<? extends MarkerSequence>> R process(final T value) {
-        final List<MarkerSequence> tokens = new LinkedList<>();
+    public <R extends Iterable<? extends MarkerIF>> R process(final T value) {
+        final List<MarkerIF> tokens = new LinkedList<>();
 //        int i = 0;
 //        char now;
 //        final StringBuilder freeText = new StringBuilder();
@@ -82,7 +82,7 @@ public class MarkerProcessor<T> implements ProcessorIF<T, MarkerSequence> {
         return (R) tokens;
     }
 
-//    public void appendExistingFreeText(final List<MarkerSequence> tokens, StringBuilder freeTextBuff, int idx) {
+//    public void appendExistingFreeText(final List<MarkerIF> tokens, StringBuilder freeTextBuff, int idx) {
 //        if (freeTextBuff.length() != 0) {
 //            tokens.add(new FreeText(idx, freeTextBuff.toString()));
 //            freeTextBuff.setLength(0);
