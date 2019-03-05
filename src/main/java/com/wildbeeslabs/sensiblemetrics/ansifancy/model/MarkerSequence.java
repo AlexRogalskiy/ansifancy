@@ -24,6 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Marker sequence interface declaration
@@ -40,5 +41,7 @@ public interface MarkerSequence extends CharSequence, Serializable {
      * @param styles - initial input array of styles {@link StyleIF}
      * @return {@link CharSequence} value
      */
-    <S extends StyleIF> CharSequence style(final S... styles);
+    <S extends StyleIF> MarkerSequence styles(final S... styles);
+
+    <C extends CharSequence> MarkerSequence args(final Map<C, Object> args);
 }

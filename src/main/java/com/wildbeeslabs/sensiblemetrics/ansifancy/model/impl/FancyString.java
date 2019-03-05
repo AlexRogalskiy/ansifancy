@@ -27,8 +27,14 @@ import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * Fancy string implementation {@link MarkerSequence}
@@ -37,7 +43,6 @@ import lombok.ToString;
  * @version 1.0
  */
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class FancyString implements MarkerSequence {
@@ -47,9 +52,143 @@ public class FancyString implements MarkerSequence {
      */
     private static final long serialVersionUID = -6957211742749459460L;
 
+    /**
+     * Default {@link String} value
+     */
+    private final CharSequence value;
+
+    /**
+     * Default {@link List} collection of position arguments {@link Object}
+     */
+    private final List<Object> positionArguments = new ArrayList<>();
+
+    /**
+     * Default {@link Map} collection of name arguments {@link Object}
+     */
+    private final Map<CharSequence, Object> nameArguments = new HashMap<>();
+
+    /**
+     * Default {@link List} collection of styles {@link StyleIF}
+     */
+    private final List<StyleIF> styles = new ArrayList<>();
+
+    /**
+     * Default {@link FancyString} constructor with input {@link String} value
+     *
+     * @param value - initial input {@link String} value
+     */
+    public FancyString(final CharSequence value) {
+        this.value = value;
+    }
+
     @Override
-    public <S extends StyleIF> CharSequence style(final S... styles) {
-        return null;
+    public MarkerSequence styles(final StyleIF... styles) {
+        this.setStyles(Arrays.asList(Optional.ofNullable(styles).orElse(new Style[0])));
+        return this;
+    }
+
+    public static MarkerSequence string(final CharSequence value) {
+        return new FancyString(value);
+    }
+
+    public static MarkerSequence string(final CharSequence value, final Object... args) {
+        final FancyString fancyString = new FancyString(value);
+        if (Objects.nonNull(args)) {
+            fancyString.setPositionArguments(Arrays.asList(args));
+        }
+        return fancyString;
+    }
+
+    public static MarkerSequence string(final CharSequence value, final Map<String, Object> args) {
+        return string(value).args(args);
+    }
+
+    public static MarkerSequence file(final String strPath) {
+        return string(readFromFile(strPath));
+    }
+
+    public static MarkerSequence file(final String strPath, final Charset encoding) {
+        return string(readFromFile(strPath, encoding));
+    }
+
+    public static MarkerSequence file(final String strPath, final Object... args) {
+        return string(readFromFile(strPath), args);
+    }
+
+    public static MarkerSequence file(final String strPath, final Charset encoding, final Object... args) {
+        return string(readFromFile(strPath, encoding), args);
+    }
+
+    public static MarkerSequence file(final String strPath, final Map<String, Object> args) {
+        return string(readFromFile(strPath), args);
+    }
+
+    public static MarkerSequence file(final String strPath, final Charset encoding, final Map<String, Object> args) {
+        return string(readFromFile(strPath, encoding), args);
+    }
+
+    public MarkerSequence string(final CharSequence argName, final Object object) {
+        if (Objects.nonNull(argName)) {
+            this.getNameArguments().putIfAbsent(argName, object);
+        }
+        return this;
+    }
+
+    @Override
+    public <C extends CharSequence> MarkerSequence args(final Map<C, Object> args) {
+        Optional.ofNullable(args)
+            .orElseGet(Collections::emptyMap)
+            .entrySet()
+            .forEach(entry -> string(entry.getKey(), entry.getValue()));
+        return this;
+    }
+
+    public MarkerSequence args(final Object... args) {
+        Objects.requireNonNull(args);
+        if (args.length % 2 == 1)
+            throw invalidNumberOfArguments(args.length);
+        for (int i = 0; i < args.length; i += 2) {
+            final String key = (String) args[i];
+            this.getNameArguments().putIfAbsent(key, args[i + 1]);
+        }
+        return this;
+    }
+
+    private static String readFromFile(final CharSequence strPath, final Charset encoding) {
+        try {
+            byte[] encodedBytes = Files.readAllBytes(Paths.get(String.valueOf(strPath)));
+            return new String(encodedBytes, encoding);
+        } catch (IOException e) {
+            throw ioExceptionReadingFromFile(strPath, e);
+        }
+    }
+
+    private static String readFromFile(final CharSequence strPath) {
+        return readFromFile(strPath, StandardCharsets.UTF_8);
+    }
+
+    public void setPositionArguments(final Collection<? extends Object> arguments) {
+        this.getPositionArguments().clear();
+        Optional.ofNullable(arguments)
+            .orElseGet(Collections::emptyList)
+            .forEach(this::addPositionArgument);
+    }
+
+    public void addPositionArgument(final Object argument) {
+        this.getPositionArguments().add(argument);
+    }
+
+    public void setStyles(final Collection<? extends StyleIF> styles) {
+        this.getStyles().clear();
+        Optional.ofNullable(styles)
+            .orElseGet(Collections::emptyList)
+            .forEach(this::addStyle);
+    }
+
+    public void addStyle(final StyleIF style) {
+        if (Objects.nonNull(style)) {
+            this.getStyles().add(style);
+        }
     }
 
     @Override
