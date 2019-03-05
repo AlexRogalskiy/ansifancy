@@ -28,53 +28,63 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Parser runtime exception {@link RuntimeException}
+ * Format runtime exception {@link RuntimeException}
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ParserException extends RuntimeException {
+public class FormatException extends RuntimeException {
 
     /**
      * Default explicit serialVersionUID for interoperability
      */
-    private static final long serialVersionUID = -7378731622066973372L;
+    private static final long serialVersionUID = 6535141661569846794L;
 
     /**
-     * Default {@link ParserException} constructor with initial message
+     * Default {@link MarkerException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
 
-    public ParserException(final String message) {
+    public FormatException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link PositionException} constructor with initial cause {@link Throwable}
+     * Default {@link MarkerException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
-    public ParserException(final Throwable cause) {
+    public FormatException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link PositionException} constructor with initial message and cause {@link Throwable}
+     * Default {@link MarkerException} constructor with initial message and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
      */
-    public ParserException(final String message, final Throwable cause) {
+    public FormatException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link ParserException} instance by invalid (empty or null) source
+     * Returns {@link FormatException} instance by input number of arguments
      *
-     * @return {@link ParserException} instance
+     * @param numOfArgs - initial input number of arguments
+     * @return {@link FormatException} instance
      */
-    public static final ParserException invalidSource() {
-        return new ParserException("ERROR: invalid source, cannot be NULL or empty.");
+    public static final FormatException invalidNumberOfArguments(final int numOfArgs) {
+        return new FormatException(String.format("ERROR: invalid number of arguments={%s} detected", numOfArgs));
+    }
+
+    /**
+     * Returns {@link FormatException} instance by input source path and error message
+     *
+     * @return {@link FormatException} instance
+     */
+    public static final FormatException ioException(final CharSequence path, final String message) {
+        return new FormatException(String.format("ERROR: cannot process source path={%s}, message={%s}", path, message));
     }
 }

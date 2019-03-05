@@ -23,6 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.FormatException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
 import lombok.Data;
@@ -146,7 +147,7 @@ public class FancyString implements MarkerSequence {
     public MarkerSequence args(final Object... args) {
         Objects.requireNonNull(args);
         if (args.length % 2 == 1)
-            throw invalidNumberOfArguments(args.length);
+            throw FormatException.invalidNumberOfArguments(args.length);
         for (int i = 0; i < args.length; i += 2) {
             final String key = (String) args[i];
             this.getNameArguments().putIfAbsent(key, args[i + 1]);
@@ -154,12 +155,12 @@ public class FancyString implements MarkerSequence {
         return this;
     }
 
-    private static String readFromFile(final CharSequence strPath, final Charset encoding) {
+    private static String readFromFile(final CharSequence sourcePath, final Charset encoding) {
         try {
-            byte[] encodedBytes = Files.readAllBytes(Paths.get(String.valueOf(strPath)));
+            byte[] encodedBytes = Files.readAllBytes(Paths.get(String.valueOf(sourcePath)));
             return new String(encodedBytes, encoding);
         } catch (IOException e) {
-            throw ioExceptionReadingFromFile(strPath, e);
+            throw FormatException.ioException(sourcePath, e.getMessage());
         }
     }
 
