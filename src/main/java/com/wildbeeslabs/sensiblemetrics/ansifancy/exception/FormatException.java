@@ -87,4 +87,22 @@ public class FormatException extends RuntimeException {
     public static final FormatException ioException(final CharSequence path, final String message) {
         return new FormatException(String.format("ERROR: cannot process source path={%s}, message={%s}", path, message));
     }
+
+    /**
+     * Returns {@link FormatException} instance by input position value
+     *
+     * @return {@link FormatException} instance
+     */
+    public static FormatException invalidPositionArgumentValue(int index) {
+        return new FormatException(String.format("ERROR: cannot process argument at position={%s}}", index));
+    }
+
+    /**
+     * Returns {@link FormatException} instance by input argument name
+     *
+     * @return {@link FormatException} instance
+     */
+    public static FormatException invalidArgumentName(final Character argName) {
+        return new FormatException(String.format("ERROR: cannot process argument by name={%s}", argName));
+    }
 }

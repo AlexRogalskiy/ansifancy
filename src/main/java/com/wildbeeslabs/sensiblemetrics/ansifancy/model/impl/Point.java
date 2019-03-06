@@ -238,7 +238,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param code   - initial input code
      * @param type   - initial input type
@@ -259,7 +259,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input code {@link CharSequence}
      * @param color  - initial input color {@link Color}
      * @param type   - initial input color type
@@ -281,7 +281,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
@@ -301,7 +301,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
@@ -321,7 +321,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
@@ -341,7 +341,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name     - initial input name {@link CharSequence}
+     * @param name     - initial input symbol name {@link CharSequence}
      * @param symbol   - initial input symbol {@link CharSequence}
      * @param position - initial input cursor position
      * @param type     - initial input cursor type
@@ -362,7 +362,7 @@ public class Point implements PointIF {
     /**
      * Returns new {@link PointIF} instance by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param row    - initial input row position
      * @param column - initial input column position
@@ -383,7 +383,7 @@ public class Point implements PointIF {
     /**
      * Returns new service {@link PointIF} by input data parameters
      *
-     * @param name   - initial input name {@link CharSequence}
+     * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}
      * @param code   - initial input cursor service code
      * @return new {@link PointIF} instance
