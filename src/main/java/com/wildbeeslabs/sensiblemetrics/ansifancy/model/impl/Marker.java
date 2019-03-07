@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Marker sequence implementation {@link MarkerIF}
+ * Default {@link MarkerIF} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -70,7 +70,7 @@ public class Marker implements MarkerIF {
      * @param styles - initial input array of styles {@link StyleIF}
      * @return updated {@link Marker} marker
      */
-    public Marker add(final StyleIF... styles) {
+    public MarkerIF add(final StyleIF... styles) {
         Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])).stream().forEach(getStyles()::add);
         return this;
     }
@@ -83,8 +83,8 @@ public class Marker implements MarkerIF {
      * @param styles   - initial array of styles {@link StyleIF}
      * @return new {@link Marker} instance
      */
-    public static Marker getMarker(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
-        return com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Marker.builder()
+    public static MarkerIF getMarker(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
+        return Marker.builder()
             .position(position)
             .metaData(metaData)
             .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])))

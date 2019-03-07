@@ -60,7 +60,7 @@ public class MetaData implements MetaDataIF {
      * @param description - initial input meta description {@link String}
      * @return new {@link MetaData} instance
      */
-    public static MetaData getMetaData(final String name, final String description) {
+    public static MetaDataIF getMetaData(final String name, final String description) {
         return MetaData.builder()
             .name(name)
             .description(description)

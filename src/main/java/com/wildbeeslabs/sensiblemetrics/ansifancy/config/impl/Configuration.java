@@ -38,7 +38,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 
 /**
- * Default configuration implementation {@link ConfigurationIF}
+ * Default {@link ConfigurationIF} implementation
  */
 @Data
 @EqualsAndHashCode

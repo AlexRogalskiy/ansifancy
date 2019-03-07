@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Parser runtime exception {@link RuntimeException}
+ * Parser {@link RuntimeException} exception
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

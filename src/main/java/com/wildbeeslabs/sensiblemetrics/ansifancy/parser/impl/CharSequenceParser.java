@@ -39,9 +39,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Default parser implementation {@link ParserIF}
+ * Default {@link ParserIF} implementation
  *
- * @param <R> type of element to be parsed to
+ * @param <R> type of element to be parsed
  * @author Alexander Rogalskiy
  * @version 1.0
  */

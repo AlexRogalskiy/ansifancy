@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Style runtime exception {@link RuntimeException}
+ * Style {@link RuntimeException} exception
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)

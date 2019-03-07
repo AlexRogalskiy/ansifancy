@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Marker sequence interface declaration
+ * Marker {@link CharSequence} interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -35,10 +35,10 @@ import java.util.Map;
 public interface MarkerSequence extends CharSequence, Serializable {
 
     /**
-     * Returns {@link CharSequence} value by input array of styles {@link StyleIF}
+     * Returns {@link CharSequence} value by input array of {@link StyleIF} items
      *
      * @param <S>    type of style instance
-     * @param styles - initial input array of styles {@link StyleIF}
+     * @param styles - initial input array of {@link StyleIF} items
      * @return {@link CharSequence} value
      */
     <S extends StyleIF> MarkerSequence styles(final S... styles);

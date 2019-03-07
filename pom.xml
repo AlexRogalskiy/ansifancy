@@ -122,7 +122,7 @@
         <main.basedir>${project.basedir}/../..</main.basedir>
         <profileProperties>src/test/resource/test.properties</profileProperties>
 
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
@@ -331,13 +331,13 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
                     <configuration>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
+                        <!--<annotationProcessorPaths>-->
+                        <!--<path>-->
+                        <!--<groupId>org.projectlombok</groupId>-->
+                        <!--<artifactId>lombok</artifactId>-->
+                        <!--<version>${lombok.version}</version>-->
+                        <!--</path>-->
+                        <!--</annotationProcessorPaths>-->
                         <executable>true</executable>
                         <showDeprecation>true</showDeprecation>
                         <debug>true</debug>
@@ -360,13 +360,13 @@
                             </configuration>
                         </execution>
                     </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.ow2.asm</groupId>
-                            <artifactId>asm</artifactId>
-                            <version>7.0</version>
-                        </dependency>
-                    </dependencies>
+                    <!--<dependencies>-->
+                    <!--<dependency>-->
+                    <!--<groupId>org.ow2.asm</groupId>-->
+                    <!--<artifactId>asm</artifactId>-->
+                    <!--<version>7.0</version>-->
+                    <!--</dependency>-->
+                    <!--</dependencies>-->
                 </plugin>
 
                 <plugin>
@@ -420,19 +420,19 @@
                             <exclude>**/*IT.java</exclude>
                         </excludes>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.ow2.asm</groupId>
-                            <artifactId>asm</artifactId>
-                            <version>7.0</version>
-                        </dependency>
-                    </dependencies>
+                    <!--<dependencies>-->
+                    <!--<dependency>-->
+                    <!--<groupId>org.ow2.asm</groupId>-->
+                    <!--<artifactId>asm</artifactId>-->
+                    <!--<version>7.0</version>-->
+                    <!--</dependency>-->
+                    <!--</dependencies>-->
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>RELEASE</version>
+                    <version>4.1.0</version>
                     <extensions>true</extensions>
                     <configuration>
                         <instructions>
@@ -488,7 +488,7 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.7</version>
+                    <version>1.6.8</version>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
@@ -843,14 +843,14 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.0</version>
-                        <configuration>
-                            <compilerArgs>
-                                <arg>-sourcepath</arg>
-                                <arg>
-                                    ${project.basedir}/src/main/java${path.separator}${project.basedir}/target/generated-sources/annotations${path.separator}/
-                                </arg>
-                            </compilerArgs>
-                        </configuration>
+                        <!--<configuration>-->
+                        <!--<compilerArgs>-->
+                        <!--<arg>-sourcepath</arg>-->
+                        <!--<arg>-->
+                        <!--${project.basedir}/src/main/java${path.separator}${project.basedir}/target/generated-sources/annotations${path.separator}/-->
+                        <!--</arg>-->
+                        <!--</compilerArgs>-->
+                        <!--</configuration>-->
                     </plugin>
                 </plugins>
             </build>

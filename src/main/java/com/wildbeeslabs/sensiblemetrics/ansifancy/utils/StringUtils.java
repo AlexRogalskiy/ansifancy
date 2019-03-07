@@ -33,7 +33,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * String utilities
+ * String utilities implementation
  */
 @Slf4j
 @UtilityClass

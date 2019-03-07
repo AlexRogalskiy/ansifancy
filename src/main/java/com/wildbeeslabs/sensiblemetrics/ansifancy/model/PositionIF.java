@@ -55,7 +55,7 @@ public interface PositionIF extends Serializable {
     int getDepth();
 
     /**
-     * Returns position vector length
+     * Returns vector length by position
      *
      * @return vector length by position
      */

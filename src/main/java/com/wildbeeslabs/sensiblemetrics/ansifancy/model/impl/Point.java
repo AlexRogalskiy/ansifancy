@@ -118,7 +118,7 @@ public class Point implements PointIF {
     public static final PointIF CLEAR_LINE_BEGIN = getCursorPoint("CLEAR_LINE_BEGIN", "CLR_LN_B", CursorClearType.BEGIN.ordinal(), CursorPositionType.K);
     public static final PointIF CLEAR_LINE_ALL = getCursorPoint("CLEAR_LINE_ALL", "CLR_LN_ALL", CursorClearType.ALL.ordinal(), CursorPositionType.K);
     /**
-     * Default position cursor escape {@link PointIF} functional ponts
+     * Default position cursor escape {@link PointIF} functional points
      */
     public static final IntFunction<PointIF> CURSOR_NEXT_LINE = num -> getCursorPoint("NEXT_LINE", "N_LN", num, CursorPositionType.E);
     public static final IntFunction<PointIF> CURSOR_PREV_LINE = num -> getCursorPoint("PREV_LINE", "P_LN", num, CursorPositionType.F);
@@ -267,7 +267,6 @@ public class Point implements PointIF {
      */
     public static PointIF getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final PointType type) {
         if (isEmpty(symbol)) {
-            Color co;
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
         return Point.builder()
@@ -381,7 +380,7 @@ public class Point implements PointIF {
     }
 
     /**
-     * Returns new service {@link PointIF} by input data parameters
+     * Returns new {@link PointIF} by input data parameters
      *
      * @param name   - initial input symbol name {@link CharSequence}
      * @param symbol - initial input symbol {@link CharSequence}

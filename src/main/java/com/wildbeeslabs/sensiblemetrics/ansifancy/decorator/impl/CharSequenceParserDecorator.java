@@ -36,7 +36,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 /**
- * Default parser decorator implementation {@link DecoratorIF}
+ * Default {@link CharSequence} parser implementation {@link DecoratorIF}
  */
 @Data
 @EqualsAndHashCode

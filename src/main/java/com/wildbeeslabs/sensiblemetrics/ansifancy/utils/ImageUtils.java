@@ -23,20 +23,25 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
- * Image service implementation
+ * Image utilities implementation
  */
 public class ImageUtils {
 
-    public String generate() {
+    /**
+     * Default functional symbol mapper {@link Function}
+     */
+    public static final Function<Predicate<Boolean>, String> DEFAULT_SYMBOL_MAPPER = null;
 
-        int width = 100;
-        int height = 30;
-
-        //BufferedImage image = ImageIO.read(new File("/Users/mkyong/Desktop/logo.jpg"));
+    public String generate(int width, int height, final String symbol, final Predicate<Integer> predicate) {
         final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         final Graphics g = image.getGraphics();
         g.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -45,19 +50,34 @@ public class ImageUtils {
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.drawString("JAVA", 10, 20);
 
-        //save this image
-        //ImageIO.write(image, "png", new File("/users/mkyong/ascii-art.png"));
+        final StringBuilder result = new StringBuilder();
+        for (int y = 0; y < height; y++) {
+            final StringBuilder sb = new StringBuilder();
+            for (int x = 0; x < width; x++) {
+                sb.append(predicate.test(image.getRGB(x, y)) ? org.apache.commons.lang3.StringUtils.EMPTY : symbol);
+            }
+            if (sb.toString().trim().isEmpty()) continue;
+            result.append(sb);
+        }
+        return result.toString();
+    }
+
+    public String generate(int width, int height, final String imagePath, final String symbol, final Predicate<Integer> predicate) throws IOException {
+        final BufferedImage image = ImageIO.read(new File(imagePath));
+        final Graphics g = image.getGraphics();
+        g.setFont(new Font("SansSerif", Font.BOLD, 24));
+
+        final Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.drawString("JAVA", 10, 20);
 
         final StringBuilder result = new StringBuilder();
         for (int y = 0; y < height; y++) {
             final StringBuilder sb = new StringBuilder();
             for (int x = 0; x < width; x++) {
-                sb.append(image.getRGB(x, y) == -16777216 ? " " : "$");
+                sb.append(predicate.test(image.getRGB(x, y)) ? org.apache.commons.lang3.StringUtils.EMPTY : symbol);
             }
-
-            if (sb.toString().trim().isEmpty()) {
-                continue;
-            }
+            if (sb.toString().trim().isEmpty()) continue;
             result.append(sb);
         }
         return result.toString();

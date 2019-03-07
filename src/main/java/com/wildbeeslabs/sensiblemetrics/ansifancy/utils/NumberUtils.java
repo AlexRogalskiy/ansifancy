@@ -27,7 +27,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Number utilities
+ * Number utilities implementation
  */
 @Slf4j
 @UtilityClass

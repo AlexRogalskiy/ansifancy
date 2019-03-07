@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.processor;
 
 /**
- * ProcessorIF interface declaration
+ * Processor interface declaration
  *
  * @param <T> type of input element to be processed
  * @author Alexander Rogalskiy

@@ -31,7 +31,7 @@ import java.util.Objects;
 import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils.toInt;
 
 /**
- * Default position implementation {@link PositionIF}
+ * Default {@link PositionIF} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -84,7 +84,7 @@ public class Position implements PositionIF {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public Position multiply(int rowScale, int colScale) {
+    public PositionIF multiply(int rowScale, int colScale) {
         setRow(getRow() * rowScale);
         setColumn(getColumn() * colScale);
         return this;
@@ -97,7 +97,7 @@ public class Position implements PositionIF {
      * @param colOffset - initial input column offset
      * @return updated {@link PositionIF} instance
      */
-    public Position shift(int rowOffset, int colOffset) {
+    public PositionIF shift(int rowOffset, int colOffset) {
         setRow(getRow() + rowOffset);
         setColumn(getColumn() + colOffset);
         return this;
@@ -115,9 +115,9 @@ public class Position implements PositionIF {
     }
 
     /**
-     * Returns {@link PositionIF} length by current position parameters
+     * Returns {@link PositionIF} vector length by current position parameters
      *
-     * @return vector length
+     * @return position vector length
      */
     public double length() {
         return Math.sqrt(getRow() * getRow() + getColumn() * getColumn());
@@ -211,7 +211,7 @@ public class Position implements PositionIF {
      * @return updated {@link Position} instance
      */
     public PositionIF vector(final PositionIF position) {
-        Objects.requireNonNull(position, "PositionIF should not be null");
+        Objects.requireNonNull(position, "Position should not be null");
         int vx = getColumn() * position.getDepth() - getDepth() * position.getRow();
         int vy = getDepth() * position.getColumn() - getColumn() * position.getDepth();
         int vz = getColumn() * position.getRow() - getRow() * position.getColumn();
@@ -225,7 +225,7 @@ public class Position implements PositionIF {
      * @return updated {@link Position} instance
      */
     public int scalar(final PositionIF position) {
-        Objects.requireNonNull(position, "PositionIF should not be null");
+        Objects.requireNonNull(position, "Position should not be null");
         return getColumn() * position.getColumn() + getRow() * position.getRow() + getDepth() * position.getDepth();
     }
 
@@ -236,7 +236,7 @@ public class Position implements PositionIF {
      * @return euclid distance
      */
     public double distance(final PositionIF position) {
-        Objects.requireNonNull(position, "PositionIF should not be null");
+        Objects.requireNonNull(position, "Position should not be null");
         int resX = (getColumn() - position.getColumn()) * (getColumn() - position.getColumn());
         int resY = (getRow() - position.getRow()) * (getRow() - position.getRow());
         int resZ = (getDepth() - position.getDepth()) * (getDepth() - position.getDepth());
@@ -251,7 +251,7 @@ public class Position implements PositionIF {
      * @return angle value
      */
     public double angle(final PositionIF position) {
-        Objects.requireNonNull(position, "PositionIF should not be null");
+        Objects.requireNonNull(position, "Position should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));

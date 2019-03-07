@@ -50,7 +50,7 @@ public interface MarkerIF extends Serializable {
     /**
      * Returns {@code S} collection of {@link StyleIF} instances
      *
-     * @param <S> type of item collection {@link Iterable}
+     * @param <S> type of {@link Iterable} item collection
      * @return collection of {@link StyleIF} instances
      */
     <S extends Iterable<? extends StyleIF>> S getStyles();

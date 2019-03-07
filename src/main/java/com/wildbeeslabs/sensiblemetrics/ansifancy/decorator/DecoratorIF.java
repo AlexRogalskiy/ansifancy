@@ -24,7 +24,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
 
 /**
- * DecoratorIF interface declaration
+ * Decorator interface declaration
  *
  * @param <T> type of input element to be decorated
  * @param <R> type of input element to decorate by

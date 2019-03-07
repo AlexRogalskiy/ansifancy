@@ -38,7 +38,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * Fancy string implementation {@link MarkerSequence}
+ * Fancy {@link MarkerSequence} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0

@@ -34,23 +34,23 @@ import java.io.Serializable;
 public interface StyleIF extends Serializable {
 
     /**
-     * Returns style title
+     * Returns {@link String} style title
      *
-     * @return style title
+     * @return {@link String} style title
      */
     String getTitle();
 
     /**
-     * Returns style description
+     * Returns {@link String} style description
      *
-     * @return style description
+     * @return {@link String} style description
      */
     String getDescription();
 
     /**
-     * Returns {@link Iterable} collection of points {@link PointIF} of current {@link StyleIF}
+     * Returns {@link Iterable} collection of style points {@link PointIF}
      *
-     * @param <S> type of item collection
+     * @param <S> type of {@link Iterable} collection of {@link PointIF} items
      * @return {@link Iterable} collection of points {@link PointIF}
      */
     <S extends Iterable<? extends PointIF>> S getPoints();

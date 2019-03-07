@@ -36,7 +36,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Default style implementation {@link StyleIF}
+ * Default {@link StyleIF} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -106,7 +106,7 @@ public class Style implements StyleIF {
      * @param points - initial input array of styles {@link PointIF}
      * @return updated {@link Style} style
      */
-    public Style add(final PointIF... points) {
+    public StyleIF add(final PointIF... points) {
         Arrays.asList(Optional.ofNullable(points).orElseGet(() -> new PointIF[0])).stream().forEach(getPoints()::add);
         return this;
     }
@@ -119,18 +119,18 @@ public class Style implements StyleIF {
      * @param code   - initial input data code {@link CharSequence}
      * @return updated {@link Point} instance
      */
-    public Style add(final CharSequence name, final CharSequence symbol, final int code, final PointIF.PointType type) {
+    public StyleIF add(final CharSequence name, final CharSequence symbol, final int code, final PointIF.PointType type) {
         getPoints().add(Point.getPoint(name, symbol, code, type));
         return this;
     }
 
     /**
-     * Returns current {@link Style} updated by input {@link Style} instance
+     * Returns current {@link StyleIF} updated by input {@link StyleIF} instance
      *
-     * @param style - initial input {@link Style} instance
-     * @return updated {@link Point} instance
+     * @param style - initial input {@link StyleIF} instance
+     * @return updated {@link StyleIF} instance
      */
-    public Style inherit(final Style style) {
+    public StyleIF add(final StyleIF style) {
         if (Objects.isNull(style)) {
             throw StyleException.invalidStyle();
         }
@@ -151,9 +151,9 @@ public class Style implements StyleIF {
     }
 
     /**
-     * Returns string representation of current collection of {@link PointIF} data symbols
+     * Returns {@link String} representation of current collection of {@link PointIF} symbols
      *
-     * @return string representation of current collection of {@link PointIF} data symbols
+     * @return {@link String} representation of current collection of {@link PointIF} symbols
      */
     public String getSymbolPoints() {
         return getPoints().stream()
@@ -163,14 +163,14 @@ public class Style implements StyleIF {
     }
 
     /**
-     * Returns new {@link Style} instance by input parameters
+     * Returns new {@link StyleIF} instance by input parameters
      *
      * @param title       - initial input style title {@link String}
      * @param description - initial input style description {@link String}
      * @param points      - initial input array of style points {@link PointIF}
-     * @return new {@link Style} instance
+     * @return new {@link StyleIF} instance
      */
-    public static Style getStyle(final String title, final String description, final PointIF... points) {
+    public static StyleIF getStyle(final String title, final String description, final PointIF... points) {
         return Style.builder()
             .title(title)
             .description(description)
