@@ -149,8 +149,7 @@ public class FancyString implements MarkerSequence {
         if (args.length % 2 == 1)
             throw FormatException.invalidNumberOfArguments(args.length);
         for (int i = 0; i < args.length; i += 2) {
-            final String key = (String) args[i];
-            this.getNameArguments().putIfAbsent(key, args[i + 1]);
+            this.getNameArguments().putIfAbsent(String.valueOf(args[i]), args[i + 1]);
         }
         return this;
     }
