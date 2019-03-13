@@ -26,10 +26,13 @@ package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.FormatException;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.stream.FancyOutputStream;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -38,11 +41,12 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * Fancy {@link MarkerSequence} implementation
+ * Fancy string implementation {@link MarkerSequence}
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Slf4j
 @Data
 @EqualsAndHashCode
 @ToString
@@ -61,12 +65,12 @@ public class FancyString implements MarkerSequence {
     /**
      * Default {@link List} collection of position arguments {@link Object}
      */
-    private final List<Object> positionArguments = new ArrayList<>();
+    private final List<Object> positionedArguments = new ArrayList<>();
 
     /**
      * Default {@link Map} collection of name arguments {@link Object}
      */
-    private final Map<CharSequence, Object> nameArguments = new HashMap<>();
+    private final Map<CharSequence, Object> namedArguments = new HashMap<>();
 
     /**
      * Default {@link List} collection of styles {@link StyleIF}
@@ -130,7 +134,7 @@ public class FancyString implements MarkerSequence {
 
     public MarkerSequence string(final CharSequence argName, final Object object) {
         if (Objects.nonNull(argName)) {
-            this.getNameArguments().putIfAbsent(argName, object);
+            this.getNamedArguments().putIfAbsent(argName, object);
         }
         return this;
     }
@@ -149,7 +153,7 @@ public class FancyString implements MarkerSequence {
         if (args.length % 2 == 1)
             throw FormatException.invalidNumberOfArguments(args.length);
         for (int i = 0; i < args.length; i += 2) {
-            this.getNameArguments().putIfAbsent(String.valueOf(args[i]), args[i + 1]);
+            this.getNamedArguments().putIfAbsent(String.valueOf(args[i]), args[i + 1]);
         }
         return this;
     }
@@ -168,14 +172,14 @@ public class FancyString implements MarkerSequence {
     }
 
     public void setPositionArguments(final Collection<? extends Object> arguments) {
-        this.getPositionArguments().clear();
+        this.getPositionedArguments().clear();
         Optional.ofNullable(arguments)
             .orElseGet(Collections::emptyList)
             .forEach(this::addPositionArgument);
     }
 
     public void addPositionArgument(final Object argument) {
-        this.getPositionArguments().add(argument);
+        this.getPositionedArguments().add(argument);
     }
 
     public void setStyles(final Collection<? extends StyleIF> styles) {
@@ -191,18 +195,33 @@ public class FancyString implements MarkerSequence {
         }
     }
 
+    private CharSequence chew(final CharSequence str) {
+        Objects.requireNonNull(str);
+        final ByteArrayOutputStream buff = new ByteArrayOutputStream();
+        final FancyOutputStream out = new FancyOutputStream(buff);
+        try {
+            out.write(str.toString().getBytes());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            log.error("ERROR: cannot write output stream, message={%s}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return String.valueOf(buff.toByteArray());
+    }
+
+    @Override
+    public char charAt(final int index) {
+        return getValue().charAt(index);
+    }
+
+    @Override
+    public CharSequence subSequence(final int start, final int end) {
+        return getValue().subSequence(start, end);
+    }
+
     @Override
     public int length() {
-        return 0;
-    }
-
-    @Override
-    public char charAt(int index) {
-        return 0;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return null;
+        return getValue().length();
     }
 }
