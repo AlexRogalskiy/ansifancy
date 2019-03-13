@@ -63,7 +63,7 @@ public class Style implements StyleIF {
     public static final StyleIF BLINK = Style.getStyle("blink", "blink style", Point.SLOW_BLINK);
     public static final StyleIF REVERSE = Style.getStyle("rev", "reverse style", Point.REVERSE);
     public static final StyleIF BLANK = Style.getStyle("blank", "blank style", Point.BLANK);
-    public static final StyleIF OVER_STRIKE = Style.getStyle("ostrike", "overstrike style", Point.OVERSTRIKE);
+    public static final StyleIF OVER_STRIKE = Style.getStyle("ostrike", "overstrike style", Point.STRIKE);
 
     /**
      * Default color styles

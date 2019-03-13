@@ -23,6 +23,9 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -34,6 +37,8 @@ import java.util.function.Predicate;
 /**
  * Image utilities implementation
  */
+@Slf4j
+@UtilityClass
 public class ImageUtils {
 
     /**

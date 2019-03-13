@@ -137,10 +137,11 @@ public class Point implements PointIF {
     public static final PointIF INVERSE = getPoint("INVERSE", "INV", 3, PointType.DECORATION_CONTROL);
     public static final PointIF UNDERLINE = getPoint("UNDERLINE", "ULN", 4, PointType.DECORATION_CONTROL);
     public static final PointIF SLOW_BLINK = getPoint("SLOW_BLINK", "S_BLK", 5, PointType.DECORATION_CONTROL);
-    public static final PointIF RAPID_BLINK = getPoint("RAPID_BLINK", "R_BLK", 6, PointType.DECORATION_CONTROL);
+    public static final PointIF FAST_BLINK = getPoint("FAST_BLINK", "F_BLK", 6, PointType.DECORATION_CONTROL);
     public static final PointIF REVERSE = getPoint("REVERSE", "REV", 7, PointType.DECORATION_CONTROL);
     public static final PointIF BLANK = getPoint("BLANK", "BLN", 8, PointType.DECORATION_CONTROL);
-    public static final PointIF OVERSTRIKE = getPoint("OVERSTRIKE", "OSTRK", 9, PointType.DECORATION_CONTROL);
+    public static final PointIF STRIKE = getPoint("STRIKE", "STRK", 9, PointType.DECORATION_CONTROL);
+    //public static final PointIF DOUBLE_UNDERLINE = getPoint("DOUBLE_UNDERLINE", "D_ULN", 21, PointType.DECORATION_CONTROL);
     public static final PointIF FRAMED = getPoint("FRAMED", "FRM", 51, PointType.DECORATION_CONTROL);
     public static final PointIF CIRCLED = getPoint("CIRCLED", "CRC", 52, PointType.DECORATION_CONTROL);
     public static final PointIF OVERLINE = getPoint("OVERLINE", "OLN", 53, PointType.DECORATION_CONTROL);
