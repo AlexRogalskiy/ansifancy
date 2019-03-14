@@ -215,6 +215,58 @@ public class Point implements PointIF {
     public static final PointIF BRIGHT_MAGENTA_BACKGROUND = getBrightColorPoint("BRIGHT_MAGENTA_BACKGROUND", "BR_MAGENTA_BG", 45, PointType.BACKGROUND_COLOR);
     public static final PointIF BRIGHT_CYAN_BACKGROUND = getBrightColorPoint("BRIGHT_CYAN_BACKGROUND", "BR_CYAN_BG", 46, PointType.BACKGROUND_COLOR);
     public static final PointIF BRIGHT_WHITE_BACKGROUND = getBrightColorPoint("BRIGHT_WHITE_BACKGROUND", "BR_WHITE_BG", 47, PointType.BACKGROUND_COLOR);
+    /**
+     * Default foreground color map
+     */
+    private static final PointIF[] FOREGROUND_COLOR_MAP = {
+        BlACK_FOREGROUND,
+        RED_FOREGROUND,
+        GREEN_FOREGROUND,
+        YELLOW_FOREGROUND,
+        BLUE_FOREGROUND,
+        MAGENTA_FOREGROUND,
+        CYAN_FOREGROUND,
+        WHITE_FOREGROUND
+    };
+    /**
+     * Default foreground bright color map
+     */
+    private static final PointIF[] FOREGROUND_BRIGHT_COLOR_MAP = {
+        BRIGHT_BLACK_FOREGROUND,
+        BRIGHT_RED_FOREGROUND,
+        BRIGHT_GREEN_FOREGROUND,
+        BRIGHT_YELLOW_FOREGROUND,
+        BRIGHT_BLUE_FOREGROUND,
+        BRIGHT_MAGENTA_FOREGROUND,
+        BRIGHT_CYAN_FOREGROUND,
+        BRIGHT_WHITE_FOREGROUND
+    };
+    /**
+     * Default background color map
+     */
+    private static final PointIF[] BACKGROUND_COLOR_MAP = {
+        BLACK_BACKGROUND,
+        RED_BACKGROUND,
+        GREEN_BACKGROUND,
+        YELLOW_BACKGROUND,
+        BLUE_BACKGROUND,
+        MAGENTA_BACKGROUND,
+        CYAN_BACKGROUND,
+        WHITE_BACKGROUND
+    };
+    /**
+     * Default background bright color map
+     */
+    private static final PointIF[] BACKGROUND_BRIGHT_COLOR_MAP = {
+        BRIGHT_BLACK_BACKGROUND,
+        BRIGHT_RED_BACKGROUND,
+        BRIGHT_GREEN_BACKGROUND,
+        BRIGHT_YELLOW_BACKGROUND,
+        BRIGHT_BLUE_BACKGROUND,
+        BRIGHT_MAGENTA_BACKGROUND,
+        BRIGHT_CYAN_BACKGROUND,
+        BRIGHT_WHITE_BACKGROUND
+    };
 
     /**
      * Default point name
