@@ -21,24 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.processor;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
+
+import java.io.Serializable;
+import java.util.Map;
 
 /**
- * Processor interface declaration
+ * Marker {@link CharSequence} interface declaration
  *
- * @param <T> type of input element to be processed
  * @author Alexander Rogalskiy
- * @version 1.1
- * @since 1.0
+ * @version 1.0
  */
-@FunctionalInterface
-public interface ProcessorIF<T, R> {
+public interface MarkerSequence extends CharSequence, Serializable {
 
     /**
-     * Returns {@link Iterable} collection of processed values {@code R} by input argument value {@code T}
+     * Returns {@link CharSequence} value by input array of {@link StyleIF} items
      *
-     * @param value - initial input argument {@code T} to process by
-     * @return {@link Iterable} collection of processed values {@code R}
+     * @param <S>    type of style instance
+     * @param styles - initial input array of {@link StyleIF} items
+     * @return {@link CharSequence} value
      */
-    <S extends Iterable<? extends R>> S process(final T value);
+    <S extends StyleIF> MarkerSequence styles(final S... styles);
+
+    <C extends CharSequence> MarkerSequence args(final Map<C, Object> args);
 }

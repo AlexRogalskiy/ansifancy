@@ -23,7 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import lombok.*;
 
 import java.util.Objects;
@@ -215,7 +215,7 @@ public class Position implements PositionIF {
         int vx = getColumn() * position.getDepth() - getDepth() * position.getRow();
         int vy = getDepth() * position.getColumn() - getColumn() * position.getDepth();
         int vz = getColumn() * position.getRow() - getRow() * position.getColumn();
-        return new Position(vx, vy, vz);
+        return Position.create(vx, vy, vz);
     }
 
     /**
@@ -267,7 +267,19 @@ public class Position implements PositionIF {
      * @return new {@link PositionIF} instance
      */
     public PositionIF offset(int rowOffset, int colOffset) {
-        return new Position(getRow() + rowOffset, getColumn() + colOffset, getDepth());
+        return offset(rowOffset, colOffset, 0);
+    }
+
+    /**
+     * Returns new {@link PositionIF} instance by input position offset parameters
+     *
+     * @param rowOffset   - initial input row offset
+     * @param colOffset   - initial input column offset
+     * @param depthOffset - initial input depth offset
+     * @return new {@link PositionIF} instance
+     */
+    public PositionIF offset(int rowOffset, int colOffset, int depthOffset) {
+        return Position.create(this.getRow() + rowOffset, this.getColumn() + colOffset, this.getDepth() + depthOffset);
     }
 
     /**
@@ -277,10 +289,76 @@ public class Position implements PositionIF {
      * @param column - initial input column position
      * @return new {@link PositionIF} instance
      */
-    public static PositionIF getPosition(int row, int column) {
+    public static Position create(int row, int column) {
+        return create(row, column, 0);
+    }
+
+    /**
+     * Returns new {@link PositionIF} instance by input position parameters
+     *
+     * @param row    - initial input row position
+     * @param column - initial input column position
+     * @param depth  - initial input depth position
+     * @return new {@link PositionIF} instance
+     */
+    public static Position create(int row, int column, int depth) {
         return Position.builder()
             .row(row)
             .column(column)
+            .depth(depth)
             .build();
+    }
+
+    /**
+     * Checks current {@link Position} is in bounds of {@code T} input area
+     *
+     * @param <T>
+     * @param area - initial input {@code T} area
+     * @return true - if current position within bounds, false - otherwise
+     */
+    public <T> boolean inBounds(final T[][] area) {
+        if (Objects.isNull(area) || Objects.isNull(area[0])) {
+            return false;
+        }
+        return (this.getRow() >= 0 && this.getColumn() >= 0 && this.getRow() < area.length && this.getColumn() < area[0].length);
+    }
+
+    /**
+     * Checks if current {@link Position} is before input position {@link Position}
+     *
+     * @param position - initial input {@link Position} to check by
+     * @return true - if current position if before input position, false - otherwise
+     */
+    public boolean isBefore(final PositionIF position) {
+        if (Objects.isNull(position)) {
+            return false;
+        }
+        return (this.getRow() <= position.getRow() && this.getColumn() <= position.getColumn());
+    }
+
+    /**
+     * Sets average {@link Position} coordinate by input min / max positions
+     *
+     * @param minPosition - initial input minimum {@link Position}
+     * @param maxPosition - initial input maximum {@link Position}
+     */
+    public void average(final PositionIF minPosition, final PositionIF maxPosition) {
+        if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) {
+            return;
+        }
+        this.setRow((minPosition.getRow() + maxPosition.getRow()) / 2);
+        this.setColumn((minPosition.getColumn() + maxPosition.getColumn()) / 2);
+        this.setDepth((minPosition.getDepth() + maxPosition.getDepth()) / 2);
+    }
+
+    /**
+     * Clones current {@link Position}
+     *
+     * @return new copy of current {@link Position}
+     */
+    @Override
+    @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
+    public Position clone() {
+        return Position.create(this.getRow(), this.getColumn(), this.getDepth());
     }
 }

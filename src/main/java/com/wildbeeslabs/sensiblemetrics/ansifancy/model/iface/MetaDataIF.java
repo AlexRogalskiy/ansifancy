@@ -21,13 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.config;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
+
+import java.io.Serializable;
 
 /**
- * Configuration interface declaration
+ * Meta data interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface ConfigurationIF {
+public interface MetaDataIF extends Serializable {
+
+    /**
+     * Returns {@link String} meta data name
+     *
+     * @return {@link String} meta data name
+     */
+    String getName();
+
+    /**
+     * Returns {@link String} meta data description
+     *
+     * @return {@link String} meta data description
+     */
+    String getDescription();
 }

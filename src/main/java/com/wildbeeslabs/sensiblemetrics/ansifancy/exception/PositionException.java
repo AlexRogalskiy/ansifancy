@@ -23,8 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.exception;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

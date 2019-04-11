@@ -24,8 +24,8 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.FormatException;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerSequence;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MarkerSequence;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.stream.FancyOutputStream;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,7 +41,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * Fancy string implementation {@link MarkerSequence}
+ * Fancy {@link MarkerSequence} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0

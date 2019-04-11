@@ -21,25 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.iface;
 
 /**
- * Decorator interface declaration
+ * Processor interface declaration
  *
- * @param <T> type of input element to be decorated
- * @param <R> type of input element to decorate by
+ * @param <T> type of input element to be processed
  * @author Alexander Rogalskiy
- * @version 1.0
+ * @version 1.1
+ * @since 1.0
  */
 @FunctionalInterface
-public interface DecoratorIF<T, R> {
+public interface ProcessorIF<T, R> {
 
     /**
-     * Returns decorated {@code R} value by input argument value {@code T}
+     * Returns {@link Iterable} collection of processed values {@code R} by input argument value {@code T}
      *
-     * @param value - initial input argument value {@code T} to be decorated
-     * @param args  - initial input array of values {@link Object} to decorate by
-     * @return decorated value {@code R}
+     * @param value - initial input argument {@code T} to process by
+     * @return {@link Iterable} collection of processed values {@code R}
      */
-    R decorate(final T value, final Object... args);
+    <S extends Iterable<? extends R>> S process(final T value);
 }

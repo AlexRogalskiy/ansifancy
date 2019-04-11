@@ -23,12 +23,12 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.ConfigurationIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.DecoratorIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.ParserIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.iface.ConfigurationIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.iface.DecoratorIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MarkerIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.iface.ParserIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.parser.impl.CharSequenceParser;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.iface.ProcessorIF;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

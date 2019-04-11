@@ -21,27 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
-
-import java.io.Serializable;
-import java.util.Map;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.decorator.iface;
 
 /**
- * Marker {@link CharSequence} interface declaration
+ * Decorator interface declaration
  *
+ * @param <T> type of input element to be decorated
+ * @param <R> type of input element to decorate by
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface MarkerSequence extends CharSequence, Serializable {
+@FunctionalInterface
+public interface DecoratorIF<T, R> {
 
     /**
-     * Returns {@link CharSequence} value by input array of {@link StyleIF} items
+     * Returns decorated {@code R} value by input argument value {@code T}
      *
-     * @param <S>    type of style instance
-     * @param styles - initial input array of {@link StyleIF} items
-     * @return {@link CharSequence} value
+     * @param value - initial input argument value {@code T} to be decorated
+     * @param args  - initial input array of values {@link Object} to decorate by
+     * @return decorated value {@code R}
      */
-    <S extends StyleIF> MarkerSequence styles(final S... styles);
-
-    <C extends CharSequence> MarkerSequence args(final Map<C, Object> args);
+    R decorate(final T value, final Object... args);
 }

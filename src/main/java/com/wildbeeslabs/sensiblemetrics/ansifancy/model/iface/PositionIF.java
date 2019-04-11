@@ -21,50 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
 
 import java.io.Serializable;
 
 /**
- * Point interface declaration {@link CharSequence}
+ * Position interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface PointIF extends Serializable {
+public interface PositionIF extends Serializable, Cloneable {
 
     /**
-     * Default point type enumeration
-     */
-    enum PointType {
-        FOREGROUND_COLOR,
-        BACKGROUND_COLOR,
-        CURSOR_CONTROL,
-        DECORATION_CONTROL,
-        SERVICE_CONTROL,
-        IDEOGRAM
-    }
-
-    /**
-     * Returns {@link PointType} of point
+     * Returns row position
      *
-     * @return {@link PointType} of point
+     * @return row position
      */
-    PointType getType();
+    int getRow();
 
     /**
-     * Returns point symbol {@code T}
+     * Returns column position
      *
-     * @param <T> type of point symbol
-     * @return point symbol {@code T}
+     * @return column position
      */
-    <T extends CharSequence> T getSymbol();
+    int getColumn();
 
     /**
-     * Returns point code {@code T}
+     * Returns depth position
      *
-     * @param <T> type of point code
-     * @return point code {@code T}
+     * @return depth position
      */
-    <T extends CharSequence> T getCode();
+    int getDepth();
+
+    /**
+     * Returns vector length by position
+     *
+     * @return vector length by position
+     */
+    double length();
 }

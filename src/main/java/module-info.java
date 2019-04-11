@@ -1,6 +1,15 @@
-module com.wildbeeslabs.sensiblemetrics.ansifancy {
+/**
+ * AnsiFancy module configuration
+ */
+module jentle.algorithms {
     requires static lombok;
-    requires org.apache.commons.lang3;
     requires slf4j.api;
+    requires org.apache.commons.lang3;
+    requires com.google.common;
+    requires gson;
+    requires org.joda.time;
+    requires org.apache.commons.codec;
+    requires commons.beanutils;
+    requires commons.collections;
     requires java.desktop;
 }

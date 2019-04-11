@@ -21,37 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
 
 import java.io.Serializable;
 
 /**
- * Marker interface declaration
+ * Style interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface MarkerIF extends Serializable {
+public interface StyleIF extends Serializable {
 
     /**
-     * Returns {@link PositionIF} instance
+     * Returns {@link String} style title
      *
-     * @return {@link PositionIF} instance
+     * @return {@link String} style title
      */
-    PositionIF getPosition();
+    String getTitle();
 
     /**
-     * Returns {@link MetaDataIF} instance
+     * Returns {@link String} style description
      *
-     * @return {@link MetaDataIF} instance
+     * @return {@link String} style description
      */
-    MetaDataIF getMetaData();
+    String getDescription();
 
     /**
-     * Returns {@code S} collection of {@link StyleIF} instances
+     * Returns {@link Iterable} collection of style points {@link PointIF}
      *
-     * @param <S> type of {@link Iterable} item collection
-     * @return collection of {@link StyleIF} instances
+     * @param <S> type of {@link Iterable} collection of {@link PointIF} items
+     * @return {@link Iterable} collection of points {@link PointIF}
      */
-    <S extends Iterable<? extends StyleIF>> S getStyles();
+    <S extends Iterable<? extends PointIF>> S getPoints();
 }

@@ -23,10 +23,10 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PositionIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MarkerIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MetaDataIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import lombok.*;
 
 import java.util.Arrays;
@@ -83,7 +83,7 @@ public class Marker implements MarkerIF {
      * @param styles   - initial array of styles {@link StyleIF}
      * @return new {@link Marker} instance
      */
-    public static MarkerIF getMarker(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
+    public static MarkerIF create(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
         return Marker.builder()
             .position(position)
             .metaData(metaData)

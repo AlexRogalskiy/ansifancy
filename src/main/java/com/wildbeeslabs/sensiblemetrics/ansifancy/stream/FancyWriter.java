@@ -53,23 +53,31 @@ public class FancyWriter extends PrintWriter {
     }
 
     @Override
-    public void write(final String s) {
-        if (test(s)) {
-            super.write(render(s));
+    public void write(final String value) {
+        if (test(value)) {
+            super.write(render(value));
         } else {
-            super.write(s);
+            super.write(value);
         }
     }
 
     @Override
     public PrintWriter format(final String format, final Object... args) {
-        print(String.format(format, args));
+        this.format(Locale.getDefault(), format, args);
         return this;
     }
 
     @Override
-    public PrintWriter format(final Locale l, final String format, final Object... args) {
-        print(String.format(l, format, args));
+    public PrintWriter format(final Locale locale, final String format, final Object... args) {
+        print(String.format(locale, format, args));
         return this;
+    }
+
+    private boolean test(final String value) {
+        return true;
+    }
+
+    private String render(final String value) {
+        return null;
     }
 }

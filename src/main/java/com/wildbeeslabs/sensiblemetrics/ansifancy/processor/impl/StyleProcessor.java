@@ -23,8 +23,8 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.processor.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.ProcessorIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.processor.iface.ProcessorIF;
 import lombok.NoArgsConstructor;
 
 /**

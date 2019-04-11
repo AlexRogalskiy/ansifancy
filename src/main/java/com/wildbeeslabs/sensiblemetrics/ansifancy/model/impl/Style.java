@@ -24,15 +24,12 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.StyleException;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.PointIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PointIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,87 +51,119 @@ public class Style implements StyleIF {
     private static final long serialVersionUID = -7712589716010883744L;
 
     /**
-     * Default control styles
+     * Default control {@link StyleIF}
      */
-    public static final StyleIF RESET = Style.getStyle("reset", "reset", Point.RESET);
-    public static final StyleIF BOLD = Style.getStyle("bold", "bold style", Point.BOLD);
-    public static final StyleIF DIM = Style.getStyle("dim", "dim style", Point.FAINT);
-    public static final StyleIF UNDER_LINE = Style.getStyle("uline", "underline style", Point.UNDERLINE);
-    public static final StyleIF BLINK = Style.getStyle("blink", "blink style", Point.SLOW_BLINK);
-    public static final StyleIF REVERSE = Style.getStyle("rev", "reverse style", Point.REVERSE);
-    public static final StyleIF BLANK = Style.getStyle("blank", "blank style", Point.BLANK);
-    public static final StyleIF OVER_STRIKE = Style.getStyle("ostrike", "overstrike style", Point.STRIKE);
+    public static final StyleIF RESET = Style.create("reset", "reset", Point.RESET);
+    public static final StyleIF BOLD = Style.create("bold", "bold style", Point.BOLD);
+    public static final StyleIF DIM = Style.create("dim", "dim style", Point.FAINT);
+    public static final StyleIF UNDER_LINE = Style.create("uline", "underline style", Point.UNDERLINE);
+    public static final StyleIF BLINK = Style.create("blink", "blink style", Point.SLOW_BLINK);
+    public static final StyleIF REVERSE = Style.create("rev", "reverse style", Point.REVERSE);
+    public static final StyleIF BLANK = Style.create("blank", "blank style", Point.BLANK);
+    public static final StyleIF OVER_STRIKE = Style.create("ostrike", "overstrike style", Point.STRIKE);
 
     /**
-     * Default color styles
+     * Default color {@link StyleIF}
      */
-    public static final StyleIF BlACK_FOREGROUND = Style.getStyle("black_fg", "black foreground style", Point.BlACK_FOREGROUND);
-    public static final StyleIF BLACK_BACKGROUND = Style.getStyle("black_bg", "black background style", Point.BLACK_BACKGROUND);
-    public static final StyleIF RED_FOREGROUND = Style.getStyle("red_fg", "red foreground style", Point.RED_FOREGROUND);
-    public static final StyleIF RED_BACKGROUND = Style.getStyle("red_bg", "red background style", Point.RED_BACKGROUND);
-    public static final StyleIF GREEN_FOREGROUND = Style.getStyle("green_fg", "green foreground style", Point.GREEN_FOREGROUND);
-    public static final StyleIF GREEN_BACKGROUND = Style.getStyle("green_bg", "green background style", Point.GREEN_BACKGROUND);
-    public static final StyleIF YELLOW_FOREGROUND = Style.getStyle("yellow_fg", "yellow foreground style", Point.YELLOW_FOREGROUND);
-    public static final StyleIF YELLOW_BACKGROUND = Style.getStyle("yellow_bg", "yellow background style", Point.YELLOW_BACKGROUND);
-    public static final StyleIF BLUE_FOREGROUND = Style.getStyle("blue_fg", "blue foreground style", Point.BLUE_FOREGROUND);
-    public static final StyleIF BLUE_BACKGROUND = Style.getStyle("blue_bg", "blue background style", Point.BLUE_BACKGROUND);
-    public static final StyleIF MAGENTA_FOREGROUND = Style.getStyle("magenta_fg", "magenta foreground style", Point.MAGENTA_FOREGROUND);
-    public static final StyleIF MAGENTA_BACKGROUND = Style.getStyle("magenta_bg", "magenta background style", Point.MAGENTA_BACKGROUND);
-    public static final StyleIF CYAN_FOREGROUND = Style.getStyle("cyan_fg", "cyan foreground style", Point.CYAN_FOREGROUND);
-    public static final StyleIF CYAN_BACKGROUND = Style.getStyle("cyan_bg", "cyan background style", Point.CYAN_BACKGROUND);
-    public static final StyleIF WHITE_FOREGROUND = Style.getStyle("white_fg", "white foreground style", Point.WHITE_FOREGROUND);
-    public static final StyleIF WHITE_BACKGROUND = Style.getStyle("white_bg", "white background style", Point.WHITE_BACKGROUND);
+    public static final StyleIF BlACK_FOREGROUND = Style.create("black_fg", "black foreground style", Point.BlACK_FOREGROUND);
+    public static final StyleIF BLACK_BACKGROUND = Style.create("black_bg", "black background style", Point.BLACK_BACKGROUND);
+    public static final StyleIF RED_FOREGROUND = Style.create("red_fg", "red foreground style", Point.RED_FOREGROUND);
+    public static final StyleIF RED_BACKGROUND = Style.create("red_bg", "red background style", Point.RED_BACKGROUND);
+    public static final StyleIF GREEN_FOREGROUND = Style.create("green_fg", "green foreground style", Point.GREEN_FOREGROUND);
+    public static final StyleIF GREEN_BACKGROUND = Style.create("green_bg", "green background style", Point.GREEN_BACKGROUND);
+    public static final StyleIF YELLOW_FOREGROUND = Style.create("yellow_fg", "yellow foreground style", Point.YELLOW_FOREGROUND);
+    public static final StyleIF YELLOW_BACKGROUND = Style.create("yellow_bg", "yellow background style", Point.YELLOW_BACKGROUND);
+    public static final StyleIF BLUE_FOREGROUND = Style.create("blue_fg", "blue foreground style", Point.BLUE_FOREGROUND);
+    public static final StyleIF BLUE_BACKGROUND = Style.create("blue_bg", "blue background style", Point.BLUE_BACKGROUND);
+    public static final StyleIF MAGENTA_FOREGROUND = Style.create("magenta_fg", "magenta foreground style", Point.MAGENTA_FOREGROUND);
+    public static final StyleIF MAGENTA_BACKGROUND = Style.create("magenta_bg", "magenta background style", Point.MAGENTA_BACKGROUND);
+    public static final StyleIF CYAN_FOREGROUND = Style.create("cyan_fg", "cyan foreground style", Point.CYAN_FOREGROUND);
+    public static final StyleIF CYAN_BACKGROUND = Style.create("cyan_bg", "cyan background style", Point.CYAN_BACKGROUND);
+    public static final StyleIF WHITE_FOREGROUND = Style.create("white_fg", "white foreground style", Point.WHITE_FOREGROUND);
+    public static final StyleIF WHITE_BACKGROUND = Style.create("white_bg", "white background style", Point.WHITE_BACKGROUND);
 
     /**
-     * Default style title
+     * Style title
      */
     private String title;
 
     /**
-     * Default style content
+     * Style content
      */
     private String description;
 
     /**
-     * Default collection of style points
+     * {@link Collection} of style points
      */
     private Collection<PointIF> points;
 
     /**
-     * Returns current {@link Style} style updated by input array of styles {@link StyleIF}
-     *
-     * @param points - initial input array of styles {@link PointIF}
-     * @return updated {@link Style} style
+     * {@link Map} collection of {@link PointIF}
      */
-    public StyleIF add(final PointIF... points) {
-        Arrays.asList(Optional.ofNullable(points).orElseGet(() -> new PointIF[0])).stream().forEach(getPoints()::add);
+    private Map<CharSequence, PointIF> pointMap;
+
+    /**
+     * Returns current {@link StyleIF} updated by input collection of style {@link PointIF}
+     *
+     * @param points - initial input collection of style {@link PointIF} to be added
+     * @return updated {@link StyleIF}
+     */
+    public StyleIF addPoints(final PointIF... points) {
+        Arrays.asList(Optional.ofNullable(points).orElseGet(() -> new PointIF[0])).forEach(this::addPoint);
         return this;
     }
 
     /**
-     * Returns current {@link Style} updated by {@link PointIF} instance
+     * Sets current {@link StyleIF} by input {@link Iterable} collection of {@link PointIF}
      *
-     * @param name   - initial input  data view {@link CharSequence}
-     * @param symbol - initial input  data view {@link CharSequence}
-     * @param code   - initial input data code {@link CharSequence}
-     * @return updated {@link Point} instance
+     * @param points - initial input {@link Iterable} collection of {@link PointIF}
+     */
+    public void setPoints(final Iterable<? extends PointIF> points) {
+        this.getPoints().clear();
+        this.getPointMap().clear();
+        Optional.ofNullable(points)
+            .orElseGet(Collections::emptyList)
+            .forEach(this::addPoint);
+    }
+
+    /**
+     * Returns current {@link StyleIF} updated by input style point {@link PointIF}
+     *
+     * @param point - initial input style {@link PointIF} to update by
+     * @return updated {@link StyleIF}
+     */
+    public StyleIF addPoint(final PointIF point) {
+        if (Objects.nonNull(point)) {
+            this.getPoints().add(point);
+            this.getPointMap().put(point.getCode(), point);
+        }
+        return this;
+    }
+
+    /**
+     * Returns current {@link StyleIF} updated by style point parameters
+     *
+     * @param name   - initial input point name {@link CharSequence}
+     * @param symbol - initial input point symbol {@link CharSequence}
+     * @param code   - initial input point code {@link CharSequence}
+     * @return updated {@link StyleIF}
      */
     public StyleIF add(final CharSequence name, final CharSequence symbol, final int code, final PointIF.PointType type) {
-        getPoints().add(Point.getPoint(name, symbol, code, type));
+        this.getPoints().add(Point.create(name, symbol, code, type));
         return this;
     }
 
     /**
      * Returns current {@link StyleIF} updated by input {@link StyleIF} instance
      *
-     * @param style - initial input {@link StyleIF} instance
+     * @param style - initial input {@link StyleIF} to update by
      * @return updated {@link StyleIF} instance
      */
     public StyleIF add(final StyleIF style) {
         if (Objects.isNull(style)) {
             throw StyleException.invalidStyle();
         }
-        getPoints().addAll(style.getPoints());
+        this.addPoints(style.getPoints());
         return this;
     }
 
@@ -144,7 +173,7 @@ public class Style implements StyleIF {
      * @return string representation of current collection of {@link PointIF} data codes
      */
     public String getCodePoints() {
-        return getPoints().stream()
+        return this.getPoints().stream()
             .map(PointIF::getCode)
             .map(String::valueOf)
             .collect(Collectors.joining(StringUtils.EMPTY));
@@ -156,7 +185,7 @@ public class Style implements StyleIF {
      * @return {@link String} representation of current collection of {@link PointIF} symbols
      */
     public String getSymbolPoints() {
-        return getPoints().stream()
+        return this.getPoints().stream()
             .map(PointIF::getSymbol)
             .map(String::valueOf)
             .collect(Collectors.joining(StringUtils.EMPTY));
@@ -170,11 +199,64 @@ public class Style implements StyleIF {
      * @param points      - initial input array of style points {@link PointIF}
      * @return new {@link StyleIF} instance
      */
-    public static StyleIF getStyle(final String title, final String description, final PointIF... points) {
-        return Style.builder()
+    public static StyleIF create(final String title, final String description, final PointIF... points) {
+        final Style style = Style.builder()
             .title(title)
             .description(description)
-            .points(Arrays.asList(Optional.ofNullable(points).orElse(new PointIF[0])))
             .build();
+        style.addPoints(points);
+        return style;
+    }
+
+    /**
+     * Returns binary flag if input {@link PointIF} exists in current collection of style points
+     *
+     * @param value - initial input {@link PointIF} to check by
+     * @return true - if input point exists, false - otherwise
+     */
+    public boolean contains(final PointIF value) {
+        return this.getPointMap().containsKey(value.getCode());
+    }
+
+    /**
+     * Returns collection size of style points {@link PointIF}
+     *
+     * @return collection size of style points {@link PointIF}
+     */
+    public int size() {
+        return this.getPoints().size();
+    }
+
+    /**
+     * Returns {@link PointIF} instance by input point symbol
+     *
+     * @param key - initial input point symbol to check by
+     * @return {@link PointIF} instance
+     */
+    public PointIF getPoint(final CharSequence key) {
+        return this.getPointMap().get(key);
+    }
+
+    /**
+     * Removes {@link PointIF} from current collection of style points
+     *
+     * @param point - initial input {@link PointIF} to remove
+     */
+    public void removePoint(final PointIF point) {
+        if (Objects.nonNull(point)) {
+            this.getPoints().remove(point);
+            this.getPointMap().remove(point.getCode());
+        }
+    }
+
+    /**
+     * Returns current {@link StyleIF} updated by input collection of style {@link PointIF}
+     *
+     * @param points - initial input collection of style {@link PointIF} to be removed
+     * @return updated {@link StyleIF} style
+     */
+    public StyleIF removePoints(final PointIF... points) {
+        Arrays.asList(Optional.ofNullable(points).orElseGet(() -> new PointIF[0])).forEach(this::removePoint);
+        return this;
     }
 }

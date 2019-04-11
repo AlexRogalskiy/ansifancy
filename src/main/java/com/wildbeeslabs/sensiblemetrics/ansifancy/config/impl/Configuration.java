@@ -23,9 +23,9 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.config.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.config.ConfigurationIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.config.iface.ConfigurationIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.exception.ConfigurationException;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MarkerIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MarkerIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Marker;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.MetaData;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Style;
@@ -64,34 +64,34 @@ public class Configuration implements ConfigurationIF {
         /**
          * Default control styles
          */
-        DEFAULT_MARKER_NAMES_MAP.put("reset", Marker.builder().metaData(MetaData.getMetaData("reset", "reset")).styles(asList(Style.RESET)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("bold", Marker.builder().metaData(MetaData.getMetaData("bold", "bold letter")).styles(asList(Style.BOLD)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("dim", Marker.builder().metaData(MetaData.getMetaData("dim", "dim letter")).styles(asList(Style.DIM)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("uline", Marker.builder().metaData(MetaData.getMetaData("uline", "underline letter")).styles(asList(Style.UNDER_LINE)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("blink", Marker.builder().metaData(MetaData.getMetaData("blink", "blink letter")).styles(asList(Style.BLINK)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("rev", Marker.builder().metaData(MetaData.getMetaData("rev", "reverse letter")).styles(asList(Style.REVERSE)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("blank", Marker.builder().metaData(MetaData.getMetaData("blank", "blank letter")).styles(asList(Style.BLANK)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("ostrike", Marker.builder().metaData(MetaData.getMetaData("ostrike", "overstrike letter")).styles(asList(Style.OVER_STRIKE)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("reset", Marker.builder().metaData(MetaData.create("reset", "reset")).styles(asList(Style.RESET)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("bold", Marker.builder().metaData(MetaData.create("bold", "bold letter")).styles(asList(Style.BOLD)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("dim", Marker.builder().metaData(MetaData.create("dim", "dim letter")).styles(asList(Style.DIM)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("uline", Marker.builder().metaData(MetaData.create("uline", "underline letter")).styles(asList(Style.UNDER_LINE)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("blink", Marker.builder().metaData(MetaData.create("blink", "blink letter")).styles(asList(Style.BLINK)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("rev", Marker.builder().metaData(MetaData.create("rev", "reverse letter")).styles(asList(Style.REVERSE)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("blank", Marker.builder().metaData(MetaData.create("blank", "blank letter")).styles(asList(Style.BLANK)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("ostrike", Marker.builder().metaData(MetaData.create("ostrike", "overstrike letter")).styles(asList(Style.OVER_STRIKE)).build());
 
         /**
          * Default color styles
          */
-        DEFAULT_MARKER_NAMES_MAP.put("black_fg", Marker.builder().metaData(MetaData.getMetaData("black_fg", "black foreground letter")).styles(asList(Style.BlACK_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("black_bg", Marker.builder().metaData(MetaData.getMetaData("black_bg", "black background letter")).styles(asList(Style.BLACK_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("red_fg", Marker.builder().metaData(MetaData.getMetaData("red_fg", "red foreground letter")).styles(asList(Style.RED_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("red_bg", Marker.builder().metaData(MetaData.getMetaData("red_bg", "red background letter")).styles(asList(Style.RED_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("green_fg", Marker.builder().metaData(MetaData.getMetaData("green_fg", "green foreground letter")).styles(asList(Style.GREEN_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("green_bg", Marker.builder().metaData(MetaData.getMetaData("green_bg", "green background letter")).styles(asList(Style.GREEN_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("yellow_fg", Marker.builder().metaData(MetaData.getMetaData("yellow_fg", "yellow foreground letter")).styles(asList(Style.YELLOW_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("yellow_bg", Marker.builder().metaData(MetaData.getMetaData("yellow_bg", "yellow background letter")).styles(asList(Style.YELLOW_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("blue_fg", Marker.builder().metaData(MetaData.getMetaData("blue_fg", "blue foreground letter")).styles(asList(Style.BLUE_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("blue_bg", Marker.builder().metaData(MetaData.getMetaData("blue_bg", "blue background letter")).styles(asList(Style.BLUE_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("magenta_fg", Marker.builder().metaData(MetaData.getMetaData("magenta_fg", "magenta foreground letter")).styles(asList(Style.MAGENTA_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("magenta_bg", Marker.builder().metaData(MetaData.getMetaData("magenta_bg", "magenta background letter")).styles(asList(Style.MAGENTA_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("cyan_fg", Marker.builder().metaData(MetaData.getMetaData("cyan_fg", "cyan foreground letter")).styles(asList(Style.CYAN_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("cyan_bg", Marker.builder().metaData(MetaData.getMetaData("cyan_bg", "cyan background letter")).styles(asList(Style.CYAN_BACKGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("white_fg", Marker.builder().metaData(MetaData.getMetaData("white_fg", "white foreground letter")).styles(asList(Style.WHITE_FOREGROUND)).build());
-        DEFAULT_MARKER_NAMES_MAP.put("white_bg", Marker.builder().metaData(MetaData.getMetaData("white_bg", "white background letter")).styles(asList(Style.WHITE_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("black_fg", Marker.builder().metaData(MetaData.create("black_fg", "black foreground letter")).styles(asList(Style.BlACK_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("black_bg", Marker.builder().metaData(MetaData.create("black_bg", "black background letter")).styles(asList(Style.BLACK_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("red_fg", Marker.builder().metaData(MetaData.create("red_fg", "red foreground letter")).styles(asList(Style.RED_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("red_bg", Marker.builder().metaData(MetaData.create("red_bg", "red background letter")).styles(asList(Style.RED_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("green_fg", Marker.builder().metaData(MetaData.create("green_fg", "green foreground letter")).styles(asList(Style.GREEN_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("green_bg", Marker.builder().metaData(MetaData.create("green_bg", "green background letter")).styles(asList(Style.GREEN_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("yellow_fg", Marker.builder().metaData(MetaData.create("yellow_fg", "yellow foreground letter")).styles(asList(Style.YELLOW_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("yellow_bg", Marker.builder().metaData(MetaData.create("yellow_bg", "yellow background letter")).styles(asList(Style.YELLOW_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("blue_fg", Marker.builder().metaData(MetaData.create("blue_fg", "blue foreground letter")).styles(asList(Style.BLUE_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("blue_bg", Marker.builder().metaData(MetaData.create("blue_bg", "blue background letter")).styles(asList(Style.BLUE_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("magenta_fg", Marker.builder().metaData(MetaData.create("magenta_fg", "magenta foreground letter")).styles(asList(Style.MAGENTA_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("magenta_bg", Marker.builder().metaData(MetaData.create("magenta_bg", "magenta background letter")).styles(asList(Style.MAGENTA_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("cyan_fg", Marker.builder().metaData(MetaData.create("cyan_fg", "cyan foreground letter")).styles(asList(Style.CYAN_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("cyan_bg", Marker.builder().metaData(MetaData.create("cyan_bg", "cyan background letter")).styles(asList(Style.CYAN_BACKGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("white_fg", Marker.builder().metaData(MetaData.create("white_fg", "white foreground letter")).styles(asList(Style.WHITE_FOREGROUND)).build());
+        DEFAULT_MARKER_NAMES_MAP.put("white_bg", Marker.builder().metaData(MetaData.create("white_bg", "white background letter")).styles(asList(Style.WHITE_BACKGROUND)).build());
     }
 
     /**

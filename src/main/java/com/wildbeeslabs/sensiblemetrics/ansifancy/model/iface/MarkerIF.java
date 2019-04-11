@@ -21,43 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
 
 import java.io.Serializable;
 
 /**
- * Position interface declaration
+ * Marker interface declaration
  *
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface PositionIF extends Serializable {
+public interface MarkerIF extends Serializable {
 
     /**
-     * Returns row position
+     * Returns {@link PositionIF} instance
      *
-     * @return row position
+     * @return {@link PositionIF} instance
      */
-    int getRow();
+    PositionIF getPosition();
 
     /**
-     * Returns column position
+     * Returns {@link MetaDataIF} instance
      *
-     * @return column position
+     * @return {@link MetaDataIF} instance
      */
-    int getColumn();
+    MetaDataIF getMetaData();
 
     /**
-     * Returns depth position
+     * Returns {@code S} collection of {@link StyleIF} instances
      *
-     * @return depth position
+     * @param <S> type of {@link Iterable} item collection
+     * @return collection of {@link StyleIF} instances
      */
-    int getDepth();
-
-    /**
-     * Returns vector length by position
-     *
-     * @return vector length by position
-     */
-    double length();
+    <S extends Iterable<? extends StyleIF>> S getStyles();
 }

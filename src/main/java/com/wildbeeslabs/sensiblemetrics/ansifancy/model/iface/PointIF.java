@@ -21,25 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.parser;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface;
+
+import java.io.Serializable;
 
 /**
- * ParserIF interface declaration
+ * Point interface declaration {@link CharSequence}
  *
- * @param <T> type of input element to be converted from
- * @param <R> type of input element to be converted to
  * @author Alexander Rogalskiy
- * @version 1.1
- * @since 1.0
+ * @version 1.0
  */
-@FunctionalInterface
-public interface ParserIF<T, R> {
+public interface PointIF extends Serializable {
 
     /**
-     * Returns parsed value {@code R} by input argument value {@code T}
-     *
-     * @param value - initial input argument value {@code T} to parse by
-     * @return parsed value {@code R}
+     * Default point type enumeration
      */
-    R parse(final T value);
+    enum PointType {
+        FOREGROUND_COLOR,
+        BACKGROUND_COLOR,
+        CURSOR_CONTROL,
+        DECORATION_CONTROL,
+        SERVICE_CONTROL,
+        IDEOGRAM
+    }
+
+    /**
+     * Returns {@link PointType} of point
+     *
+     * @return {@link PointType} of point
+     */
+    PointType getType();
+
+    /**
+     * Returns point symbol {@code T}
+     *
+     * @param <T> type of point symbol
+     * @return point symbol {@code T}
+     */
+    <T extends CharSequence> T getSymbol();
+
+    /**
+     * Returns point code {@code T}
+     *
+     * @param <T> type of point code
+     * @return point code {@code T}
+     */
+    <T extends CharSequence> T getCode();
 }

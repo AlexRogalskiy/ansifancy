@@ -23,11 +23,11 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.MetaDataIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MetaDataIF;
 import lombok.*;
 
 /**
- * Default meta data implementation {@link MetaDataIF}
+ * Default {@link MetaDataIF} implementation
  *
  * @author Alexander Rogalskiy
  * @version 1.0
@@ -60,7 +60,7 @@ public class MetaData implements MetaDataIF {
      * @param description - initial input meta description {@link String}
      * @return new {@link MetaData} instance
      */
-    public static MetaDataIF getMetaData(final String name, final String description) {
+    public static MetaDataIF create(final String name, final String description) {
         return MetaData.builder()
             .name(name)
             .description(description)

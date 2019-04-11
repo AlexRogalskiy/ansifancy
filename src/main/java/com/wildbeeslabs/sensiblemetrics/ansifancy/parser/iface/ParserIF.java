@@ -21,37 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.sensiblemetrics.ansifancy.model;
-
-import java.io.Serializable;
+package com.wildbeeslabs.sensiblemetrics.ansifancy.parser.iface;
 
 /**
- * Style interface declaration
+ * ParserIF interface declaration
  *
+ * @param <T> type of input element to be converted from
+ * @param <R> type of input element to be converted to
  * @author Alexander Rogalskiy
- * @version 1.0
+ * @version 1.1
+ * @since 1.0
  */
-public interface StyleIF extends Serializable {
+@FunctionalInterface
+public interface ParserIF<T, R> {
 
     /**
-     * Returns {@link String} style title
+     * Returns parsed value {@code R} by input argument value {@code T}
      *
-     * @return {@link String} style title
+     * @param value - initial input argument value {@code T} to parse by
+     * @return parsed value {@code R}
      */
-    String getTitle();
-
-    /**
-     * Returns {@link String} style description
-     *
-     * @return {@link String} style description
-     */
-    String getDescription();
-
-    /**
-     * Returns {@link Iterable} collection of style points {@link PointIF}
-     *
-     * @param <S> type of {@link Iterable} collection of {@link PointIF} items
-     * @return {@link Iterable} collection of points {@link PointIF}
-     */
-    <S extends Iterable<? extends PointIF>> S getPoints();
+    R parse(final T value);
 }
