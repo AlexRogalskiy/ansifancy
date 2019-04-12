@@ -8,5 +8,12 @@ import java.io.Serializable;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface BlockIF extends Serializable {
+public interface BlockIF<T> extends Serializable {
+
+    /**
+     * Returns {@link BlockIF} top right position
+     *
+     * @return {@link BlockIF} top right position
+     */
+    <S extends AreaIF<T>> S getArea();
 }

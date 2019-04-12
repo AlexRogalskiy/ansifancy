@@ -1,9 +1,9 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.SubSquareIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.AreaIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Area;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Position;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.SubSquare;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -288,12 +288,12 @@ public class MatrixUtils {
         return true;
     }
 
-    public static <T> SubSquareIF findSquare(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> AreaIF findSquare(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
         Objects.requireNonNull(matrix[0]);
 
         for (int i = matrix.length; i >= 1; i--) {
-            final SubSquareIF square = findSquareWithSize(matrix, value, i, cmp);
+            final AreaIF square = findSquareWithSize(matrix, value, i, cmp);
             if (Objects.nonNull(square)) {
                 return square;
             }
@@ -301,12 +301,12 @@ public class MatrixUtils {
         return null;
     }
 
-    private static <T> SubSquareIF findSquareWithSize(final T[][] matrix, final T value, int squareSize, final Comparator<? super T> cmp) {
+    private static <T> AreaIF findSquareWithSize(final T[][] matrix, final T value, int squareSize, final Comparator<? super T> cmp) {
         int count = matrix.length - squareSize + 1;
         for (int row = 0; row < count; row++) {
             for (int col = 0; col < count; col++) {
                 if (isSquare(matrix, value, row, col, squareSize, cmp)) {
-                    return SubSquare.create(row, col, squareSize);
+                    return Area.create(row, col, squareSize);
                 }
             }
         }

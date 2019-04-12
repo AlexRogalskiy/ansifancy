@@ -31,33 +31,33 @@ import java.io.Serializable;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface PositionIF extends Serializable, Cloneable {
+public interface PositionIF<T> extends Serializable, Cloneable {
 
     /**
-     * Returns row position
+     * Returns {@link PositionIF} row
      *
-     * @return row position
+     * @return {@link PositionIF} row
      */
-    int getRow();
+    T getRow();
 
     /**
-     * Returns column position
+     * Returns {@link PositionIF} column
      *
-     * @return column position
+     * @return {@link PositionIF} column
      */
-    int getColumn();
+    T getColumn();
 
     /**
-     * Returns depth position
+     * Returns {@link PositionIF} depth
      *
-     * @return depth position
+     * @return {@link PositionIF} depth
      */
-    int getDepth();
+    T getDepth();
 
     /**
-     * Returns vector length by position
+     * Returns {@link PositionIF} length
      *
-     * @return vector length by position
+     * @return {@link PositionIF} length
      */
     double length();
 }

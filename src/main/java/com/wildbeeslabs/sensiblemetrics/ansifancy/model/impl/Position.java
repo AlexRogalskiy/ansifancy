@@ -41,7 +41,7 @@ import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils.toInt
 @Data
 @EqualsAndHashCode
 @ToString
-public class Position implements PositionIF {
+public class Position implements PositionIF<Integer> {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -51,15 +51,15 @@ public class Position implements PositionIF {
     /**
      * Default row position
      */
-    private int row;
+    private Integer row;
     /**
      * Default column position
      */
-    private int column;
+    private Integer column;
     /**
      * Default depth position
      */
-    private int depth;
+    private Integer depth;
 
     /**
      * Returns updated {@link PositionIF} instance by input position scale parameters division
@@ -68,7 +68,7 @@ public class Position implements PositionIF {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public Position divide(int rowScale, int colScale) {
+    public PositionIF<Integer> divide(int rowScale, int colScale) {
         if (0 == rowScale || 0 == colScale) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, rowOffset={%s}, colOffset={%s}", rowScale, colScale));
         }
@@ -84,7 +84,7 @@ public class Position implements PositionIF {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF multiply(int rowScale, int colScale) {
+    public PositionIF<Integer> multiply(int rowScale, int colScale) {
         setRow(getRow() * rowScale);
         setColumn(getColumn() * colScale);
         return this;
@@ -97,7 +97,7 @@ public class Position implements PositionIF {
      * @param colOffset - initial input column offset
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF shift(int rowOffset, int colOffset) {
+    public PositionIF<Integer> shift(int rowOffset, int colOffset) {
         setRow(getRow() + rowOffset);
         setColumn(getColumn() + colOffset);
         return this;
@@ -108,7 +108,7 @@ public class Position implements PositionIF {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF negate() {
+    public PositionIF<Integer> negate() {
         setRow(-getRow());
         setColumn(-getColumn());
         return this;
@@ -128,7 +128,7 @@ public class Position implements PositionIF {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF normalize() {
+    public PositionIF<Integer> normalize() {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -144,7 +144,7 @@ public class Position implements PositionIF {
      * @param angle - initial input angle to rotate by
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF rotate(double angle) {
+    public PositionIF<Integer> rotate(double angle) {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -210,8 +210,9 @@ public class Position implements PositionIF {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public PositionIF vector(final PositionIF position) {
+    public PositionIF<Integer> vector(final PositionIF<Integer> position) {
         Objects.requireNonNull(position, "Position should not be null");
+
         int vx = getColumn() * position.getDepth() - getDepth() * position.getRow();
         int vy = getDepth() * position.getColumn() - getColumn() * position.getDepth();
         int vz = getColumn() * position.getRow() - getRow() * position.getColumn();
@@ -224,7 +225,7 @@ public class Position implements PositionIF {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public int scalar(final PositionIF position) {
+    public int scalar(final PositionIF<Integer> position) {
         Objects.requireNonNull(position, "Position should not be null");
         return getColumn() * position.getColumn() + getRow() * position.getRow() + getDepth() * position.getDepth();
     }
@@ -235,7 +236,7 @@ public class Position implements PositionIF {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return euclid distance
      */
-    public double distance(final PositionIF position) {
+    public double distance(final PositionIF<Integer> position) {
         Objects.requireNonNull(position, "Position should not be null");
         int resX = (getColumn() - position.getColumn()) * (getColumn() - position.getColumn());
         int resY = (getRow() - position.getRow()) * (getRow() - position.getRow());
@@ -250,7 +251,7 @@ public class Position implements PositionIF {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return angle value
      */
-    public double angle(final PositionIF position) {
+    public double angle(final PositionIF<Integer> position) {
         Objects.requireNonNull(position, "Position should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
@@ -266,7 +267,7 @@ public class Position implements PositionIF {
      * @param colOffset - initial input column offset
      * @return new {@link PositionIF} instance
      */
-    public PositionIF offset(int rowOffset, int colOffset) {
+    public PositionIF<Integer> offset(int rowOffset, int colOffset) {
         return offset(rowOffset, colOffset, 0);
     }
 
@@ -278,7 +279,7 @@ public class Position implements PositionIF {
      * @param depthOffset - initial input depth offset
      * @return new {@link PositionIF} instance
      */
-    public PositionIF offset(int rowOffset, int colOffset, int depthOffset) {
+    public PositionIF<Integer> offset(int rowOffset, int colOffset, int depthOffset) {
         return Position.create(this.getRow() + rowOffset, this.getColumn() + colOffset, this.getDepth() + depthOffset);
     }
 
@@ -329,7 +330,7 @@ public class Position implements PositionIF {
      * @param position - initial input {@link Position} to check by
      * @return true - if current position if before input position, false - otherwise
      */
-    public boolean isBefore(final PositionIF position) {
+    public boolean isBefore(final PositionIF<Integer> position) {
         if (Objects.isNull(position)) {
             return false;
         }
@@ -342,7 +343,7 @@ public class Position implements PositionIF {
      * @param minPosition - initial input minimum {@link Position}
      * @param maxPosition - initial input maximum {@link Position}
      */
-    public void average(final PositionIF minPosition, final PositionIF maxPosition) {
+    public void average(final PositionIF<Integer> minPosition, final PositionIF<Integer> maxPosition) {
         if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) {
             return;
         }
