@@ -826,6 +826,7 @@
                         <artifactId>maven-project-info-reports-plugin</artifactId>
                         <version>${maven.reports.plugin.version}</version>
                         <configuration>
+                            <webAccessUrl>https://github.com/AlexRogalskiy/ansifancy</webAccessUrl>
                             <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
                         </configuration>
                         <reportSets>
