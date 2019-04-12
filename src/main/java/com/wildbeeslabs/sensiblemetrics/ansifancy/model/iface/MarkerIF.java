@@ -31,14 +31,14 @@ import java.io.Serializable;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface MarkerIF extends Serializable {
+public interface MarkerIF<T> extends Serializable, Cloneable {
 
     /**
      * Returns {@link PositionIF} instance
      *
      * @return {@link PositionIF} instance
      */
-    PositionIF getPosition();
+    PositionIF<T> getPosition();
 
     /**
      * Returns {@link MetaDataIF} instance

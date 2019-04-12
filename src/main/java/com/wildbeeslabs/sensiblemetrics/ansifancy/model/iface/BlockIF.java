@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-public interface BlockIF<T> extends Serializable {
+public interface BlockIF<T> extends Serializable, Cloneable {
 
     /**
      * Returns {@link BlockIF} top right position

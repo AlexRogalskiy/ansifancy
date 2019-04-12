@@ -4,6 +4,8 @@ import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.AreaIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import lombok.*;
 
+import java.util.Objects;
+
 /**
  * Default {@link AreaIF} implementation
  *
@@ -15,7 +17,7 @@ import lombok.*;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Area implements AreaIF<Integer> {
+public class Area implements AreaIF<IntCoordinate> {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -25,30 +27,47 @@ public class Area implements AreaIF<Integer> {
     /**
      * Default top right {@link PositionIF}
      */
-    private PositionIF<Integer> topRight;
+    private final PositionIF<IntCoordinate> topRight;
     /**
      * Default bottom left {@link PositionIF}
      */
-    private PositionIF<Integer> bottomLeft;
+    private final PositionIF<IntCoordinate> bottomLeft;
 
-    public boolean isOverlap(final AreaIF<Integer> other) {
-        if (getTopRight().getRow() < other.getBottomLeft().getRow() || getBottomLeft().getRow() > other.getTopRight().getRow()) {
+    /**
+     * Checks if input {@link AreaIF} overlaps with current {@link AreaIF}
+     *
+     * @param other - initial input {@link AreaIF} to check by
+     * @return true - if input {@link AreaIF} overlaps with current {@link AreaIF}, false - otherwise
+     */
+    public boolean isOverlap(final AreaIF<IntCoordinate> other) {
+        if (Objects.isNull(other)) return false;
+        if (getTopRight().getRow().getValue() < other.getBottomLeft().getRow().getValue() || getBottomLeft().getRow().getValue() > other.getTopRight().getRow().getValue()) {
             return false;
         }
-        if (getTopRight().getColumn() < other.getBottomLeft().getColumn() || getBottomLeft().getColumn() > other.getTopRight().getColumn()) {
+        if (getTopRight().getColumn().getValue() < other.getBottomLeft().getColumn().getValue() || getBottomLeft().getColumn().getValue() > other.getTopRight().getColumn().getValue()) {
             return false;
         }
         return true;
     }
 
+    /**
+     * Returns width of current {@link AreaIF}
+     *
+     * @return width of current {@link AreaIF}
+     */
     @Override
     public int width() {
-        return (getTopRight().getColumn() - getBottomLeft().getColumn());
+        return (getTopRight().getColumn().getValue() - getBottomLeft().getColumn().getValue());
     }
 
+    /**
+     * Returns height of current {@link AreaIF}
+     *
+     * @return height of current {@link AreaIF}
+     */
     @Override
     public int height() {
-        return (getTopRight().getRow() - getTopRight().getRow());
+        return (getTopRight().getRow().getValue() - getTopRight().getRow().getValue());
     }
 
     /**
@@ -58,7 +77,7 @@ public class Area implements AreaIF<Integer> {
      * @param bottomLeft - initial input bottom left {@link PositionIF}
      * @return new {@link AreaIF} instance
      */
-    public static AreaIF<Integer> create(final PositionIF<Integer> topRight, final PositionIF<Integer> bottomLeft) {
+    public static AreaIF<IntCoordinate> create(@NonNull final PositionIF<IntCoordinate> topRight, @NonNull final PositionIF<IntCoordinate> bottomLeft) {
         return Area.builder()
             .topRight(topRight)
             .bottomLeft(bottomLeft)
@@ -73,10 +92,7 @@ public class Area implements AreaIF<Integer> {
      * @param size - initial input area size
      * @return new {@link AreaIF} instance
      */
-    public static AreaIF<Integer> create(final Integer row, final Integer col, final Integer size) {
-        return Area.builder()
-            .topRight(Position.create(row, col + size))
-            .bottomLeft(Position.create(row + size, col))
-            .build();
+    public static AreaIF<IntCoordinate> create(final int row, final int col, final int size) {
+        return create(Position.create(row, col + size), Position.create(row + size, col));
     }
 }

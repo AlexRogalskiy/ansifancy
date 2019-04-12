@@ -41,7 +41,7 @@ import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.NumberUtils.toInt
 @Data
 @EqualsAndHashCode
 @ToString
-public class Position implements PositionIF<Integer> {
+public class Position implements PositionIF<IntCoordinate> {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -51,15 +51,15 @@ public class Position implements PositionIF<Integer> {
     /**
      * Default row position
      */
-    private Integer row;
+    private IntCoordinate row;
     /**
      * Default column position
      */
-    private Integer column;
+    private IntCoordinate column;
     /**
      * Default depth position
      */
-    private Integer depth;
+    private IntCoordinate depth;
 
     /**
      * Returns updated {@link PositionIF} instance by input position scale parameters division
@@ -68,12 +68,12 @@ public class Position implements PositionIF<Integer> {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> divide(int rowScale, int colScale) {
+    public PositionIF<IntCoordinate> divide(int rowScale, int colScale) {
         if (0 == rowScale || 0 == colScale) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, rowOffset={%s}, colOffset={%s}", rowScale, colScale));
         }
-        setRow(getRow() / rowScale);
-        setColumn(getColumn() / colScale);
+        getRow().setValue(getRow().getValue() / rowScale);
+        getColumn().setValue(getColumn().getValue() / colScale);
         return this;
     }
 
@@ -84,9 +84,9 @@ public class Position implements PositionIF<Integer> {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> multiply(int rowScale, int colScale) {
-        setRow(getRow() * rowScale);
-        setColumn(getColumn() * colScale);
+    public PositionIF<IntCoordinate> multiply(int rowScale, int colScale) {
+        getRow().setValue(getRow().getValue() * rowScale);
+        getColumn().setValue(getColumn().getValue() * colScale);
         return this;
     }
 
@@ -97,9 +97,9 @@ public class Position implements PositionIF<Integer> {
      * @param colOffset - initial input column offset
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> shift(int rowOffset, int colOffset) {
-        setRow(getRow() + rowOffset);
-        setColumn(getColumn() + colOffset);
+    public PositionIF<IntCoordinate> shift(int rowOffset, int colOffset) {
+        getRow().setValue(getRow().getValue() + rowOffset);
+        getColumn().setValue(getColumn().getValue() + colOffset);
         return this;
     }
 
@@ -108,9 +108,9 @@ public class Position implements PositionIF<Integer> {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> negate() {
-        setRow(-getRow());
-        setColumn(-getColumn());
+    public PositionIF<IntCoordinate> negate() {
+        getRow().setValue(-getRow().getValue());
+        getColumn().setValue(-getColumn().getValue());
         return this;
     }
 
@@ -120,7 +120,7 @@ public class Position implements PositionIF<Integer> {
      * @return position vector length
      */
     public double length() {
-        return Math.sqrt(getRow() * getRow() + getColumn() * getColumn());
+        return Math.sqrt(getRow().getValue() * getRow().getValue() + getColumn().getValue() * getColumn().getValue());
     }
 
     /**
@@ -128,13 +128,13 @@ public class Position implements PositionIF<Integer> {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> normalize() {
+    public PositionIF<IntCoordinate> normalize() {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
         }
-        setRow(toInt(getRow() / length));
-        setColumn(toInt(getColumn() / length));
+        getRow().setValue(toInt(getRow().getValue() / length));
+        getColumn().setValue(toInt(getColumn().getValue() / length));
         return this;
     }
 
@@ -144,24 +144,28 @@ public class Position implements PositionIF<Integer> {
      * @param angle - initial input angle to rotate by
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<Integer> rotate(double angle) {
+    public PositionIF<IntCoordinate> rotate(double angle) {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
         }
-        double phi = Math.acos(getDepth() / length);
-        double theta = (getColumn() > 0) ? Math.atan2(getRow(), getColumn()) : (getColumn() < 0) ? (Math.PI + Math.atan2(getRow(), getColumn())) : (getColumn() == 0 && getRow() >= 0) ? Math.PI / 2 : 3 * Math.PI / 2;
-        //
-        int vx = getColumn(), vy = getRow(), vz = getDepth();
+        double phi = Math.acos(getDepth().getValue() / length);
+        double theta = (getColumn().getValue() > 0)
+            ? Math.atan2(getRow().getValue(), getColumn().getValue())
+            : (getColumn().getValue() < 0)
+            ? (Math.PI + Math.atan2(getRow().getValue(), getColumn().getValue()))
+            : (getColumn().getValue() == 0 && getRow().getValue() >= 0) ? Math.PI / 2 : 3 * Math.PI / 2;
+
+        int vx = getColumn().getValue(), vy = getRow().getValue(), vz = getDepth().getValue();
         double cosVal = Math.cos(theta), sinVal = Math.sin(theta);
-        setColumn(toInt(vx * cosVal + vy * sinVal));
-        setRow(toInt(-vx * sinVal + vy * cosVal));
-        //
-        vx = getColumn();
+        getColumn().setValue(toInt(vx * cosVal + vy * sinVal));
+        getRow().setValue(toInt(-vx * sinVal + vy * cosVal));
+
+        vx = getColumn().getValue();
         cosVal = Math.cos(phi);
         sinVal = Math.sin(phi);
-        setColumn(toInt(vx * cosVal - vz * sinVal));
-        setDepth(toInt(vx * sinVal + vz * cosVal));
+        getColumn().setValue(toInt(vx * cosVal - vz * sinVal));
+        getDepth().setValue(toInt(vx * sinVal + vz * cosVal));
         this.rotateX(angle);
         this.rotateZ(theta);
         this.rotateY(phi);
@@ -174,10 +178,10 @@ public class Position implements PositionIF<Integer> {
      * @param angle - initial input angle to rotate by
      */
     private void rotateX(double angle) {
-        int vy = getRow(), vz = getDepth();
+        int vy = getRow().getValue(), vz = getDepth().getValue();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
-        setRow(toInt(vy * cosVal - vz * sinVal));
-        setDepth(toInt(vy * sinVal + vz * cosVal));
+        getRow().setValue(toInt(vy * cosVal - vz * sinVal));
+        getDepth().setValue(toInt(vy * sinVal + vz * cosVal));
     }
 
     /**
@@ -186,10 +190,10 @@ public class Position implements PositionIF<Integer> {
      * @param angle - initial input angle value to rotate by
      */
     private void rotateY(double angle) {
-        int vx = getColumn(), vz = getDepth();
+        int vx = getColumn().getValue(), vz = getDepth().getValue();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
-        setColumn(toInt(vx * cosVal + vz * sinVal));
-        setDepth(toInt(-vx * sinVal + vz * cosVal));
+        getColumn().setValue(toInt(vx * cosVal + vz * sinVal));
+        getDepth().setValue(toInt(-vx * sinVal + vz * cosVal));
     }
 
     /**
@@ -198,10 +202,10 @@ public class Position implements PositionIF<Integer> {
      * @param angle - initial input angle value to rotate by
      */
     private void rotateZ(double angle) {
-        int vx = getColumn(), vy = getRow();
+        int vx = getColumn().getValue(), vy = getRow().getValue();
         double cosVal = Math.cos(angle), sinVal = Math.sin(angle);
-        setColumn(toInt(vx * cosVal - vy * sinVal));
-        setRow(toInt(vx * sinVal + vy * cosVal));
+        getColumn().setValue(toInt(vx * cosVal - vy * sinVal));
+        getRow().setValue(toInt(vx * sinVal + vy * cosVal));
     }
 
     /**
@@ -210,12 +214,12 @@ public class Position implements PositionIF<Integer> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public PositionIF<Integer> vector(final PositionIF<Integer> position) {
+    public PositionIF<IntCoordinate> vector(final PositionIF<IntCoordinate> position) {
         Objects.requireNonNull(position, "Position should not be null");
 
-        int vx = getColumn() * position.getDepth() - getDepth() * position.getRow();
-        int vy = getDepth() * position.getColumn() - getColumn() * position.getDepth();
-        int vz = getColumn() * position.getRow() - getRow() * position.getColumn();
+        int vx = getColumn().getValue() * position.getDepth().getValue() - getDepth().getValue() * position.getRow().getValue();
+        int vy = getDepth().getValue() * position.getColumn().getValue() - getColumn().getValue() * position.getDepth().getValue();
+        int vz = getColumn().getValue() * position.getRow().getValue() - getRow().getValue() * position.getColumn().getValue();
         return Position.create(vx, vy, vz);
     }
 
@@ -225,9 +229,11 @@ public class Position implements PositionIF<Integer> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public int scalar(final PositionIF<Integer> position) {
+    public int scalar(final PositionIF<IntCoordinate> position) {
         Objects.requireNonNull(position, "Position should not be null");
-        return getColumn() * position.getColumn() + getRow() * position.getRow() + getDepth() * position.getDepth();
+        return getColumn().getValue() * position.getColumn().getValue()
+            + getRow().getValue() * position.getRow().getValue()
+            + getDepth().getValue() * position.getDepth().getValue();
     }
 
     /**
@@ -236,11 +242,11 @@ public class Position implements PositionIF<Integer> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return euclid distance
      */
-    public double distance(final PositionIF<Integer> position) {
+    public double distance(final PositionIF<IntCoordinate> position) {
         Objects.requireNonNull(position, "Position should not be null");
-        int resX = (getColumn() - position.getColumn()) * (getColumn() - position.getColumn());
-        int resY = (getRow() - position.getRow()) * (getRow() - position.getRow());
-        int resZ = (getDepth() - position.getDepth()) * (getDepth() - position.getDepth());
+        int resX = (getColumn().getValue() - position.getColumn().getValue()) * (getColumn().getValue() - position.getColumn().getValue());
+        int resY = (getRow().getValue() - position.getRow().getValue()) * (getRow().getValue() - position.getRow().getValue());
+        int resZ = (getDepth().getValue() - position.getDepth().getValue()) * (getDepth().getValue() - position.getDepth().getValue());
         int res = resX + resY + resZ;
         return (res > 0 ? Math.sqrt(res) : 0);
     }
@@ -251,7 +257,7 @@ public class Position implements PositionIF<Integer> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return angle value
      */
-    public double angle(final PositionIF<Integer> position) {
+    public double angle(final PositionIF<IntCoordinate> position) {
         Objects.requireNonNull(position, "Position should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
@@ -267,7 +273,7 @@ public class Position implements PositionIF<Integer> {
      * @param colOffset - initial input column offset
      * @return new {@link PositionIF} instance
      */
-    public PositionIF<Integer> offset(int rowOffset, int colOffset) {
+    public PositionIF<IntCoordinate> offset(int rowOffset, int colOffset) {
         return offset(rowOffset, colOffset, 0);
     }
 
@@ -279,8 +285,8 @@ public class Position implements PositionIF<Integer> {
      * @param depthOffset - initial input depth offset
      * @return new {@link PositionIF} instance
      */
-    public PositionIF<Integer> offset(int rowOffset, int colOffset, int depthOffset) {
-        return Position.create(this.getRow() + rowOffset, this.getColumn() + colOffset, this.getDepth() + depthOffset);
+    public PositionIF<IntCoordinate> offset(int rowOffset, int colOffset, int depthOffset) {
+        return Position.create(this.getRow().getValue() + rowOffset, this.getColumn().getValue() + colOffset, this.getDepth().getValue() + depthOffset);
     }
 
     /**
@@ -304,9 +310,9 @@ public class Position implements PositionIF<Integer> {
      */
     public static Position create(int row, int column, int depth) {
         return Position.builder()
-            .row(row)
-            .column(column)
-            .depth(depth)
+            .row(IntCoordinate.builder().value(row).build())
+            .column(IntCoordinate.builder().value(column).build())
+            .depth(IntCoordinate.builder().value(depth).build())
             .build();
     }
 
@@ -318,10 +324,8 @@ public class Position implements PositionIF<Integer> {
      * @return true - if current position within bounds, false - otherwise
      */
     public <T> boolean inBounds(final T[][] area) {
-        if (Objects.isNull(area) || Objects.isNull(area[0])) {
-            return false;
-        }
-        return (this.getRow() >= 0 && this.getColumn() >= 0 && this.getRow() < area.length && this.getColumn() < area[0].length);
+        if (Objects.isNull(area) || Objects.isNull(area[0])) return false;
+        return (this.getRow().getValue() >= 0 && this.getColumn().getValue() >= 0 && this.getRow().getValue() < area.length && this.getColumn().getValue() < area[0].length);
     }
 
     /**
@@ -330,11 +334,9 @@ public class Position implements PositionIF<Integer> {
      * @param position - initial input {@link Position} to check by
      * @return true - if current position if before input position, false - otherwise
      */
-    public boolean isBefore(final PositionIF<Integer> position) {
-        if (Objects.isNull(position)) {
-            return false;
-        }
-        return (this.getRow() <= position.getRow() && this.getColumn() <= position.getColumn());
+    public boolean isBefore(final PositionIF<IntCoordinate> position) {
+        if (Objects.isNull(position)) return false;
+        return (this.getRow().getValue() <= position.getRow().getValue() && this.getColumn().getValue() <= position.getColumn().getValue());
     }
 
     /**
@@ -343,13 +345,11 @@ public class Position implements PositionIF<Integer> {
      * @param minPosition - initial input minimum {@link Position}
      * @param maxPosition - initial input maximum {@link Position}
      */
-    public void average(final PositionIF<Integer> minPosition, final PositionIF<Integer> maxPosition) {
-        if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) {
-            return;
-        }
-        this.setRow((minPosition.getRow() + maxPosition.getRow()) / 2);
-        this.setColumn((minPosition.getColumn() + maxPosition.getColumn()) / 2);
-        this.setDepth((minPosition.getDepth() + maxPosition.getDepth()) / 2);
+    public void average(final PositionIF<IntCoordinate> minPosition, final PositionIF<IntCoordinate> maxPosition) {
+        if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) return;
+        this.getRow().setValue((minPosition.getRow().getValue() + maxPosition.getRow().getValue()) / 2);
+        this.getColumn().setValue((minPosition.getColumn().getValue() + maxPosition.getColumn().getValue()) / 2);
+        this.getDepth().setValue((minPosition.getDepth().getValue() + maxPosition.getDepth().getValue()) / 2);
     }
 
     /**
@@ -360,6 +360,10 @@ public class Position implements PositionIF<Integer> {
     @Override
     @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
     public Position clone() {
-        return Position.create(this.getRow(), this.getColumn(), this.getDepth());
+        return Position.builder()
+            .row(this.getRow())
+            .column(this.getColumn())
+            .depth(this.getDepth())
+            .build();
     }
 }

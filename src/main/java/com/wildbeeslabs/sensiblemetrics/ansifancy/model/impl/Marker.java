@@ -23,10 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MarkerIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MetaDataIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.StyleIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.*;
 import lombok.*;
 
 import java.util.Arrays;
@@ -44,7 +41,7 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Marker implements MarkerIF {
+public class Marker implements MarkerIF<IntCoordinate> {
 
     /**
      * Default explicit serialVersionUID for interoperability
@@ -54,15 +51,15 @@ public class Marker implements MarkerIF {
     /**
      * Default marker position
      */
-    private PositionIF position;
+    private final PositionIF<IntCoordinate> position;
     /**
      * Default symbol meta data
      */
-    private MetaDataIF metaData;
+    private final MetaDataIF metaData;
     /**
      * Default collection of styles
      */
-    private Collection<StyleIF> styles;
+    private final Collection<StyleIF> styles;
 
     /**
      * Returns updated {@link Marker} marker by input array of styles {@link StyleIF}
@@ -83,11 +80,22 @@ public class Marker implements MarkerIF {
      * @param styles   - initial array of styles {@link StyleIF}
      * @return new {@link Marker} instance
      */
-    public static MarkerIF create(@NonNull final PositionIF position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
+    public static MarkerIF create(@NonNull final PositionIF<IntCoordinate> position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
         return Marker.builder()
             .position(position)
             .metaData(metaData)
             .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])))
             .build();
+    }
+
+    /**
+     * Clones current {@link BlockIF}
+     *
+     * @return new copy of current {@link BlockIF}
+     */
+    @Override
+    @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
+    public MarkerIF clone() {
+        return create(this.position, this.metaData, this.styles.toArray(new StyleIF[this.styles.size()]));
     }
 }

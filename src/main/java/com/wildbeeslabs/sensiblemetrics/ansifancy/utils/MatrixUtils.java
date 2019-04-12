@@ -1,6 +1,5 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
-import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.AreaIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Area;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Position;
@@ -170,7 +169,7 @@ public class MatrixUtils {
         return false;
     }
 
-    public static <T> PositionIF find(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> Position find(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
         Objects.requireNonNull(matrix[0]);
 
@@ -179,48 +178,48 @@ public class MatrixUtils {
         return find(matrix, origin, dest, value, cmp);
     }
 
-    private static <T> PositionIF find(final T[][] matrix, final Position origin, final Position dest, final T value, final Comparator<? super T> cmp) {
+    private static <T> Position find(final T[][] matrix, final Position origin, final Position dest, final T value, final Comparator<? super T> cmp) {
         if (!origin.inBounds(matrix) || !dest.inBounds(matrix)) {
             return null;
         }
-        if (Objects.compare(matrix[origin.getRow()][origin.getColumn()], value, cmp) == 0) {
+        if (Objects.compare(matrix[origin.getRow().getValue()][origin.getColumn().getValue()], value, cmp) == 0) {
             return origin;
         } else if (!origin.isBefore(dest)) {
             return null;
         }
 
         final Position start = origin.clone();
-        int diagDist = Math.min(dest.getRow() - origin.getRow(), dest.getColumn() - origin.getColumn());
-        final Position end = Position.create(start.getRow() + diagDist, start.getColumn() + diagDist);
+        int diagDist = Math.min(dest.getRow().getValue() - origin.getRow().getValue(), dest.getColumn().getValue() - origin.getColumn().getValue());
+        final Position end = Position.create(start.getRow().getValue() + diagDist, start.getColumn().getValue() + diagDist);
         final Position p = Position.create(0, 0);
 
         while (start.isBefore(end)) {
             p.average(start, end);
-            if (Objects.compare(value, matrix[p.getRow()][p.getColumn()], cmp) > 0) {
-                start.setRow(p.getRow() + 1);
-                start.setColumn(p.getColumn() + 1);
+            if (Objects.compare(value, matrix[p.getRow().getValue()][p.getColumn().getValue()], cmp) > 0) {
+                start.getRow().setValue(p.getRow().getValue() + 1);
+                start.getColumn().setValue(p.getColumn().getValue() + 1);
             } else {
-                end.setRow(p.getRow() - 1);
-                end.setColumn(p.getColumn() - 1);
+                end.getRow().setValue(p.getRow().getValue() - 1);
+                end.getColumn().setValue(p.getColumn().getValue() - 1);
             }
         }
         return partitionAndSearch(matrix, origin, dest, start, value, cmp);
     }
 
-    private static <T> PositionIF partitionAndSearch(final T[][] matrix, final Position origin, final Position dest, final Position pivot, final T value, final Comparator<? super T> cmp) {
-        final Position lowerLeftOrigin = Position.create(pivot.getRow(), origin.getColumn());
-        final Position lowerLeftDest = Position.create(dest.getRow(), pivot.getColumn() - 1);
-        final Position upperRightOrigin = Position.create(origin.getRow(), pivot.getColumn());
-        final Position upperRightDest = Position.create(pivot.getRow() - 1, dest.getColumn());
+    private static <T> Position partitionAndSearch(final T[][] matrix, final Position origin, final Position dest, final Position pivot, final T value, final Comparator<? super T> cmp) {
+        final Position lowerLeftOrigin = Position.create(pivot.getRow().getValue(), origin.getColumn().getValue());
+        final Position lowerLeftDest = Position.create(dest.getRow().getValue(), pivot.getColumn().getValue() - 1);
+        final Position upperRightOrigin = Position.create(origin.getRow().getValue(), pivot.getColumn().getValue());
+        final Position upperRightDest = Position.create(pivot.getRow().getValue() - 1, dest.getColumn().getValue());
 
-        final PositionIF lowerLeft = find(matrix, lowerLeftOrigin, lowerLeftDest, value, cmp);
+        final Position lowerLeft = find(matrix, lowerLeftOrigin, lowerLeftDest, value, cmp);
         if (Objects.isNull(lowerLeft)) {
             return find(matrix, upperRightOrigin, upperRightDest, value, cmp);
         }
         return lowerLeft;
     }
 
-    public static <T> PositionIF search(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> Position search(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
         Objects.requireNonNull(matrix[0]);
 
