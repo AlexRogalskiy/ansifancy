@@ -73,11 +73,20 @@ public class Area implements AreaIF<IntCoordinate> {
     }
 
     /**
+     * Returns copy of {@link AreaIF}
+     *
+     * @return copy of {@link AreaIF}
+     */
+    public Area copy() {
+        return create(this.getTopRight(), this.getBottomLeft());
+    }
+
+    /**
      * Returns centroid {@link PositionIF} of current {@link AreaIF}
      *
      * @return centroid {@link PositionIF} of current {@link AreaIF}
      */
-    public PositionIF<IntCoordinate> centroid() {
+    public Position centroid() {
         return Position.create(ADD.apply(this.getBottomLeft().getColumn(), this.getTopRight().getColumn()) / 2,
             ADD.apply(this.getTopRight().getRow(), this.getBottomLeft().getRow()) / 2,
             ADD.apply(this.getBottomLeft().getDepth(), this.getTopRight().getDepth()) / 2);
@@ -90,7 +99,7 @@ public class Area implements AreaIF<IntCoordinate> {
      * @param bottomLeft - initial input bottom left {@link PositionIF}
      * @return new {@link AreaIF} instance
      */
-    public static AreaIF<IntCoordinate> create(@NonNull final PositionIF<IntCoordinate> topRight, @NonNull final PositionIF<IntCoordinate> bottomLeft) {
+    public static Area create(@NonNull final PositionIF<IntCoordinate> topRight, @NonNull final PositionIF<IntCoordinate> bottomLeft) {
         return Area.builder()
             .topRight(topRight)
             .bottomLeft(bottomLeft)

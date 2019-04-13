@@ -1,6 +1,7 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.utils;
 
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.AreaIF;
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Area;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl.Position;
 import lombok.NonNull;
@@ -26,18 +27,18 @@ import static com.wildbeeslabs.sensiblemetrics.ansifancy.operation.OperationFact
 @UtilityClass
 public class MatrixUtils {
 
-    public static <T> boolean equals(final T[][] m1, final T[][] m2, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(m1);
-        Objects.requireNonNull(m1[0]);
-        Objects.requireNonNull(m2);
-        Objects.requireNonNull(m2[0]);
+    public static <T> boolean equals(final MatrixIF<T> matrix1, final MatrixIF<T> matrix2, final Comparator<? super T> cmp) {
+        Objects.requireNonNull(matrix1);
+        Objects.requireNonNull(matrix1.getRow(0));
+        Objects.requireNonNull(matrix2);
+        Objects.requireNonNull(matrix2.getRow(0));
 
-        if (m1.length != m2.length || m1[0].length != m2[0].length) {
+        if (matrix1.height() != matrix2.height() || matrix1.width() != matrix2.width()) {
             return false;
         }
-        for (int k = 0; k < m1.length; k++) {
-            for (int j = 0; j < m1[0].length; j++) {
-                if (Objects.compare(m1[k][j], m2[k][j], cmp) != 0) {
+        for (int k = 0; k < matrix1.height(); k++) {
+            for (int j = 0; j < matrix1.width(); j++) {
+                if (Objects.compare(matrix1.get(k, j), matrix2.get(k, j), cmp) != 0) {
                     return false;
                 }
             }
@@ -45,79 +46,79 @@ public class MatrixUtils {
         return true;
     }
 
-    public static <T> void updateColumn(final T[][] matrix, int col, final T value) {
+    public static <T> void updateColumn(final MatrixIF<T> matrix, int col, final T value) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        checkBound(col, 0, matrix[0].length - 1);
-        for (final T[] row : matrix) {
-            row[col] = value;
+        checkBound(col, 0, matrix.width() - 1);
+        for (int i = 0; i < matrix.height(); i++) {
+            matrix.set(i, col, value);
         }
     }
 
-    public static <T> void updateRow(final T[][] matrix, int row, final T value) {
+    public static <T> void updateRow(final MatrixIF<T> matrix, int row, final T value) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[row]);
+        Objects.requireNonNull(matrix.getRow(row));
 
-        checkBound(row, 0, matrix.length - 1);
-        for (int j = 0; j < matrix[row].length; j++) {
-            matrix[row][j] = value;
+        checkBound(row, 0, matrix.height() - 1);
+        for (int j = 0; j < matrix.getRow(row).length; j++) {
+            matrix.set(row, j, value);
         }
     }
 
-    public static <T> void rotate(final T[][] matrix, int size) {
+    public static <T> void rotate(final MatrixIF<T> matrix, int size) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        assert matrix.length == matrix[0].length : "Should be a square matrix";
-        checkBound(size, 0, matrix.length - 1);
+        assert matrix.height() == matrix.width() : "Should be a square matrix";
+        checkBound(size, 0, matrix.height() - 1);
 
         for (int layer = 0; layer < size / 2; layer++) {
             int first = layer;
             int last = size - layer - 1;
             for (int i = first; i < last; i++) {
                 int offset = i - first;
-                T top = matrix[first][i];
-                matrix[first][i] = matrix[last - offset][first];
-                matrix[last - offset][first] = matrix[last][last - offset];
-                matrix[last][last - offset] = matrix[i][last];
-                matrix[i][last] = top;
+                T top = matrix.get(first, i);
+                matrix.set(first, i, matrix.get(last - offset, first));
+                matrix.set(last - offset, first, matrix.get(last, last - offset));
+                matrix.set(last, last - offset, matrix.get(i, last));
+                matrix.set(i, last, top);
             }
         }
     }
 
-    public static <T> void replaceBy(final T[][] matrix, final T value, final T defaultValue) {
+    public static <T> void replaceBy(final MatrixIF<T> matrix, final T value, final T defaultValue) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
         boolean rowHasZero = false, colHasZero = false;
-        for (final T row : matrix[0]) {
+        for (final T row : matrix.getRow(0)) {
             if (Objects.equals(row, value)) {
                 rowHasZero = true;
                 break;
             }
         }
-        for (final T[] col : matrix) {
-            if (Objects.equals(col[0], value)) {
+        for (int i = 0; i < matrix.height(); i++) {
+            if (Objects.equals(matrix.get(i, 0), value)) {
                 colHasZero = true;
                 break;
             }
         }
-        for (int i = 1; i < matrix.length; i++) {
-            for (int j = 1; j < matrix[0].length; j++) {
-                if (Objects.equals(matrix[i][j], value)) {
-                    matrix[i][0] = defaultValue;
-                    matrix[0][j] = defaultValue;
+        for (int i = 1; i < matrix.height(); i++) {
+            for (int j = 1; j < matrix.width(); j++) {
+                if (Objects.equals(matrix.get(i, j), value)) {
+                    matrix.set(i, 0, defaultValue);
+                    matrix.set(0, j, defaultValue);
                 }
             }
         }
-        for (int i = 1; i < matrix.length; i++) {
-            if (Objects.equals(matrix[i][0], defaultValue)) {
+        for (int i = 1; i < matrix.height(); i++) {
+            if (Objects.equals(matrix.get(i, 0), defaultValue)) {
                 updateRow(matrix, i, defaultValue);
             }
         }
-        for (int j = 1; j < matrix[0].length; j++) {
-            if (Objects.equals(matrix[0][j], defaultValue)) {
+        for (int j = 1; j < matrix.width(); j++) {
+            if (Objects.equals(matrix.get(0, j), defaultValue)) {
                 updateColumn(matrix, j, defaultValue);
             }
         }
@@ -129,40 +130,40 @@ public class MatrixUtils {
         }
     }
 
-    public static <T> void shuffle(final T[][] matrix) {
+    public static <T> void shuffle(final MatrixIF<T> matrix) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        int nRows = matrix.length;
-        int nColumns = matrix[0].length;
+        int nRows = matrix.height();
+        int nColumns = matrix.width();
         int num = nRows * nColumns;
         for (int i = 0; i < num; i++) {
             int j = i + RandomUtils.nextInt(0, num - i);
             if (i != j) {
                 int row1 = i / nColumns;
                 int column1 = (i - row1 * nColumns) % nColumns;
-                T cell1 = matrix[row1][column1];
+                T cell1 = matrix.get(row1, column1);
 
                 int row2 = j / nColumns;
                 int column2 = (j - row2 * nColumns) % nColumns;
-                T cell2 = matrix[row2][column2];
+                T cell2 = matrix.get(row2, column2);
 
-                matrix[row1][column1] = cell2;
-                matrix[row2][column2] = cell1;
+                matrix.set(row1, column1, cell2);
+                matrix.set(row2, column2, cell1);
             }
         }
     }
 
-    public static <T> boolean exists(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> boolean exists(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
         int row = 0;
-        int col = matrix[0].length - 1;
-        while (row < matrix.length && col >= 0) {
-            if (Objects.compare(matrix[row][col], value, cmp) == 0) {
+        int col = matrix.width() - 1;
+        while (row < matrix.height() && col >= 0) {
+            if (Objects.compare(matrix.get(row, col), value, cmp) == 0) {
                 return true;
-            } else if (Objects.compare(matrix[row][col], value, cmp) > 0) {
+            } else if (Objects.compare(matrix.get(row, col), value, cmp) > 0) {
                 col--;
             } else {
                 row++;
@@ -171,20 +172,20 @@ public class MatrixUtils {
         return false;
     }
 
-    public static <T> Position find(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> Position find(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
         final Position origin = Position.create(0, 0);
-        final Position dest = Position.create(matrix.length - 1, matrix[0].length - 1);
+        final Position dest = Position.create(matrix.height() - 1, matrix.width() - 1);
         return find(matrix, origin, dest, value, cmp);
     }
 
-    private static <T> Position find(final T[][] matrix, final Position origin, final Position dest, final T value, final Comparator<? super T> cmp) {
+    private static <T> Position find(final MatrixIF<T> matrix, final Position origin, final Position dest, final T value, final Comparator<? super T> cmp) {
         if (!origin.inBounds(matrix) || !dest.inBounds(matrix)) {
             return null;
         }
-        if (Objects.compare(matrix[origin.getRow().getValue()][origin.getColumn().getValue()], value, cmp) == 0) {
+        if (Objects.compare(matrix.get(origin.getRow().getValue(), origin.getColumn().getValue()), value, cmp) == 0) {
             return origin;
         } else if (!origin.isBefore(dest)) {
             return null;
@@ -196,7 +197,7 @@ public class MatrixUtils {
 
         while (start.isBefore(end)) {
             Position p = Position.middle(start, end);
-            if (Objects.compare(value, matrix[p.getRow().getValue()][p.getColumn().getValue()], cmp) > 0) {
+            if (Objects.compare(value, matrix.get(p.getRow().getValue(), p.getColumn().getValue()), cmp) > 0) {
                 start.getRow().setValue(p.getRow().getValue() + 1);
                 start.getColumn().setValue(p.getColumn().getValue() + 1);
             } else {
@@ -207,7 +208,7 @@ public class MatrixUtils {
         return partitionAndSearch(matrix, origin, dest, start, value, cmp);
     }
 
-    private static <T> Position partitionAndSearch(final T[][] matrix, final Position origin, final Position dest, final Position pivot, final T value, final Comparator<? super T> cmp) {
+    private static <T> Position partitionAndSearch(final MatrixIF<T> matrix, final Position origin, final Position dest, final Position pivot, final T value, final Comparator<? super T> cmp) {
         final Position lowerLeftOrigin = Position.create(pivot.getRow().getValue(), origin.getColumn().getValue());
         final Position lowerLeftDest = Position.create(dest.getRow().getValue(), pivot.getColumn().getValue() - 1);
         final Position upperRightOrigin = Position.create(origin.getRow().getValue(), pivot.getColumn().getValue());
@@ -220,22 +221,22 @@ public class MatrixUtils {
         return lowerLeft;
     }
 
-    public static <T> Position search(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> Position search(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        int l = matrix.length - 1;
+        int l = matrix.height() - 1;
         int k = 0;
-        while (l >= 0 && k <= matrix[0].length - 1) {
-            if (Objects.compare(matrix[l][k], value, cmp) < 0) {
+        while (l >= 0 && k <= matrix.width() - 1) {
+            if (Objects.compare(matrix.get(l, k), value, cmp) < 0) {
                 k++;
-            } else if (Objects.compare(matrix[l][k], value, cmp) > 0) {
+            } else if (Objects.compare(matrix.get(l, k), value, cmp) > 0) {
                 l--;
             } else {
                 break;
             }
         }
-        return (Objects.compare(matrix[l][k], value, cmp) == 0) ? Position.create(l, k) : null;
+        return (Objects.compare(matrix.get(l, k), value, cmp) == 0) ? Position.create(l, k) : null;
     }
 
     public static int[][] randomMatrix(int rows, int columns, int min, int max) {
@@ -264,22 +265,22 @@ public class MatrixUtils {
         return matrix;
     }
 
-    public static <T> boolean fill(final T[][] matrix, int row, int column, final T value) {
+    public static <T> boolean fill(final MatrixIF<T> matrix, int row, int column, final T value) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        if (Objects.equals(value, matrix[row][column])) {
+        if (Objects.equals(value, matrix.get(row, column))) {
             return false;
         }
-        return fill(matrix, row, column, matrix[row][column], value);
+        return fill(matrix, row, column, matrix.get(row, column), value);
     }
 
-    private static <T> boolean fill(final T[][] matrix, int row, int column, final T oldValue, final T newValue) {
-        checkBound(row, 0, matrix.length - 1);
-        checkBound(column, 0, matrix[0].length - 1);
+    private static <T> boolean fill(final MatrixIF<T> matrix, int row, int column, final T oldValue, final T newValue) {
+        checkBound(row, 0, matrix.height() - 1);
+        checkBound(column, 0, matrix.width() - 1);
 
-        if (Objects.equals(oldValue, matrix[row][column])) {
-            matrix[row][column] = newValue;
+        if (Objects.equals(oldValue, matrix.get(row, column))) {
+            matrix.set(row, column, newValue);
             fill(matrix, row - 1, column, oldValue, newValue);
             fill(matrix, row + 1, column, oldValue, newValue);
             fill(matrix, row, column - 1, oldValue, newValue);
@@ -288,11 +289,11 @@ public class MatrixUtils {
         return true;
     }
 
-    public static <T> AreaIF findSquare(final T[][] matrix, final T value, final Comparator<? super T> cmp) {
+    public static <T> AreaIF findSquare(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        for (int i = matrix.length; i >= 1; i--) {
+        for (int i = matrix.height(); i >= 1; i--) {
             final AreaIF square = findSquareWithSize(matrix, value, i, cmp);
             if (Objects.nonNull(square)) {
                 return square;
@@ -301,8 +302,8 @@ public class MatrixUtils {
         return null;
     }
 
-    private static <T> AreaIF findSquareWithSize(final T[][] matrix, final T value, int squareSize, final Comparator<? super T> cmp) {
-        int count = matrix.length - squareSize + 1;
+    private static <T> AreaIF findSquareWithSize(final MatrixIF<T> matrix, final T value, int squareSize, final Comparator<? super T> cmp) {
+        int count = matrix.height() - squareSize + 1;
         for (int row = 0; row < count; row++) {
             for (int col = 0; col < count; col++) {
                 if (isSquare(matrix, value, row, col, squareSize, cmp)) {
@@ -313,51 +314,50 @@ public class MatrixUtils {
         return null;
     }
 
-    private static <T> boolean isSquare(final T[][] matrix, final T value, int row, int col, int size, final Comparator<? super T> cmp) {
+    private static <T> boolean isSquare(final MatrixIF<T> matrix, final T value, int row, int col, int size, final Comparator<? super T> cmp) {
         for (int j = 0; j < size; j++) {
-            if (Objects.compare(matrix[row][col + j], value, cmp) == 0) {
+            if (Objects.compare(matrix.get(row, col + j), value, cmp) == 0) {
                 return false;
             }
-            if (Objects.compare(matrix[row + size - 1][col + j], value, cmp) == 0) {
+            if (Objects.compare(matrix.get(row + size - 1, col + j), value, cmp) == 0) {
                 return false;
             }
         }
         for (int i = 1; i < size - 1; i++) {
-            if (Objects.compare(matrix[row + i][col], value, cmp) == 0) {
+            if (Objects.compare(matrix.get(row + i, col), value, cmp) == 0) {
                 return false;
             }
-            if (Objects.compare(matrix[row + i][col + size - 1], value, cmp) == 0) {
+            if (Objects.compare(matrix.get(row + i, col + size - 1), value, cmp) == 0) {
                 return false;
             }
         }
         return true;
     }
 
-    public static <T> boolean checkDiagonal(final T[][] matrix, boolean isMainDiagonal, final Comparator<? super T> cmp) {
+    public static <T> boolean checkDiagonal(final MatrixIF<T> matrix, boolean isMainDiagonal, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        int row = 0, column = isMainDiagonal ? 0 : matrix[0].length - 1;
+        int row = 0, column = isMainDiagonal ? 0 : matrix.width() - 1;
         int direction = isMainDiagonal ? 1 : -1;
-        final T first = matrix[0][column];
-        for (final T[] ignored : matrix) {
-            if (Objects.compare(matrix[row][column], first, cmp) != 0) {
+        final T first = matrix.get(0, column);
+        for (int i = 0; i < matrix.height(); i++) {
+            if (Objects.compare(matrix.get(i, column), first, cmp) != 0) {
                 return false;
             }
-            row++;
             column += direction;
         }
         return true;
     }
 
-    public static <T> List<Integer> computeAreaSize(final T[][] matrix, final T emptyValue, final Comparator<? super T> cmp) {
+    public static <T> List<Integer> computeAreaSize(final MatrixIF<T> matrix, final T emptyValue, final Comparator<? super T> cmp) {
         Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix[0]);
+        Objects.requireNonNull(matrix.getRow(0));
 
-        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
+        boolean[][] visited = new boolean[matrix.height()][matrix.width()];
         final List<Integer> areaSize = new ArrayList<>();
-        for (int r = 0; r < matrix.length; r++) {
-            for (int c = 0; c < matrix[0].length; c++) {
+        for (int r = 0; r < matrix.height(); r++) {
+            for (int c = 0; c < matrix.width(); c++) {
                 int size = computeArea(matrix, visited, r, c, emptyValue, cmp);
                 if (size > 0) {
                     areaSize.add(size);
@@ -367,8 +367,8 @@ public class MatrixUtils {
         return areaSize;
     }
 
-    private static <T> int computeArea(final T[][] matrix, boolean[][] visited, int row, int col, final T emptyValue, final Comparator<? super T> cmp) {
-        if (row < 0 || col < 0 || row >= matrix.length || col >= matrix[0].length || visited[row][col] || Objects.compare(matrix[row][col], emptyValue, cmp) == 0) {
+    private static <T> int computeArea(final MatrixIF<T> matrix, boolean[][] visited, int row, int col, final T emptyValue, final Comparator<? super T> cmp) {
+        if (row < 0 || col < 0 || row >= matrix.height() || col >= matrix.width() || visited[row][col] || Objects.compare(matrix.get(row, col), emptyValue, cmp) == 0) {
             return 0;
         }
         int size = 1;

@@ -23,6 +23,7 @@
  */
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
+import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.wildbeeslabs.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import lombok.*;
 
@@ -82,13 +83,13 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> divide(int rowScale, int colScale) {
+    public <T extends Position> T divide(int rowScale, int colScale) {
         if (0 == rowScale || 0 == colScale) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, rowOffset={%s}, colOffset={%s}", rowScale, colScale));
         }
         getRow().setValue(getRow().getValue() / rowScale);
         getColumn().setValue(getColumn().getValue() / colScale);
-        return this;
+        return (T) this;
     }
 
     /**
@@ -98,10 +99,10 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param colScale - initial input column scale
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> multiply(int rowScale, int colScale) {
+    public <T extends Position> T multiply(int rowScale, int colScale) {
         getRow().setValue(getRow().getValue() * rowScale);
         getColumn().setValue(getColumn().getValue() * colScale);
-        return this;
+        return (T) this;
     }
 
     /**
@@ -111,10 +112,10 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param colOffset - initial input column offset
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> shift(int rowOffset, int colOffset) {
+    public <T extends Position> T shift(int rowOffset, int colOffset) {
         getRow().setValue(getRow().getValue() + rowOffset);
         getColumn().setValue(getColumn().getValue() + colOffset);
-        return this;
+        return (T) this;
     }
 
     /**
@@ -122,10 +123,10 @@ public class Position implements PositionIF<IntCoordinate> {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> negate() {
+    public <T extends Position> T negate() {
         getRow().setValue(-getRow().getValue());
         getColumn().setValue(-getColumn().getValue());
-        return this;
+        return (T) this;
     }
 
     /**
@@ -142,14 +143,14 @@ public class Position implements PositionIF<IntCoordinate> {
      *
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> normalize() {
+    public <T extends Position> T normalize() {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
         }
         getRow().setValue(toInt(getRow().getValue() / length));
         getColumn().setValue(toInt(getColumn().getValue() / length));
-        return this;
+        return (T) this;
     }
 
     /**
@@ -158,7 +159,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param angle - initial input angle to rotate by
      * @return updated {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> rotate(double angle) {
+    public <T extends Position> T rotate(double angle) {
         double length = this.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -183,7 +184,7 @@ public class Position implements PositionIF<IntCoordinate> {
         this.rotateX(angle);
         this.rotateZ(theta);
         this.rotateY(phi);
-        return this;
+        return (T) this;
     }
 
     /**
@@ -228,12 +229,12 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public PositionIF<IntCoordinate> vector(final PositionIF<IntCoordinate> position) {
+    public <T extends Position> T vector(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
         int vx = MULTIPLY.apply(getColumn(), position.getDepth()) - MULTIPLY.apply(getDepth(), position.getRow());
         int vy = MULTIPLY.apply(getDepth(), position.getColumn()) - MULTIPLY.apply(getColumn(), position.getDepth());
         int vz = MULTIPLY.apply(getColumn(), position.getRow()) - MULTIPLY.apply(getRow(), position.getColumn());
-        return Position.create(vx, vy, vz);
+        return (T) Position.create(vx, vy, vz);
     }
 
     /**
@@ -242,7 +243,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return updated {@link Position} instance
      */
-    public int scalar(final PositionIF<IntCoordinate> position) {
+    public <T extends Position> int scalar(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
         return MULTIPLY.apply(getColumn(), position.getColumn())
             + MULTIPLY.apply(getRow(), position.getRow())
@@ -255,7 +256,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return euclid distance
      */
-    public double distance(final PositionIF<IntCoordinate> position) {
+    public <T extends Position> double distance(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
         int res = SUBTRACT.apply(getColumn(), position.getColumn()) * 2
             + SUBTRACT.apply(getRow(), position.getRow()) * 2
@@ -269,7 +270,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param position - initial input {@link PositionIF} value to calculate by
      * @return angle value
      */
-    public double angle(final PositionIF<IntCoordinate> position) {
+    public <T extends Position> double angle(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
@@ -297,8 +298,8 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param depthOffset - initial input depth offset
      * @return new {@link PositionIF} instance
      */
-    public PositionIF<IntCoordinate> offset(int rowOffset, int colOffset, int depthOffset) {
-        return Position.create(this.getRow().getValue() + rowOffset, this.getColumn().getValue() + colOffset, this.getDepth().getValue() + depthOffset);
+    public <T extends Position> T offset(int rowOffset, int colOffset, int depthOffset) {
+        return (T) Position.create(this.getRow().getValue() + rowOffset, this.getColumn().getValue() + colOffset, this.getDepth().getValue() + depthOffset);
     }
 
     /**
@@ -361,11 +362,11 @@ public class Position implements PositionIF<IntCoordinate> {
      * @param area - initial input {@code T} area
      * @return true - if current position within bounds, false - otherwise
      */
-    public <T> boolean inBounds(final T[][] area) {
-        if (Objects.isNull(area) || Objects.isNull(area[0])) return false;
+    public <T> boolean inBounds(final MatrixIF<T> area) {
+        if (Objects.isNull(area) || Objects.isNull(area.getRow(0))) return false;
         return (this.getRow().getValue() >= 0 && this.getColumn().getValue() >= 0
-            && this.getRow().getValue() < area.length
-            && this.getColumn().getValue() < area[0].length);
+            && this.getRow().getValue() < area.height()
+            && this.getColumn().getValue() < area.width());
     }
 
     /**

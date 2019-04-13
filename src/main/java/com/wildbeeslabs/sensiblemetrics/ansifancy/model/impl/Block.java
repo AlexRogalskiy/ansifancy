@@ -8,8 +8,6 @@ import lombok.*;
 
 import java.util.Objects;
 
-import static com.wildbeeslabs.sensiblemetrics.ansifancy.utils.MatrixUtils.checkBound;
-
 /**
  * Default {@link BlockIF} implementation
  *
@@ -31,21 +29,21 @@ public class Block implements BlockIF<IntCoordinate> {
     /**
      * Block {@link Area} position
      */
-    private final AreaIF<IntCoordinate> area;
+    private final Area area;
 
     /**
      * Array of block styles {@link StyleIF}
      */
-    public final StyleIF[][] matrix;
+    public final Matrix matrix;
 
     /**
      * Default block constructor by input width / height parameters
      *
      * @param area - initial input {@link AreaIF}
      */
-    public Block(final AreaIF<IntCoordinate> area) {
+    public Block(final Area area) {
         this.area = Objects.requireNonNull(area);
-        this.matrix = new StyleIF[this.area.height()][this.area.width()];
+        this.matrix = new Matrix(this.area.height(), this.area.width());
     }
 
     /**
@@ -56,9 +54,7 @@ public class Block implements BlockIF<IntCoordinate> {
      * @return {@link StyleIF}
      */
     public StyleIF getStyle(int i, int j) {
-        checkBound(i, 0, this.area.height() - 1);
-        checkBound(j, 0, this.area.width() - 1);
-        return this.matrix[i][j];
+        return this.matrix.get(i, j);
     }
 
     /**
@@ -68,53 +64,28 @@ public class Block implements BlockIF<IntCoordinate> {
      * @param j     - initial input column value
      * @param style - initial input {@link StyleIF} instance
      */
-    public void setStyle(int i, int j, final StyleIF style) {
-        checkBound(i, 0, this.area.height() - 1);
-        checkBound(j, 0, this.area.width() - 1);
-        this.matrix[i][j] = style;
+    public void set(int i, int j, final StyleIF style) {
+        this.matrix.set(i, j, style);
     }
 
     /**
-     * Returns copy of {@link StyleIF} by input height / width offset
+     * Returns array of {@link StyleIF} by row index
      *
-     * @return copy of {@link StyleIF}
+     * @param i - initial input row index
+     * @return array of {@link StyleIF}
      */
-    protected StyleIF[][] copy() {
-        return this.copy(this.area.height(), this.area.width());
+    public StyleIF[] getRow(int i) {
+        return this.matrix.getRow(i);
     }
 
     /**
-     * Returns matrix copy of {@link StyleIF} by input height / width offset
-     *
-     * @param hOffset - initial input height offset
-     * @param wOffset - initial input width offset
-     * @return matrix copy of {@link StyleIF}
-     */
-    protected StyleIF[][] copy(int hOffset, int wOffset) {
-        checkBound(hOffset, 0, this.area.height());
-        checkBound(wOffset, 0, this.area.width());
-
-        final StyleIF temp[][] = new StyleIF[hOffset][wOffset];
-        for (int i = 0; i < hOffset; i++) {
-            System.arraycopy(this.matrix[i], 0, temp[i], 0, wOffset);
-        }
-        return temp;
-    }
-
-    /**
-     * Returns {@link String} representation of a column by input index
+     * Returns array of {@link StyleIF} by column index
      *
      * @param i - initial input column index
-     * @return {@link String} representation of a column
+     * @return array of {@link StyleIF}
      */
-    public String getColumn(int i) {
-        checkBound(i, 0, this.area.width());
-
-        final StringBuffer sb = new StringBuffer();
-        for (int r = 0; r < this.area.height(); r++) {
-            sb.append(this.matrix[r][i]);
-        }
-        return sb.toString();
+    public StyleIF[] getColumn(int i) {
+        return this.matrix.getColumn(i);
     }
 
     /**
@@ -123,7 +94,7 @@ public class Block implements BlockIF<IntCoordinate> {
      * @param area - initial input {@link AreaIF}
      * @return new {@link BlockIF} instance
      */
-    public static Block create(@NonNull final AreaIF<IntCoordinate> area) {
+    public static Block create(@NonNull final Area area) {
         return Block.builder()
             .area(area)
             .build();
@@ -149,8 +120,8 @@ public class Block implements BlockIF<IntCoordinate> {
     @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
     public Block clone() {
         return Block.builder()
-            .area(this.area)
-            .matrix(this.copy())
+            .area(this.area.copy())
+            .matrix(this.matrix.copy())
             .build();
     }
 }
