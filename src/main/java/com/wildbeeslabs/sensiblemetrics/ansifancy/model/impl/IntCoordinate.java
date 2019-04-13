@@ -1,6 +1,6 @@
 package com.wildbeeslabs.sensiblemetrics.ansifancy.model.impl;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,14 +11,20 @@ import lombok.ToString;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
-@Builder
 @Data
+@AllArgsConstructor(staticName = "of")
 @EqualsAndHashCode
 @ToString
-public class IntCoordinate {
+public class IntCoordinate implements Comparable<IntCoordinate> {
 
     /**
-     * Default coordinate value
+     * Coordinate value
      */
     int value;
+
+    @Override
+    public int compareTo(final IntCoordinate o) {
+        if (this.getValue() == o.getValue()) return 0;
+        return this.getValue() < o.getValue() ? -1 : 1;
+    }
 }

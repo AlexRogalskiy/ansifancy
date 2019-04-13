@@ -55,7 +55,7 @@ public class PointProcessor<T> implements ProcessorIF<T, PointIF> {
 //                    throw unknownEscapeClass(escapeClassName);
 //                }
 //                buff.append(ansiClass.getCharSequences());
-//                ansiClasses.add(ansiClass);
+//                ansiClasses.ADD(ansiClass);
 //            } else if (token instanceof FreeText) {
 //                buff.append(((FreeText) token).getText());
 //            } else if (token instanceof EscapeClassEnd) {

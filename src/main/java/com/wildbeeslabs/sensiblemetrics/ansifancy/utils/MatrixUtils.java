@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import static com.wildbeeslabs.sensiblemetrics.ansifancy.operation.OperationFactory.SUBTRACT;
+
 /**
  * Matrix utilities implementation
  */
@@ -189,12 +191,11 @@ public class MatrixUtils {
         }
 
         final Position start = origin.clone();
-        int diagDist = Math.min(dest.getRow().getValue() - origin.getRow().getValue(), dest.getColumn().getValue() - origin.getColumn().getValue());
+        int diagDist = Math.min(SUBTRACT.apply(dest.getRow(), origin.getRow()), SUBTRACT.apply(dest.getColumn(), origin.getColumn()));
         final Position end = Position.create(start.getRow().getValue() + diagDist, start.getColumn().getValue() + diagDist);
-        final Position p = Position.create(0, 0);
 
         while (start.isBefore(end)) {
-            p.average(start, end);
+            Position p = Position.middle(start, end);
             if (Objects.compare(value, matrix[p.getRow().getValue()][p.getColumn().getValue()], cmp) > 0) {
                 start.getRow().setValue(p.getRow().getValue() + 1);
                 start.getColumn().setValue(p.getColumn().getValue() + 1);

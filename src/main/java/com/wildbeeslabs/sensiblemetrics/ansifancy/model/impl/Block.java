@@ -84,19 +84,19 @@ public class Block implements BlockIF<IntCoordinate> {
     }
 
     /**
-     * Returns copy of {@link StyleIF} by input height / width offset
+     * Returns matrix copy of {@link StyleIF} by input height / width offset
      *
-     * @param heightOffset - initial input height offset
-     * @param widthOffset  - initial input width offset
-     * @return copy of {@link StyleIF}
+     * @param hOffset - initial input height offset
+     * @param wOffset - initial input width offset
+     * @return matrix copy of {@link StyleIF}
      */
-    protected StyleIF[][] copy(int heightOffset, int widthOffset) {
-        checkBound(heightOffset, 0, this.area.height());
-        checkBound(widthOffset, 0, this.area.width());
+    protected StyleIF[][] copy(int hOffset, int wOffset) {
+        checkBound(hOffset, 0, this.area.height());
+        checkBound(wOffset, 0, this.area.width());
 
-        final StyleIF temp[][] = new StyleIF[heightOffset][widthOffset];
-        for (int i = 0; i < heightOffset; i++) {
-            System.arraycopy(this.matrix[i], 0, temp[i], 0, widthOffset);
+        final StyleIF temp[][] = new StyleIF[hOffset][wOffset];
+        for (int i = 0; i < hOffset; i++) {
+            System.arraycopy(this.matrix[i], 0, temp[i], 0, wOffset);
         }
         return temp;
     }
@@ -108,6 +108,8 @@ public class Block implements BlockIF<IntCoordinate> {
      * @return {@link String} representation of a column
      */
     public String getColumn(int i) {
+        checkBound(i, 0, this.area.width());
+
         final StringBuffer sb = new StringBuffer();
         for (int r = 0; r < this.area.height(); r++) {
             sb.append(this.matrix[r][i]);

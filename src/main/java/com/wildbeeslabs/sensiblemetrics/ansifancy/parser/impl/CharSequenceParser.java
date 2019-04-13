@@ -91,7 +91,7 @@ public class CharSequenceParser<R extends CharSequence> implements ParserIF<Char
 //                    throw unknownEscapeClass(escapeClassName);
 //                }
 //                buff.append(ansiClass.getCharSequences());
-//                ansiClasses.add(ansiClass);
+//                ansiClasses.ADD(ansiClass);
 //            } else if (token instanceof FreeText) {
 //                buff.append(((FreeText) token).getText());
 //            } else if (token instanceof EscapeClassEnd) {

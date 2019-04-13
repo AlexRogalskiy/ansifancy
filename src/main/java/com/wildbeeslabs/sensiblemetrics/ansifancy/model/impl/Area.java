@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.util.Objects;
 
+import static com.wildbeeslabs.sensiblemetrics.ansifancy.operation.OperationFactory.*;
+
 /**
  * Default {@link AreaIF} implementation
  *
@@ -41,10 +43,10 @@ public class Area implements AreaIF<IntCoordinate> {
      */
     public boolean isOverlap(final AreaIF<IntCoordinate> other) {
         if (Objects.isNull(other)) return false;
-        if (getTopRight().getRow().getValue() < other.getBottomLeft().getRow().getValue() || getBottomLeft().getRow().getValue() > other.getTopRight().getRow().getValue()) {
+        if (DEFAULT_COORDINATE_CMP.compare(getTopRight().getRow(), other.getBottomLeft().getRow()) < 0 || DEFAULT_COORDINATE_CMP.compare(getBottomLeft().getRow(), other.getTopRight().getRow()) > 0) {
             return false;
         }
-        if (getTopRight().getColumn().getValue() < other.getBottomLeft().getColumn().getValue() || getBottomLeft().getColumn().getValue() > other.getTopRight().getColumn().getValue()) {
+        if (DEFAULT_COORDINATE_CMP.compare(getTopRight().getColumn(), other.getBottomLeft().getColumn()) < 0 || DEFAULT_COORDINATE_CMP.compare(getBottomLeft().getColumn(), other.getTopRight().getColumn()) > 0) {
             return false;
         }
         return true;
@@ -57,7 +59,7 @@ public class Area implements AreaIF<IntCoordinate> {
      */
     @Override
     public int width() {
-        return (getTopRight().getColumn().getValue() - getBottomLeft().getColumn().getValue());
+        return SUBTRACT.apply(getTopRight().getColumn(), getBottomLeft().getColumn());
     }
 
     /**
@@ -67,7 +69,18 @@ public class Area implements AreaIF<IntCoordinate> {
      */
     @Override
     public int height() {
-        return (getTopRight().getRow().getValue() - getTopRight().getRow().getValue());
+        return SUBTRACT.apply(getTopRight().getRow(), getTopRight().getRow());
+    }
+
+    /**
+     * Returns centroid {@link PositionIF} of current {@link AreaIF}
+     *
+     * @return centroid {@link PositionIF} of current {@link AreaIF}
+     */
+    public PositionIF<IntCoordinate> centroid() {
+        return Position.create(ADD.apply(this.getBottomLeft().getColumn(), this.getTopRight().getColumn()) / 2,
+            ADD.apply(this.getTopRight().getRow(), this.getBottomLeft().getRow()) / 2,
+            ADD.apply(this.getBottomLeft().getDepth(), this.getTopRight().getDepth()) / 2);
     }
 
     /**
@@ -93,6 +106,7 @@ public class Area implements AreaIF<IntCoordinate> {
      * @return new {@link AreaIF} instance
      */
     public static AreaIF<IntCoordinate> create(final int row, final int col, final int size) {
+        assert size >= 0 : "Should be greater than or equal zero";
         return create(Position.create(row, col + size), Position.create(row + size, col));
     }
 }

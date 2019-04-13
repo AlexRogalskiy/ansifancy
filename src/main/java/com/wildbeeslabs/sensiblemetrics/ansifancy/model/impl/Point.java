@@ -218,7 +218,7 @@ public class Point implements PointIF {
     /**
      * Default foreground color map
      */
-    private static final PointIF[] FOREGROUND_COLOR_MAP = {
+    public static final PointIF[] FOREGROUND_COLOR_MAP = {
         BlACK_FOREGROUND,
         RED_FOREGROUND,
         GREEN_FOREGROUND,
@@ -231,7 +231,7 @@ public class Point implements PointIF {
     /**
      * Default foreground bright color map
      */
-    private static final PointIF[] FOREGROUND_BRIGHT_COLOR_MAP = {
+    public static final PointIF[] FOREGROUND_BRIGHT_COLOR_MAP = {
         BRIGHT_BLACK_FOREGROUND,
         BRIGHT_RED_FOREGROUND,
         BRIGHT_GREEN_FOREGROUND,
@@ -244,7 +244,7 @@ public class Point implements PointIF {
     /**
      * Default background color map
      */
-    private static final PointIF[] BACKGROUND_COLOR_MAP = {
+    public static final PointIF[] BACKGROUND_COLOR_MAP = {
         BLACK_BACKGROUND,
         RED_BACKGROUND,
         GREEN_BACKGROUND,
@@ -257,7 +257,7 @@ public class Point implements PointIF {
     /**
      * Default background bright color map
      */
-    private static final PointIF[] BACKGROUND_BRIGHT_COLOR_MAP = {
+    public static final PointIF[] BACKGROUND_BRIGHT_COLOR_MAP = {
         BRIGHT_BLACK_BACKGROUND,
         BRIGHT_RED_BACKGROUND,
         BRIGHT_GREEN_BACKGROUND,
@@ -297,16 +297,29 @@ public class Point implements PointIF {
      * @param type   - initial input type
      * @return new {@link PointIF} instance
      */
-    public static PointIF create(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
+    public static PointIF create(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final String code, final PointType type) {
         if (isEmpty(symbol)) {
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
         return Point.builder()
             .name(name)
             .symbol(symbol)
-            .code(String.format(DEFAULT_ESCAPE_FORMAT, code))
+            .code(code)
             .type(type)
             .build();
+    }
+
+    /**
+     * Returns new {@link PointIF} instance by input data parameters
+     *
+     * @param name   - initial input symbol name {@link CharSequence}
+     * @param symbol - initial input symbol {@link CharSequence}
+     * @param code   - initial input code
+     * @param type   - initial input type
+     * @return new {@link PointIF} instance
+     */
+    public static PointIF create(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
+        return create(name, symbol, String.format(DEFAULT_ESCAPE_FORMAT, code), type);
     }
 
     /**
@@ -319,15 +332,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final PointType type) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRedComponent(), color.getGreenComponent(), color.getBlueComponent()))
-            .type(type)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRedComponent(), color.getGreenComponent(), color.getBlueComponent()), type);
     }
 
     /**
@@ -339,15 +344,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getForegroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_FOREGROUND_COLOR_ESCAPE_FORMAT, code))
-            .type(PointType.FOREGROUND_COLOR)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_FOREGROUND_COLOR_ESCAPE_FORMAT, code), PointType.FOREGROUND_COLOR);
     }
 
     /**
@@ -359,15 +356,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getBackgroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_BACKGROUND_COLOR_ESCAPE_FORMAT, code))
-            .type(PointType.BACKGROUND_COLOR)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_BACKGROUND_COLOR_ESCAPE_FORMAT, code), PointType.BACKGROUND_COLOR);
     }
 
     /**
@@ -379,15 +368,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     private static PointIF getBrightColorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_BRIGHT_COLOR_ESCAPE_FORMAT, code))
-            .type(type)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_BRIGHT_COLOR_ESCAPE_FORMAT, code), type);
     }
 
     /**
@@ -400,15 +381,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int position, final CursorPositionType type) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_CURSOR_ESCAPE_FORMAT, position, type))
-            .type(PointType.CURSOR_CONTROL)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_CURSOR_ESCAPE_FORMAT, position, type), PointType.CURSOR_CONTROL);
     }
 
     /**
@@ -421,15 +394,7 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getPositionCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int row, final int column) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_CURSOR_POSITION_ESCAPE_FORMAT, row, column, CursorPositionType.H))
-            .type(PointType.CURSOR_CONTROL)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_CURSOR_POSITION_ESCAPE_FORMAT, row, column, CursorPositionType.H), PointType.CURSOR_CONTROL);
     }
 
     /**
@@ -441,14 +406,6 @@ public class Point implements PointIF {
      * @return new {@link PointIF} instance
      */
     public static PointIF getServiceCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final char code) {
-        if (isEmpty(symbol)) {
-            throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
-        }
-        return Point.builder()
-            .name(name)
-            .symbol(symbol)
-            .code(String.format(DEFAULT_CURSOR_SERVICE_ESCAPE_FORMAT, code))
-            .type(PointType.CURSOR_CONTROL)
-            .build();
+        return create(name, symbol, String.format(DEFAULT_CURSOR_SERVICE_ESCAPE_FORMAT, code), PointType.CURSOR_CONTROL);
     }
 }

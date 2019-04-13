@@ -88,7 +88,7 @@ public class Style implements StyleIF {
     private String title;
 
     /**
-     * Style content
+     * Style description
      */
     private String description;
 
@@ -114,7 +114,7 @@ public class Style implements StyleIF {
     }
 
     /**
-     * Sets current {@link StyleIF} by input {@link Iterable} collection of {@link PointIF}
+     * Updates current {@link StyleIF} by input {@link Iterable} collection of {@link PointIF}
      *
      * @param points - initial input {@link Iterable} collection of {@link PointIF}
      */
@@ -145,7 +145,7 @@ public class Style implements StyleIF {
      *
      * @param name   - initial input point name {@link CharSequence}
      * @param symbol - initial input point symbol {@link CharSequence}
-     * @param code   - initial input point code {@link CharSequence}
+     * @param code   - initial input point code {@code PointType}
      * @return updated {@link StyleIF}
      */
     public StyleIF add(final CharSequence name, final CharSequence symbol, final int code, final PointIF.PointType type) {
@@ -196,7 +196,7 @@ public class Style implements StyleIF {
      *
      * @param title       - initial input style title {@link String}
      * @param description - initial input style description {@link String}
-     * @param points      - initial input array of style points {@link PointIF}
+     * @param points      - initial input collection of style points {@link PointIF}
      * @return new {@link StyleIF} instance
      */
     public static StyleIF create(final String title, final String description, final PointIF... points) {
@@ -230,7 +230,7 @@ public class Style implements StyleIF {
     /**
      * Returns {@link PointIF} instance by input point symbol
      *
-     * @param key - initial input point symbol to check by
+     * @param key - initial input point symbol {@link CharSequence} to check by
      * @return {@link PointIF} instance
      */
     public PointIF getPoint(final CharSequence key) {

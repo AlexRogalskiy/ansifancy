@@ -64,27 +64,27 @@ public class MarkerProcessor<T> implements ProcessorIF<T, MarkerIF> {
 //                appendExistingFreeText(tokens, freeText, i);
 //                // We obtain the ascii escape class name
 //                String escapeClassName = ParserUtils.getUntilSpaceOrEnd(source, i + 1);
-//                tokens.add(new EscapeClassBegin(i, escapeClassName));
+//                tokens.ADD(new EscapeClassBegin(i, escapeClassName));
 //                // We skip to the character where the class name ends.
 //                i += escapeClassName.length() + 1;
 //            } else if (now == CHR_ESCAPE_CLASS_END) {
 //                // This is where we exit from potential FreeText so everything we collected
 //                // so far is going to be added in the final list of tokens
 //                appendExistingFreeText(tokens, freeText, i);
-//                tokens.add(new EscapeClassEnd(i));
+//                tokens.ADD(new EscapeClassEnd(i));
 //            } else {
 //                freeText.append(now);
 //            }
 //            i++;
 //        }
-//        // If there was anything in the freetext buffer we add it to the list of tokens
+//        // If there was anything in the freetext buffer we ADD it to the list of tokens
 //        appendExistingFreeText(tokens, freeText, i);
         return (R) tokens;
     }
 
 //    public void appendExistingFreeText(final List<MarkerIF> tokens, StringBuilder freeTextBuff, int idx) {
 //        if (freeTextBuff.length() != 0) {
-//            tokens.add(new FreeText(idx, freeTextBuff.toString()));
+//            tokens.ADD(new FreeText(idx, freeTextBuff.toString()));
 //            freeTextBuff.setLength(0);
 //        }
 //    }
