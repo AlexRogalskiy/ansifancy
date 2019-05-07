@@ -1,5 +1,5 @@
 /**
- * AnsiFancy module configuration
+ * AnsiFancy module info
  */
 module jentle.algorithms {
     requires static lombok;
