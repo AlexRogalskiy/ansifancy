@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wildbeeslabs.sensiblemetrics</groupId>
+    <groupId>com.sensiblemetrics.tools</groupId>
     <artifactId>ansifancy</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
@@ -39,7 +39,7 @@
             <comments>
                 The MIT License
 
-                Copyright 2019 WildBees Labs, Inc.
+                Copyright 2019 SensibleMetrics Labs, Inc.
 
                 Permission is hereby granted, free of charge, to any person obtaining a copy
                 of this software and associated documentation files (the "Software"), to deal
@@ -104,8 +104,8 @@
             <name>Alexander Rogalsky</name>
             <email>alexander.rogalsky@yandex.ru</email>
             <url>https://github.com/AlexRogalskiy</url>
-            <organization>Wildbees Labs, Inc., Saint-Petersburg (RU)</organization>
-            <organizationUrl>http://www.wildbeeslabs.com</organizationUrl>
+            <organization>SensibleMetrics Labs, Inc., Saint-Petersburg (RU)</organization>
+            <organizationUrl>http://www.sensiblemetrics.com</organizationUrl>
             <roles>
                 <role>developer</role>
             </roles>
@@ -114,8 +114,8 @@
     </developers>
 
     <organization>
-        <name>WildBees Labs, Inc.</name>
-        <url>http://www.wildbeeslabs.com/</url>
+        <name>SensibleMetrics Labs, Inc.</name>
+        <url>http://www.sensiblemetrics.com/</url>
     </organization>
 
     <properties>
@@ -532,8 +532,8 @@
                             <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
                             <Bundle-Version>${project.version}</Bundle-Version>
                             <Import-Package>*</Import-Package>
-                            <Private-Package>com.wildbeeslabs.sensiblemetrics.ansifancy.examples.*</Private-Package>
-                            <Export-Package>com.wildbeeslabs.sensiblemetrics.ansifancy.*;-noimport:=true
+                            <Private-Package>com.sensiblemetrics.ansifancy.examples.*</Private-Package>
+                            <Export-Package>com.sensiblemetrics.ansifancy.*;-noimport:=true
                             </Export-Package>
                             <DynamicImport-Package>*</DynamicImport-Package>
                         </instructions>
@@ -756,18 +756,6 @@
             <id>jcenter</id>
             <name>JCenter repository</name>
             <url>https://jcenter.bintray.com/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-releases</id>
-            <name>Spring repo</name>
-            <url>https://repo.spring.io/libs-release</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -1175,6 +1163,12 @@
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
             <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

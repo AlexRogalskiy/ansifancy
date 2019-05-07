@@ -1,7 +1,7 @@
 /**
  * AnsiFancy module info
  */
-module jentle.algorithms {
+module com.sensiblemetrics.ansifancy {
     requires static lombok;
     requires slf4j.api;
     requires org.apache.commons.lang3;
@@ -12,4 +12,5 @@ module jentle.algorithms {
     requires commons.beanutils;
     requires commons.collections;
     requires java.desktop;
+    requires annotations;
 }
