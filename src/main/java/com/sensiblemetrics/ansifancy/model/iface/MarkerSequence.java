@@ -37,6 +37,11 @@ import java.util.Map;
 public interface MarkerSequence extends CharSequence, Serializable {
 
     /**
+     * Empty {@link MarkerSequence}
+     */
+    MarkerSequence EMPTY = new EmptyMarkerSequence();
+
+    /**
      * Returns {@link MarkerSequence} by input array of {@link StyleIF}
      *
      * @param <S>    type of style item
@@ -46,4 +51,35 @@ public interface MarkerSequence extends CharSequence, Serializable {
     @NonNull <S extends StyleIF> MarkerSequence styles(final S... styles);
 
     @NonNull <C extends CharSequence> MarkerSequence args(final Map<C, Object> args);
+
+    /**
+     * Default empty {@link MarkerSequence} implementation
+     */
+    final class EmptyMarkerSequence implements MarkerSequence {
+
+        @Override
+        public @NonNull <S extends StyleIF> MarkerSequence styles(final S... styles) {
+            return null;
+        }
+
+        @Override
+        public @NonNull <C extends CharSequence> MarkerSequence args(final Map<C, Object> args) {
+            return null;
+        }
+
+        @Override
+        public int length() {
+            return 0;
+        }
+
+        @Override
+        public char charAt(int index) {
+            return 0;
+        }
+
+        @Override
+        public CharSequence subSequence(int start, int end) {
+            return null;
+        }
+    }
 }

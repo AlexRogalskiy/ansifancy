@@ -3,13 +3,14 @@ package com.sensiblemetrics.ansifancy.enumeration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 /**
  * Default color type enumeration
  */
 @Getter
 @RequiredArgsConstructor
 public enum ColorType {
-
     ABSOLUTE_ZERO("Absolute Zero", "#0048BA"),
     ACID_GREEN("Acid Green", "#B0BF1A"),
     AERO("Aero", "#7CB9E8"),
@@ -142,23 +143,19 @@ public enum ColorType {
     BLUEBERRY("Blueberry", "#4F86F7");
 
     private final String name;
-    private final String hex;
+    private final String code;
 
-    public static ColorType getByName(final String name) {
-        for (final ColorType type : values()) {
-            if (type.getName().equalsIgnoreCase(name)) {
-                return type;
-            }
-        }
-        return null;
+    public static ColorType findByName(final String name) {
+        return Arrays.stream(values())
+            .filter(type -> type.getName().equalsIgnoreCase(name))
+            .findFirst()
+            .orElse(null);
     }
 
-    public static ColorType getByHex(final String hex) {
-        for (final ColorType type : values()) {
-            if (type.getHex().equalsIgnoreCase(hex)) {
-                return type;
-            }
-        }
-        return null;
+    public static ColorType findByCode(final String code) {
+        return Arrays.stream(values())
+            .filter(type -> type.getCode().equalsIgnoreCase(code))
+            .findFirst()
+            .orElse(null);
     }
 }
