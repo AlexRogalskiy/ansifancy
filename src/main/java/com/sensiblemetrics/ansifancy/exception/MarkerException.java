@@ -71,21 +71,21 @@ public class MarkerException extends RuntimeException {
     }
 
     /**
-     * Returns {@link MarkerException} instance by input marker {@link MarkerIF}
+     * Returns {@link MarkerException} by input marker {@link MarkerIF}
      *
      * @param marker - initial input marker {@link MarkerIF}
-     * @return {@link MarkerException} instance
+     * @return {@link MarkerException}
      */
-    public static final MarkerException throwUnknownMarker(final MarkerIF marker) {
+    public static <T> MarkerException throwUnknownMarker(final MarkerIF<T> marker) {
         return new MarkerException(String.format("ERROR: unknown marker: {%s}", marker));
     }
 
     /**
-     * Returns {@link MarkerException} instance by invalid (empty or null) marker {@link MarkerIF}
+     * Returns {@link MarkerException} by invalid (empty or null) {@link MarkerIF}
      *
-     * @return {@link MarkerException} instance
+     * @return {@link MarkerException}
      */
-    public static final MarkerException throwInvalidMarker() {
+    public static MarkerException throwInvalidMarker() {
         return new MarkerException("ERROR: invalid marker, cannot be NULL or empty");
     }
 }

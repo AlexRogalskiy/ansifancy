@@ -62,7 +62,7 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Default {@link ConfigurationException} constructor with initial message and cause {@link Throwable}
+     * Default {@link ConfigurationException} constructor with initial message {@link String} and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
@@ -72,11 +72,11 @@ public class ConfigurationException extends RuntimeException {
     }
 
     /**
-     * Returns {@link ConfigurationException} instance by already registered meta data {@link StyleIF}
+     * Returns {@link ConfigurationException} by already registered meta data {@link StyleIF}
      *
-     * @return {@link ConfigurationException} instance
+     * @return {@link ConfigurationException}
      */
-    public static final ConfigurationException throwConfigAlreadyExist(final MetaDataIF metaData) {
-        return new ConfigurationException(String.format("ERROR: already defined meta name={%s}, meta description={%s}, should be unique", metaData.getName(), metaData.getDescription()));
+    public static ConfigurationException throwConfigAlreadyExist(final MetaDataIF metaData) {
+        return new ConfigurationException(String.format("ERROR: already defined meta name: {%s}, meta description: {%s}, should be unique", metaData.getName(), metaData.getDescription()));
     }
 }

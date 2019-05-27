@@ -28,6 +28,7 @@ import lombok.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -73,6 +74,29 @@ public class Marker implements MarkerIF<IntCoordinate> {
     }
 
     /**
+     * Return binary flag based on {@link MarkerIF}s comparison
+     *
+     * @param marker - initial input {@link MarkerIF}
+     * @return true - if {@link MarkerIF}s are equals, false - otherwise
+     */
+    public boolean isEqual(final MarkerIF marker) {
+        return Objects.equals(this.getMetaData(), marker.getMetaData())
+            && Objects.equals(this.getPosition(), marker.getPosition())
+            && Objects.equals(this.getStyles(), marker.getStyles());
+    }
+
+    /**
+     * Clones current {@link BlockIF}
+     *
+     * @return new copy of current {@link BlockIF}
+     */
+    @Override
+    @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
+    public MarkerIF clone() {
+        return create(this.position, this.metaData, this.styles.toArray(new StyleIF[this.styles.size()]));
+    }
+
+    /**
      * Returns new {@link Marker} instance by input parameters
      *
      * @param position - initial input marker position {@link PositionIF}
@@ -86,16 +110,5 @@ public class Marker implements MarkerIF<IntCoordinate> {
             .metaData(metaData)
             .styles(Arrays.asList(Optional.ofNullable(styles).orElse(new StyleIF[0])))
             .build();
-    }
-
-    /**
-     * Clones current {@link BlockIF}
-     *
-     * @return new copy of current {@link BlockIF}
-     */
-    @Override
-    @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
-    public MarkerIF clone() {
-        return create(this.position, this.metaData, this.styles.toArray(new StyleIF[this.styles.size()]));
     }
 }

@@ -23,58 +23,64 @@
  */
 package com.sensiblemetrics.ansifancy.exception;
 
+import com.sensiblemetrics.ansifancy.model.impl.IntCoordinate;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Parser {@link RuntimeException} exception
+ * Position {@link RuntimeException} exception
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ParserException extends RuntimeException {
+public class CoordinateException extends RuntimeException {
 
     /**
-     * Default explicit serialVersionUID for interoperability
-     */
-    private static final long serialVersionUID = -7378731622066973372L;
-
-    /**
-     * Default {@link ParserException} constructor with initial message
+     * Default {@link CoordinateException} constructor with initial message
      *
      * @param message - initial input exception message {@link String}
      */
 
-    public ParserException(final String message) {
+    public CoordinateException(final String message) {
         super(message);
     }
 
     /**
-     * Default {@link ParserException} constructor with initial cause {@link Throwable}
+     * Default {@link CoordinateException} constructor with initial cause {@link Throwable}
      *
      * @param cause - initial input exception cause {@link Throwable}
      */
-    public ParserException(final Throwable cause) {
+    public CoordinateException(final Throwable cause) {
         super(cause);
     }
 
     /**
-     * Default {@link ParserException} constructor with initial message {@link String} and cause {@link Throwable}
+     * Default {@link CoordinateException} constructor with initial message {@link String} and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
      */
-    public ParserException(final String message, final Throwable cause) {
+    public CoordinateException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Returns {@link ParserException} by invalid (empty or null) source
+     * Returns {@link CoordinateException} by input {@link IntCoordinate}
      *
-     * @return {@link ParserException}
+     * @param coordinate - initial input {@link IntCoordinate}
+     * @return {@link CoordinateException}
      */
-    public static final ParserException throwInvalidSource() {
-        return new ParserException("ERROR: invalid source, cannot be NULL or empty");
+    public static CoordinateException throwIncorrectCoordinate(final IntCoordinate coordinate) {
+        return new CoordinateException(String.format("ERROR: incorrect coordinate: {%s}", coordinate));
+    }
+
+    /**
+     * Returns {@link CoordinateException} by invalid (empty or null) {@link IntCoordinate}
+     *
+     * @return {@link CoordinateException}
+     */
+    public static CoordinateException throwInvalidCoordinate() {
+        return new CoordinateException("ERROR: invalid coordinate, cannot be NULL or empty");
     }
 }

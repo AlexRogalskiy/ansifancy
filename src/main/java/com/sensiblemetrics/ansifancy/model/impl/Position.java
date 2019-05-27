@@ -24,9 +24,9 @@
 package com.sensiblemetrics.ansifancy.model.impl;
 
 import com.sensiblemetrics.ansifancy.calculation.OperationFactory;
-import com.sensiblemetrics.ansifancy.utils.NumberUtils;
 import com.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
+import com.sensiblemetrics.ansifancy.utils.NumberUtils;
 import lombok.*;
 
 import java.util.Objects;
@@ -50,15 +50,15 @@ public class Position implements PositionIF<IntCoordinate> {
     private static final long serialVersionUID = 4745754960240147629L;
 
     /**
-     * Default row position
+     * Default row {@link IntCoordinate} position
      */
     private IntCoordinate row;
     /**
-     * Default column position
+     * Default column {@link IntCoordinate} position
      */
     private IntCoordinate column;
     /**
-     * Default depth position
+     * Default depth {@link IntCoordinate} position
      */
     private IntCoordinate depth;
 
@@ -302,56 +302,15 @@ public class Position implements PositionIF<IntCoordinate> {
     }
 
     /**
-     * Sets average {@link Position} coordinate by input min / max positions
+     * Compares input {@link Position} by coordinate parameters
      *
-     * @param minPosition - initial input minimum {@link Position}
-     * @param maxPosition - initial input maximum {@link Position}
+     * @param position - initial input {@link Position} to compare with
+     * @return true - if both {@link Position}s are equals, false - otherwise
      */
-    public static <T extends Position> T middle(final T minPosition, final T maxPosition) {
-        if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) return null;
-        return (T) create(OperationFactory.ADD.apply(minPosition.getRow(), maxPosition.getRow()) / 2,
-            OperationFactory.ADD.apply(minPosition.getColumn(), maxPosition.getColumn()) / 2,
-            OperationFactory.ADD.apply(minPosition.getDepth(), maxPosition.getDepth()) / 2);
-    }
-
-    /**
-     * Swaps {@link Position} coordinates
-     *
-     * @param <T>   type of position coordinate
-     * @param first - initial input {@link Position} to swap by
-     * @param last  - initial input {@link Position} to swap with
-     */
-    public static <T extends Position> void swap(final T first, final T last) {
-        final IntCoordinate tempX = first.getColumn(), tempY = first.getRow(), tempZ = first.getDepth();
-        first.setCoordinates(last.getRow(), last.getColumn(), last.getDepth());
-        last.setCoordinates(tempX, tempY, tempZ);
-    }
-
-    /**
-     * Returns new {@link PositionIF} instance by input position parameters
-     *
-     * @param row    - initial input row position
-     * @param column - initial input column position
-     * @return new {@link PositionIF} instance
-     */
-    public static Position create(int row, int column) {
-        return create(row, column, 0);
-    }
-
-    /**
-     * Returns new {@link PositionIF} instance by input position parameters
-     *
-     * @param row    - initial input row position
-     * @param column - initial input column position
-     * @param depth  - initial input depth position
-     * @return new {@link PositionIF} instance
-     */
-    public static Position create(int row, int column, int depth) {
-        return Position.builder()
-            .row(IntCoordinate.of(row))
-            .column(IntCoordinate.of(column))
-            .depth(IntCoordinate.of(depth))
-            .build();
+    public boolean isEqual(final Position position) {
+        return Objects.equals(this.getColumn(), position.getColumn())
+            && Objects.equals(this.getRow(), position.getRow())
+            && Objects.equals(this.getDepth(), position.getDepth());
     }
 
     /**
@@ -388,10 +347,66 @@ public class Position implements PositionIF<IntCoordinate> {
     @Override
     @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
     public Position clone() {
-        return Position.builder()
+        return Position
+            .builder()
             .row(this.getRow())
             .column(this.getColumn())
             .depth(this.getDepth())
+            .build();
+    }
+
+    /**
+     * Sets average {@link Position} coordinate by input min / max positions
+     *
+     * @param minPosition - initial input minimum {@link Position}
+     * @param maxPosition - initial input maximum {@link Position}
+     */
+    public static <T extends Position> T middle(final T minPosition, final T maxPosition) {
+        if (Objects.isNull(minPosition) || Objects.isNull(maxPosition)) return null;
+        return (T) create(OperationFactory.ADD.apply(minPosition.getRow(), maxPosition.getRow()) / 2,
+            OperationFactory.ADD.apply(minPosition.getColumn(), maxPosition.getColumn()) / 2,
+            OperationFactory.ADD.apply(minPosition.getDepth(), maxPosition.getDepth()) / 2);
+    }
+
+    /**
+     * Swaps {@link Position} coordinates
+     *
+     * @param <T>   type of position coordinate
+     * @param first - initial input {@link Position} to swap by
+     * @param last  - initial input {@link Position} to swap with
+     */
+    public static <T extends Position> void swap(final T first, final T last) {
+        final IntCoordinate tempX = first.getColumn();
+        final IntCoordinate tempY = first.getRow();
+        final IntCoordinate tempZ = first.getDepth();
+        first.setCoordinates(last.getRow(), last.getColumn(), last.getDepth());
+        last.setCoordinates(tempX, tempY, tempZ);
+    }
+
+    /**
+     * Returns new {@link PositionIF} instance by input position parameters
+     *
+     * @param row    - initial input row position
+     * @param column - initial input column position
+     * @return new {@link PositionIF} instance
+     */
+    public static Position create(int row, int column) {
+        return create(row, column, 0);
+    }
+
+    /**
+     * Returns new {@link PositionIF} instance by input position parameters
+     *
+     * @param row    - initial input row position
+     * @param column - initial input column position
+     * @param depth  - initial input depth position
+     * @return new {@link PositionIF} instance
+     */
+    public static Position create(int row, int column, int depth) {
+        return Position.builder()
+            .row(IntCoordinate.of(row))
+            .column(IntCoordinate.of(column))
+            .depth(IntCoordinate.of(depth))
             .build();
     }
 }

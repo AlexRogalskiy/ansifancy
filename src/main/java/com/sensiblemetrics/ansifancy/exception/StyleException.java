@@ -71,40 +71,40 @@ public class StyleException extends RuntimeException {
     }
 
     /**
-     * Returns {@link StyleException} instance by input point {@link PointIF}
+     * Returns {@link StyleException} by input point {@link PointIF}
      *
      * @param point - initial input point {@link PointIF}
-     * @return {@link StyleException} instance
+     * @return {@link StyleException}
      */
-    public static final StyleException throwUnknownPoint(final PointIF point) {
+    public static StyleException throwUnknownPoint(final PointIF point) {
         return new StyleException(String.format("ERROR: unknown point: {%s}", point));
     }
 
     /**
-     * Returns {@link StyleException} instance by invalid (empty or null) point {@link PointIF}
+     * Returns {@link StyleException} by invalid (empty or null) point {@link PointIF}
      *
-     * @return {@link StyleException} instance
+     * @return {@link StyleException}
      */
-    public static final StyleException throwInvalidPoint() {
+    public static StyleException throwInvalidPoint() {
         return new StyleException(String.format("ERROR: invalid point, cannot be NULL or empty"));
     }
 
     /**
-     * Returns {@link StyleException} instance by input style {@link StyleIF}
+     * Returns {@link StyleException} by input style {@link StyleIF}
      *
      * @param style - initial input style {@link StyleIF}
-     * @return {@link StyleException} instance
+     * @return {@link StyleException}
      */
-    public static final StyleException throwUnknownStyle(final StyleIF style) {
+    public static StyleException throwUnknownStyle(final StyleIF style) {
         return new StyleException(String.format("ERROR: unknown style: {%s}", style));
     }
 
     /**
-     * Returns {@link StyleException} instance by invalid (empty or null) style {@link StyleIF}
+     * Returns {@link StyleException} by invalid (empty or null) {@link StyleIF}
      *
-     * @return {@link StyleException} instance
+     * @return {@link StyleException}
      */
-    public static final StyleException throwInvalidStyle() {
+    public static StyleException throwInvalidStyle() {
         return new StyleException("ERROR: invalid style, cannot be NULL or empty");
     }
 }

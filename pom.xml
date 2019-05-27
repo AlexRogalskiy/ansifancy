@@ -816,6 +816,7 @@
                         <configuration>
                             <webAccessUrl>https://github.com/AlexRogalskiy/ansifancy</webAccessUrl>
                             <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                            <version>${maven.reports.plugin.version}</version>
                         </configuration>
                         <reportSets>
                             <reportSet>

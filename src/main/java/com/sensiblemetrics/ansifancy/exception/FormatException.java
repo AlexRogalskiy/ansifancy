@@ -60,7 +60,7 @@ public class FormatException extends RuntimeException {
     }
 
     /**
-     * Default {@link MarkerException} constructor with initial message and cause {@link Throwable}
+     * Default {@link MarkerException} constructor with initial message {@link String} and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
@@ -70,39 +70,39 @@ public class FormatException extends RuntimeException {
     }
 
     /**
-     * Returns {@link FormatException} instance by input number of arguments
+     * Returns {@link FormatException} by input number of arguments
      *
      * @param numOfArgs - initial input number of arguments
-     * @return {@link FormatException} instance
+     * @return {@link FormatException}
      */
     public static final FormatException throwInvalidNumOfArguments(final int numOfArgs) {
         return new FormatException(String.format("ERROR: invalid number of arguments: {%s}", numOfArgs));
     }
 
     /**
-     * Returns {@link FormatException} instance by input source path and error message
+     * Returns {@link FormatException} by input source path {@link CharSequence} and error {@link Throwable}
      *
-     * @return {@link FormatException} instance
+     * @return {@link FormatException}
      */
     public static final FormatException throwIOError(final CharSequence path, final Throwable throwable) {
         return new FormatException(String.format("ERROR: cannot process source path: {%s}", path), throwable);
     }
 
     /**
-     * Returns {@link FormatException} instance by input position value
+     * Returns {@link FormatException} by input index value
      *
-     * @return {@link FormatException} instance
+     * @return {@link FormatException}
      */
     public static FormatException throwInvalidPositionArgument(int index) {
         return new FormatException(String.format("ERROR: cannot process argument at position: {%s}", index));
     }
 
     /**
-     * Returns {@link FormatException} instance by input argument name
+     * Returns {@link FormatException} by input argument name {@link CharSequence}
      *
-     * @return {@link FormatException} instance
+     * @return {@link FormatException}
      */
-    public static FormatException throwInvalidArgumentName(final Character argName) {
+    public static FormatException throwInvalidArgumentName(final CharSequence argName) {
         return new FormatException(String.format("ERROR: cannot process argument by name: {%s}", argName));
     }
 }

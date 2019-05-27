@@ -24,7 +24,6 @@
 package com.sensiblemetrics.ansifancy.exception;
 
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
-import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -62,7 +61,7 @@ public class PositionException extends RuntimeException {
     }
 
     /**
-     * Default {@link PositionException} constructor with initial message and cause {@link Throwable}
+     * Default {@link PositionException} constructor with initial message {@link String} and cause {@link Throwable}
      *
      * @param message - initial input exception message {@link String}
      * @param cause   - initial input exception cause {@link Throwable}
@@ -72,21 +71,31 @@ public class PositionException extends RuntimeException {
     }
 
     /**
-     * Returns {@link PositionException} instance by input position {@link StyleIF}
+     * Returns {@link PositionException} by input position {@link PositionIF}
      *
      * @param position - initial input position {@link PositionIF}
-     * @return {@link PositionException} instance
+     * @return {@link PositionException}
      */
-    public static final PositionException throwUnknownPosition(final PositionIF position) {
+    public static <T> PositionException throwUnknownPosition(final PositionIF<T> position) {
         return new PositionException(String.format("ERROR: unknown position: {%s}", position));
     }
 
     /**
-     * Returns {@link PositionException} instance by invalid (empty or null) position {@link PositionIF}
+     * Returns {@link PositionException} by input position {@link PositionIF}
      *
-     * @return {@link PositionException} instance
+     * @param position - initial input position {@link PositionIF}
+     * @return {@link PositionException}
      */
-    public static final PositionException throwInvalidPosition() {
+    public static <T> PositionException throwIncorrectPosition(final PositionIF<T> position) {
+        return new PositionException(String.format("ERROR: incorrect position: {%s}", position));
+    }
+
+    /**
+     * Returns {@link PositionException} by invalid (empty or null) {@link PositionIF}
+     *
+     * @return {@link PositionException}
+     */
+    public static PositionException throwInvalidPosition() {
         return new PositionException("ERROR: invalid position, cannot be NULL or empty");
     }
 }

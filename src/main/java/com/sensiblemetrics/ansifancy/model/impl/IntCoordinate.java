@@ -22,9 +22,15 @@ public class IntCoordinate implements Comparable<IntCoordinate> {
      */
     private int value;
 
+    /**
+     * Return integer result by {@link IntCoordinate}s comparison
+     *
+     * @param coordinate - initial input {@link IntCoordinate} to compare by
+     * @return 0 - if {@link IntCoordinate}s are equals, -1 - if current {@link IntCoordinate} is lower than input {@link IntCoordinate}, 1 - if current {@link IntCoordinate} is greater than {@link IntCoordinate}
+     */
     @Override
-    public int compareTo(final IntCoordinate o) {
-        if (this.getValue() == o.getValue()) return 0;
-        return this.getValue() < o.getValue() ? -1 : 1;
+    public int compareTo(final IntCoordinate coordinate) {
+        if (this.getValue() == coordinate.getValue()) return 0;
+        return this.getValue() < coordinate.getValue() ? -1 : 1;
     }
 }
