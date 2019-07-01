@@ -23,12 +23,14 @@
  */
 package com.sensiblemetrics.ansifancy.model.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.sensiblemetrics.ansifancy.calculation.OperationFactory;
 import com.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.sensiblemetrics.ansifancy.utils.NumberUtils;
 import lombok.*;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -61,6 +63,15 @@ public class Position implements PositionIF<IntCoordinate> {
      * Default depth {@link IntCoordinate} position
      */
     private IntCoordinate depth;
+
+    public Position(final Map<String, IntCoordinate> map) {
+        if (Objects.isNull(map) || !map.containsKey("row") || !map.containsKey("column") || !map.containsKey("depth")) {
+            throw new IllegalArgumentException(String.format("Could not initialize position by input map parameter = {%s}", map.toString()));
+        }
+        this.row = this.validateParam(map.get("row"));
+        this.column = this.validateParam(map.get("column"));
+        this.depth = this.validateParam(map.get("depth"));
+    }
 
     /**
      * Updates {@link PositionIF} coordinates by input parametes {@link IntCoordinate}
@@ -135,6 +146,21 @@ public class Position implements PositionIF<IntCoordinate> {
      */
     public double length() {
         return Math.sqrt(OperationFactory.MULTIPLY.apply(getRow(), getRow()) + OperationFactory.MULTIPLY.apply(getColumn(), getColumn()));
+    }
+
+    public Map<String, IntCoordinate> parameters() {
+        return ImmutableMap.<String, IntCoordinate>builder()
+            .put("row", this.getRow())
+            .put("column", this.getColumn())
+            .put("depth", this.getDepth())
+            .build();
+    }
+
+    private IntCoordinate validateParam(final IntCoordinate value) {
+        if (Objects.isNull(value) || value.getValue() < 0) {
+            throw new IllegalArgumentException(String.format("ERROR: incorrect int coordinate value = {%s}, cannot be negative", value));
+        }
+        return value;
     }
 
     /**
