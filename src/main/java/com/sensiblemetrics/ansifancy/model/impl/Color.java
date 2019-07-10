@@ -38,7 +38,7 @@ import java.util.function.Predicate;
  */
 @Builder
 @AllArgsConstructor
-@Data
+@Getter
 @EqualsAndHashCode
 @ToString
 public class Color implements Serializable {
@@ -410,6 +410,14 @@ public class Color implements Serializable {
             Math.max((this.getGreenComponent() * DEFAULT_RGB_MAX_BOUND), DEFAULT_RGB_MIN_BOUND),
             Math.max((this.getBlueComponent() * DEFAULT_RGB_MAX_BOUND), DEFAULT_RGB_MIN_BOUND),
             getAlphaComponent());
+    }
+
+    public static double[] normalize(final Color color, int value) {
+        final double[] result = new double[3];
+        result[0] = color.getRedComponent() / 255.0;
+        result[1] = color.getGreenComponent() / 255.0;
+        result[2] = color.getBlueComponent() / 255.0;
+        return result;
     }
 
     /**

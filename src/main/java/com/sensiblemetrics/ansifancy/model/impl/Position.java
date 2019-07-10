@@ -86,6 +86,93 @@ public class Position implements PositionIF<IntCoordinate> {
         this.depth = depth;
     }
 
+    public void setCoordinates(final IntCoordinate[] values) {
+        Objects.requireNonNull(values, "Values array should not be null");
+        this.setCoordinates(values[0], values[1], values[2]);
+    }
+
+    public void setCoordinates(final PositionIF<IntCoordinate> position) {
+        Objects.requireNonNull(position, "Position should not be null");
+        this.setCoordinates(position.getRow(), position.getColumn(), position.getDepth());
+    }
+
+    public final double distanceBy(final Position position) {
+        Objects.requireNonNull(position, "Position should not be null");
+        return Math.max(
+            Math.abs(this.getRow().getValue() - position.getRow().getValue()),
+            Math.abs(this.getColumn().getValue() - position.getColumn().getValue())
+        );
+    }
+
+    public final Position absolute(final Position position) {
+        Objects.requireNonNull(position, "Position should not be null");
+        return this.create(
+            Math.abs(position.getRow().getValue()),
+            Math.abs(position.getColumn().getValue()),
+            Math.abs(position.getDepth().getValue())
+        );
+    }
+
+    public final void clamp(final IntCoordinate max, final IntCoordinate min) {
+        if (this.getRow().getValue() > min.getValue()) {
+            this.setRow(min);
+        } else if (this.getRow().getValue() < max.getValue()) {
+            this.setRow(max);
+        }
+        if (this.getColumn().getValue() > min.getValue()) {
+            this.setColumn(min);
+        } else if (this.getColumn().getValue() < max.getValue()) {
+            this.setColumn(max);
+        }
+        if (this.getDepth().getValue() > min.getValue()) {
+            this.setDepth(min);
+        } else if (this.getDepth().getValue() < max.getValue()) {
+            this.setDepth(max);
+        }
+    }
+
+    public final void clampMin(final IntCoordinate min) {
+        if (this.getRow().getValue() < min.getValue()) {
+            this.setRow(min);
+        }
+        if (this.getColumn().getValue() < min.getValue()) {
+            this.setColumn(min);
+        }
+        if (this.getDepth().getValue() < min.getValue()) {
+            this.setDepth(min);
+        }
+    }
+
+    public final void clampMax(final IntCoordinate max) {
+        if (this.getRow().getValue() > max.getValue()) {
+            this.setRow(max);
+        }
+        if (this.getColumn().getValue() > max.getValue()) {
+            this.setColumn(max);
+        }
+        if (this.getDepth().getValue() > max.getValue()) {
+            this.setDepth(max);
+        }
+    }
+
+    public final void absolute() {
+        this.row = IntCoordinate.of(Math.abs(this.getRow().getValue()));
+        this.column = IntCoordinate.of(Math.abs(this.getColumn().getValue()));
+        this.depth = IntCoordinate.of(Math.abs(this.getDepth().getValue()));
+    }
+
+    public final void interpolate(final Position position, final Position position2, final float value) {
+        this.row = IntCoordinate.of((int) ((1.0F - value) * position.getRow().getValue() + value * position2.getRow().getValue()));
+        this.column = IntCoordinate.of((int) ((1.0F - value) * position.getColumn().getValue() + value * position2.getColumn().getValue()));
+        this.depth = IntCoordinate.of((int) ((1.0F - value) * position.getDepth().getValue() + value * position2.getDepth().getValue()));
+    }
+
+    public final void interpolate(final Position position, final float value) {
+        this.row = IntCoordinate.of((int) ((1.0F - value) * this.getRow().getValue() + value * position.getRow().getValue()));
+        this.column = IntCoordinate.of((int) ((1.0F - value) * this.getColumn().getValue() + value * position.getColumn().getValue()));
+        this.depth = IntCoordinate.of((int) ((1.0F - value) * this.getDepth().getValue() + value * position.getDepth().getValue()));
+    }
+
     /**
      * Returns updated {@link PositionIF} instance by input position scale parameters division
      *
