@@ -33,6 +33,8 @@ import lombok.*;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.sensiblemetrics.ansifancy.calculation.OperationFactory.MULTIPLY;
+
 /**
  * Default {@link PositionIF} implementation
  *
@@ -232,7 +234,17 @@ public class Position implements PositionIF<IntCoordinate> {
      * @return position vector length
      */
     public double length() {
-        return Math.sqrt(OperationFactory.MULTIPLY.apply(getRow(), getRow()) + OperationFactory.MULTIPLY.apply(getColumn(), getColumn()));
+        return Math.sqrt(MULTIPLY.apply(getRow(), getRow())
+            + MULTIPLY.apply(getColumn(), getColumn())
+            + MULTIPLY.apply(getDepth(), getDepth()));
+    }
+
+    public final void cross(final Position first, final Position last) {
+        double var3 = first.getRow().getValue() * last.getColumn().getValue() * last.getDepth().getValue() - first.getDepth().getValue() * last.getColumn().getValue();
+        double var5 = last.getRow().getValue() * first.getDepth().getValue() - last.getDepth().getValue() * first.getRow().getValue();
+        this.getDepth().setValue(first.getRow().getValue() * last.getColumn().getValue() - first.getColumn().getValue() * last.getRow().getValue());
+        this.getRow().setValue((int) var3);
+        this.getColumn().setValue((int) var5);
     }
 
     public Map<String, IntCoordinate> parameters() {
@@ -262,6 +274,7 @@ public class Position implements PositionIF<IntCoordinate> {
         }
         getRow().setValue(NumberUtils.toInt(getRow().getValue() / length));
         getColumn().setValue(NumberUtils.toInt(getColumn().getValue() / length));
+        getDepth().setValue(NumberUtils.toInt(getDepth().getValue() / length));
         return (T) this;
     }
 
@@ -343,9 +356,9 @@ public class Position implements PositionIF<IntCoordinate> {
      */
     public <T extends Position> T vector(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
-        int vx = OperationFactory.MULTIPLY.apply(getColumn(), position.getDepth()) - OperationFactory.MULTIPLY.apply(getDepth(), position.getRow());
-        int vy = OperationFactory.MULTIPLY.apply(getDepth(), position.getColumn()) - OperationFactory.MULTIPLY.apply(getColumn(), position.getDepth());
-        int vz = OperationFactory.MULTIPLY.apply(getColumn(), position.getRow()) - OperationFactory.MULTIPLY.apply(getRow(), position.getColumn());
+        int vx = MULTIPLY.apply(getColumn(), position.getDepth()) - MULTIPLY.apply(getDepth(), position.getRow());
+        int vy = MULTIPLY.apply(getDepth(), position.getColumn()) - MULTIPLY.apply(getColumn(), position.getDepth());
+        int vz = MULTIPLY.apply(getColumn(), position.getRow()) - MULTIPLY.apply(getRow(), position.getColumn());
         return (T) Position.create(vx, vy, vz);
     }
 
@@ -357,9 +370,9 @@ public class Position implements PositionIF<IntCoordinate> {
      */
     public <T extends Position> int scalar(final T position) {
         Objects.requireNonNull(position, "Position should not be null");
-        return OperationFactory.MULTIPLY.apply(getColumn(), position.getColumn())
-            + OperationFactory.MULTIPLY.apply(getRow(), position.getRow())
-            + OperationFactory.MULTIPLY.apply(getDepth(), position.getDepth());
+        return MULTIPLY.apply(getColumn(), position.getColumn())
+            + MULTIPLY.apply(getRow(), position.getRow())
+            + MULTIPLY.apply(getDepth(), position.getDepth());
     }
 
     /**
