@@ -3,6 +3,7 @@ package com.sensiblemetrics.ansifancy.model.impl;
 import com.sensiblemetrics.ansifancy.calculation.OperationFactory;
 import com.sensiblemetrics.ansifancy.model.iface.AreaIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.*;
 
 import java.util.Objects;
@@ -114,7 +115,14 @@ public class Area implements AreaIF<IntCoordinate> {
      * @return new {@link AreaIF} instance
      */
     public static AreaIF<IntCoordinate> create(final int row, final int col, final int size) {
-        assert size >= 0 : "Should be greater than or equal zero";
+        ValidationUtils.isTrue(size >= 0, "Should be greater than or equal zero");
         return create(Position.create(row, col + size), Position.create(row + size, col));
+    }
+
+    public PositionIF<IntCoordinate> getCenter() {
+        return Position.builder()
+            .row(IntCoordinate.of(OperationFactory.SUBTRACT.apply(this.topRight.getRow(), this.bottomLeft.getRow()) / 2))
+            .column(IntCoordinate.of(OperationFactory.SUBTRACT.apply(this.topRight.getColumn(), this.bottomLeft.getColumn()) / 2))
+            .build();
     }
 }
