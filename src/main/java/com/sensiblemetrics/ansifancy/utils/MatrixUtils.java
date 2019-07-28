@@ -67,10 +67,10 @@ public class MatrixUtils {
     }
 
     public static <T> void rotate(final MatrixIF<T> matrix, int size) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix, "Matrix should not be null");
+        ValidationUtils.notNull(matrix.getRow(0), "Matrix row should not be null");
 
-        assert matrix.height() == matrix.width() : "Should be a square matrix";
+        ValidationUtils.isTrue(matrix.height() == matrix.width(), "Should be a square matrix");
         checkBound(size, 0, matrix.height() - 1);
 
         for (int layer = 0; layer < size / 2; layer++) {
@@ -240,8 +240,8 @@ public class MatrixUtils {
     }
 
     public static int[][] randomMatrix(int rows, int columns, int min, int max) {
-        assert rows > 0 : "Should be greater than or equal zero";
-        assert columns > 0 : "Should be greater than or equal zero";
+        ValidationUtils.isTrue(rows > 0, "Should be greater than or equal zero");
+        ValidationUtils.isTrue(columns > 0, "Should be greater than or equal zero");
 
         final int[][] matrix = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
@@ -253,8 +253,8 @@ public class MatrixUtils {
     }
 
     public static <T extends Serializable> T[][] fillMatrix(int rows, int columns, final Class<? extends T> clazz, final T defaultValue) {
-        assert rows > 0 : "Should be greater than or equal zero";
-        assert columns > 0 : "Should be greater than or equal zero";
+        ValidationUtils.isTrue(rows > 0, "Should be greater than or equal zero");
+        ValidationUtils.isTrue(columns > 0, "Should be greater than or equal zero");
 
         final T[][] matrix = newMatrix(clazz, rows, columns);
         for (int i = 0; i < rows; i++) {
@@ -382,14 +382,14 @@ public class MatrixUtils {
     }
 
     public static <T> T[] newArray(@NonNull final Class<? extends T[]> type, int size) {
-        assert size >= 0 : "Should be greater than or equal zero";
+        ValidationUtils.isTrue(size >= 0, "Should be greater than or equal zero");
         return type.cast(Array.newInstance(type.getComponentType(), size));
 //        return (T[]) Array.newInstance(type, size);
     }
 
     public static <T> T[][] newMatrix(@NonNull final Class<? extends T> type, int rows, int columns) {
-        assert rows > 0 : "Should be greater than or equal zero";
-        assert columns > 0 : "Should be greater than or equal zero";
+        ValidationUtils.isTrue(rows > 0, "Should be greater than or equal zero");
+        ValidationUtils.isTrue(columns > 0, "Should be greater than or equal zero");
 
         return (T[][]) Array.newInstance(type, rows, columns);
     }
@@ -415,6 +415,6 @@ public class MatrixUtils {
      * @param upperBound - initial input upper bound
      */
     public static void checkBound(int index, int lowerBound, int upperBound) {
-        assert (index >= lowerBound && index <= upperBound) : String.format("Should be in range [{%s},{%s}]", lowerBound, upperBound);
+        ValidationUtils.isTrue(index >= lowerBound && index <= upperBound, String.format("Should be in range [{%s},{%s}]", lowerBound, upperBound));
     }
 }

@@ -36,6 +36,56 @@ import java.util.Objects;
 @UtilityClass
 public class ConsoleUtils {
 
+    // ---Constants------------------------------------------------
+    public static final char ESC = 27;
+
+    // Text attributes
+    public static final int NORMAL = 0;
+
+    public static final int BOLD = 1;
+
+    public static final int UNDERSCORE = 4;
+
+    public static final int BLINK = 5;
+
+    public static final int REVERSE = 7;
+
+    public static final int CONCEALED = 8;
+
+    // Foreground colors
+    public static final int FG_BLACK = 30;
+
+    public static final int FG_RED = 31;
+
+    public static final int FG_GREEN = 32;
+
+    public static final int FG_YELLOW = 33;
+
+    public static final int FG_BLUE = 34;
+
+    public static final int FG_MAGENTA = 35;
+
+    public static final int FG_CYAN = 36;
+
+    public static final int FG_WHITE = 37;
+
+    // Background colors
+    public static final int BG_BLACK = 40;
+
+    public static final int BG_RED = 41;
+
+    public static final int BG_GREEN = 42;
+
+    public static final int BG_YELLOW = 43;
+
+    public static final int BG_BLUE = 44;
+
+    public static final int BG_MAGENTA = 45;
+
+    public static final int BG_CYAN = 46;
+
+    public static final int BG_WHITE = 47;
+
     /**
      * Default windows console flag
      */
@@ -56,4 +106,22 @@ public class ConsoleUtils {
         && Objects.nonNull(System.getenv("MSYSTEM"))
         && System.getenv("MSYSTEM").startsWith("MINGW")
         && Objects.equals("xterm", System.getenv("TERM"));
+
+    /*
+     * A method to change the color codes. This only works on color-enabled
+     * terminals. In Windows/MS-DOS you need to load the ansi.sys driver from
+     * config.sys or c:\winnt\system32\config.nt (NT/win2k). ANSI.sys only works
+     * under Win2k in DOS mode. In UNIX, you need an ansi-enabled terminal...
+     */
+    public String getColor(final int style, final int fgColor, final int bgColor) {
+        return ESC + "[" + style + ";" + fgColor + ";" + bgColor + "m";
+    }
+
+    public String resetColor() {
+        return getColor(NORMAL, FG_WHITE, BG_BLACK);
+    }
+
+    public String treeColor() {
+        return getColor(NORMAL, FG_YELLOW, BG_BLACK);
+    }
 }
