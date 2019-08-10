@@ -24,9 +24,11 @@
 package com.sensiblemetrics.ansifancy.utils;
 
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigInteger;
+import java.net.URL;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 /**
@@ -40,6 +42,32 @@ import java.util.regex.Pattern;
 public class ValidationUtils {
 
     /**
+     * Ensures that a string passed as a parameter to the calling method is not empty.
+     *
+     * @param value string value
+     * @throws IllegalArgumentException if {@code value} is empty
+     */
+    public static void checkNotEmptyString(final String value) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("An empty string passed as parameter");
+        }
+    }
+
+    /**
+     * Ensures that a string passed as a parameter to the calling method is not empty.
+     *
+     * @param value        string value
+     * @param errorMessage the exception message to use if the check fails; will be converted to a string using
+     *                     {@link String#valueOf(Object)}
+     * @throws IllegalArgumentException if {@code value} is empty
+     */
+    public static void checkNotEmptyString(final String value, final String errorMessage) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException(String.valueOf(errorMessage));
+        }
+    }
+
+    /**
      * <p>Checks if the value matches the regular expression.</p>
      *
      * @param value  The value validation is being performed on.
@@ -47,70 +75,22 @@ public class ValidationUtils {
      * @return true if matches the regular expression.
      */
     public static boolean matchRegexp(final String value, final String regexp) {
-        if (StringUtils.isBlank(regexp)) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(regexp)) {
             return false;
         }
         return Pattern.matches(regexp, value);
     }
 
-    /**
-     * <p>Checks if the value can safely be converted to a byte primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to a Byte.
-     */
-    public static boolean isByte(final String value) {
-        return Objects.nonNull(FormatUtils.formatByte(value));
-    }
-
-    /**
-     * <p>Checks if the value can safely be converted to a short primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to a Short.
-     */
-    public static boolean isShort(final String value) {
-        return Objects.nonNull(FormatUtils.formatShort(value));
-    }
-
-    /**
-     * <p>Checks if the value can safely be converted to a int primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to an Integer.
-     */
-    public static boolean isInt(final String value) {
-        return Objects.nonNull(FormatUtils.formatInt(value));
-    }
-
-    /**
-     * <p>Checks if the value can safely be converted to a long primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to a Long.
-     */
-    public static boolean isLong(final String value) {
-        return Objects.nonNull(FormatUtils.formatLong(value));
-    }
-
-    /**
-     * <p>Checks if the value can safely be converted to a float primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to a Float.
-     */
-    public static boolean isFloat(final String value) {
-        return Objects.nonNull(FormatUtils.formatFloat(value));
-    }
-
-    /**
-     * <p>Checks if the value can safely be converted to a double primitive.</p>
-     *
-     * @param value The value validation is being performed on.
-     * @return true if the value can be converted to a Double.
-     */
-    public static boolean isDouble(final String value) {
-        return Objects.nonNull(FormatUtils.formatDouble(value));
+    public static <T extends Comparable<? super T>> Predicate<T> inRange(final T min, final T max) {
+        return c -> {
+            if (min == null && max == null)
+                return true;
+            if (min == null)
+                return c.compareTo(max) <= 0;
+            if (max == null)
+                return c.compareTo(min) >= 0;
+            return c.compareTo(min) >= 0 && c.compareTo(max) <= 0;
+        };
     }
 
     /**
@@ -122,7 +102,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(byte value, byte min, byte max) {
+    public static boolean isInRange(final byte value, final byte min, final byte max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -135,7 +115,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(int value, int min, int max) {
+    public static boolean isInRange(final int value, final int min, final int max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -148,7 +128,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(float value, float min, float max) {
+    public static boolean isInRange(final float value, final float min, final float max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -161,7 +141,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(short value, short min, short max) {
+    public static boolean isInRange(final short value, final short min, final short max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -174,7 +154,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(long value, long min, long max) {
+    public static boolean isInRange(final long value, final long min, final long max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -187,7 +167,7 @@ public class ValidationUtils {
      * @param max   The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static boolean isInRange(double value, double min, double max) {
+    public static boolean isInRange(final double value, final double min, final double max) {
         return ((value >= min) && (value <= max));
     }
 
@@ -200,7 +180,7 @@ public class ValidationUtils {
      * @param desc  The maximum value of the range.
      * @return true if the value is in the specified range.
      */
-    public static int checkElementIndex(int index, int size, final String desc) {
+    public static int checkElementIndex(final int index, final int size, final String desc) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(String.format("ERROR: index = {%s} out of bounds = {%s}, message = {%s}", index, size, desc));
         }
@@ -219,6 +199,85 @@ public class ValidationUtils {
     }
 
     /**
+     * Validates that the array contains no null elements
+     *
+     * @param objects the array to test
+     */
+    public static void noNullElements(final Object[] objects) {
+        noNullElements(objects, "Array must not contain any null objects");
+    }
+
+    /**
+     * Validates that the array contains no null elements
+     *
+     * @param objects the array to test
+     * @param msg     message to output if validation fails
+     */
+    public static void noNullElements(final Object[] objects, final String msg) {
+        for (final Object obj : objects) {
+            if (Objects.isNull(obj)) {
+                throw new IllegalArgumentException(msg);
+            }
+        }
+    }
+
+    public static <K, V> void checkEntryNotNull(final K key, final V value) {
+        if (Objects.isNull(key)) {
+            throw new NullPointerException(String.format("ERROR: null key in entry with value = {%s}", value));
+        } else if (Objects.isNull(value)) {
+            throw new NullPointerException(String.format("ERROR: null value in entry with key = {%s}", key));
+        }
+    }
+
+    public static BigInteger checkPositiveOrZero(final BigInteger value, final String name) {
+        if (value.signum() < 0) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    public static double checkPositiveOrZero(double value, final String name) {
+        if (!(value >= 0)) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative or zero but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    public static int checkPositiveOrZero(int value, final String name) {
+        if (value < 0) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    public static long checkPositiveOrZero(long value, final String name) {
+        if (value < 0) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    public static double checkPositive(double value, final String name) {
+        if (!(value > 0)) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    public static void checkPositive(int value, String name) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative or zero but was: {%s}", name, value));
+        }
+    }
+
+    public static BigInteger checkPositive(final BigInteger value, final String name) {
+        if (value.signum() <= 0) {
+            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative or zero but was: {%s}", name, value));
+        }
+        return value;
+    }
+
+    /**
      * <p>Checks if the value's adjusted length is less than or equal to the max.</p>
      *
      * @param value         The value validation is being performed on.
@@ -227,7 +286,7 @@ public class ValidationUtils {
      * @return true if the value's length is less than the specified maximum.
      */
     public static boolean maxLength(final String value, int max, int lineEndLength) {
-        final int adjustAmount = adjustForLineEnding(value, lineEndLength);
+        int adjustAmount = adjustForLineEnding(value, lineEndLength);
         return ((value.length() + adjustAmount) <= max);
     }
 
@@ -251,7 +310,7 @@ public class ValidationUtils {
      * @return true if the value's length is more than the specified minimum.
      */
     public static boolean minLength(final String value, int min, int lineEndLength) {
-        final int adjustAmount = adjustForLineEnding(value, lineEndLength);
+        int adjustAmount = adjustForLineEnding(value, lineEndLength);
         return ((value.length() + adjustAmount) >= min);
     }
 
@@ -296,7 +355,7 @@ public class ValidationUtils {
      * @param min   The minimum numeric value.
      * @return true if the value is &gt;= the specified minimum.
      */
-    public static boolean minValue(long value, long min) {
+    public static boolean minValue(final long value, final long min) {
         return (value >= min);
     }
 
@@ -307,7 +366,7 @@ public class ValidationUtils {
      * @param min   The minimum numeric value.
      * @return true if the value is &gt;= the specified minimum.
      */
-    public static boolean minValue(double value, double min) {
+    public static boolean minValue(final double value, final double min) {
         return (value >= min);
     }
 
@@ -329,7 +388,7 @@ public class ValidationUtils {
      * @param max   The maximum numeric value.
      * @return true if the value is &lt;= the specified maximum.
      */
-    public static boolean maxValue(int value, int max) {
+    public static boolean maxValue(final int value, final int max) {
         return (value <= max);
     }
 
@@ -340,7 +399,7 @@ public class ValidationUtils {
      * @param max   The maximum numeric value.
      * @return true if the value is &lt;= the specified maximum.
      */
-    public static boolean maxValue(long value, long max) {
+    public static boolean maxValue(final long value, final long max) {
         return (value <= max);
     }
 
@@ -351,7 +410,7 @@ public class ValidationUtils {
      * @param max   The maximum numeric value.
      * @return true if the value is &lt;= the specified maximum.
      */
-    public static boolean maxValue(double value, double max) {
+    public static boolean maxValue(final double value, final double max) {
         return (value <= max);
     }
 
@@ -362,7 +421,7 @@ public class ValidationUtils {
      * @param max   The maximum numeric value.
      * @return true if the value is &lt;= the specified maximum.
      */
-    public static boolean maxValue(float value, float max) {
+    public static boolean maxValue(final float value, final float max) {
         return (value <= max);
     }
 
@@ -384,7 +443,7 @@ public class ValidationUtils {
      * @param msg message to output if validation fails
      */
     public static void notNull(final Object obj, final String msg) {
-        if (Objects.isNull(obj)) {
+        if (Objects.nonNull(obj)) {
             throw new IllegalArgumentException(msg);
         }
     }
@@ -394,7 +453,7 @@ public class ValidationUtils {
      *
      * @param val object to test
      */
-    public static void isTrue(boolean val) {
+    public static void isTrue(final boolean val) {
         if (!val) {
             throw new IllegalArgumentException("Must be true");
         }
@@ -406,7 +465,7 @@ public class ValidationUtils {
      * @param val object to test
      * @param msg message to output if validation fails
      */
-    public static void isTrue(boolean val, final String msg) {
+    public static void isTrue(final boolean val, final String msg) {
         if (!val) {
             throw new IllegalArgumentException(msg);
         }
@@ -417,7 +476,7 @@ public class ValidationUtils {
      *
      * @param val object to test
      */
-    public static void isFalse(boolean val) {
+    public static void isFalse(final boolean val) {
         if (val) {
             throw new IllegalArgumentException("Must be false");
         }
@@ -429,34 +488,12 @@ public class ValidationUtils {
      * @param val object to test
      * @param msg message to output if validation fails
      */
-    public static void isFalse(boolean val, final String msg) {
+    public static void isFalse(final boolean val, final String msg) {
         if (val) {
             throw new IllegalArgumentException(msg);
         }
     }
 
-    /**
-     * Validates that the array contains no null elements
-     *
-     * @param objects the array to test
-     */
-    public static void noNullElements(final Object[] objects) {
-        noNullElements(objects, "Array must not contain any null objects");
-    }
-
-    /**
-     * Validates that the array contains no null elements
-     *
-     * @param objects the array to test
-     * @param msg     message to output if validation fails
-     */
-    public static void noNullElements(final Object[] objects, final String msg) {
-        for (final Object obj : objects) {
-            if (Objects.isNull(obj)) {
-                throw new IllegalArgumentException(msg);
-            }
-        }
-    }
 
     /**
      * Validates that the string is not empty
@@ -464,7 +501,7 @@ public class ValidationUtils {
      * @param string the string to test
      */
     public static void notEmpty(final String string) {
-        if (StringUtils.isBlank(string)) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(string)) {
             throw new IllegalArgumentException("String must not be empty");
         }
     }
@@ -476,7 +513,7 @@ public class ValidationUtils {
      * @param msg    message to output if validation fails
      */
     public static void notEmpty(final String string, final String msg) {
-        if (StringUtils.isBlank(string)) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(string)) {
             throw new IllegalArgumentException(msg);
         }
     }
@@ -509,38 +546,42 @@ public class ValidationUtils {
      * @param upperBound - initial input upper bound
      * @throws IllegalStateException if bounds are invalid
      */
-    public static void checkBounds(int lowerBound, int upperBound) throws IllegalStateException {
+    public void checkBounds(final int lowerBound, final int upperBound) throws IllegalStateException {
         if ((lowerBound < 0) || (upperBound < 0 || lowerBound > upperBound)) {
             throw new IllegalArgumentException("ERROR: invalid lower={%s}, upper={%s} bounds");
         }
     }
 
-    public static <K, V> void checkEntryNotNull(final K key, final V value) {
-        if (Objects.isNull(key)) {
-            throw new NullPointerException("null key in entry: null=" + value);
-        } else if (Objects.isNull(value)) {
-            throw new NullPointerException("null value in entry: " + key + "=null");
+    public static void checkOffsetAndCount(final long arrayLength, final long offset, final long count) {
+        if ((offset | count) < 0 || offset > arrayLength || arrayLength - offset < count) {
+            throw new ArrayIndexOutOfBoundsException();
         }
     }
 
-    public static int checkPositiveOrZero(int value, final String name) {
-        if (value < 0) {
-            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+    public static boolean isValidUrl(final String url) {
+        try {
+            new URL(url).toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return value;
     }
 
-    public static long checkPositiveOrZero(long value, final String name) {
-        if (value < 0) {
-            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative but was: {%s}", name, value));
+    public static boolean isValidEmail(final String email) {
+        final String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        final Pattern pattern = Pattern.compile(emailRegex);
+        if (Objects.isNull(email)) {
+            return false;
         }
-        return value;
+        return pattern.matcher(email).matches();
     }
 
-    public static void checkPositive(int value, String name) {
-        if (value <= 0) {
-            throw new IllegalArgumentException(String.format("ERROR: {%s} cannot be negative or zero but was: {%s}", name, value));
+    public static boolean isNumber(final String value) {
+        for (int i = 0; i < value.length(); i++) {
+            if (!Character.isDigit(value.charAt(i))) {
+                return false;
+            }
         }
+        return true;
     }
 }
-
