@@ -73,6 +73,18 @@ public class Area implements AreaIF<IntCoordinate> {
     }
 
     /**
+     * Returns binary flag by input {@link PositionIF} value
+     * @param p - initial input {@link PositionIF} value
+     * @return true - if current {@link Area} contains {@link PositionIF}, false - otherwise
+     */
+    public boolean contains(final PositionIF<IntCoordinate> p) {
+        return p.getColumn().getValue() >= this.getBottomLeft().getColumn().getValue()
+            && p.getColumn().getValue() <= this.getTopRight().getColumn().getValue()
+            && p.getRow().getValue() <= this.getBottomLeft().getRow().getValue()
+            && p.getColumn().getValue() >= this.getTopRight().getRow().getValue();
+    }
+
+    /**
      * Returns copy of {@link AreaIF}
      *
      * @return copy of {@link AreaIF}
