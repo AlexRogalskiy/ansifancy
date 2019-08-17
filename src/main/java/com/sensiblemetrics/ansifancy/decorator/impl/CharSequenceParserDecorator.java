@@ -29,12 +29,11 @@ import com.sensiblemetrics.ansifancy.model.iface.MarkerIF;
 import com.sensiblemetrics.ansifancy.parser.iface.ParserIF;
 import com.sensiblemetrics.ansifancy.parser.impl.CharSequenceParser;
 import com.sensiblemetrics.ansifancy.processor.iface.ProcessorIF;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
-
-import java.util.Objects;
 
 /**
  * Default {@link CharSequence} parser implementation {@link DecoratorIF}
@@ -55,8 +54,8 @@ public class CharSequenceParserDecorator<R extends CharSequence> implements Deco
      * @param configuration - initial input {@link ConfigurationIF} instance
      */
     public CharSequenceParserDecorator(final ConfigurationIF configuration, final ProcessorIF<CharSequence, MarkerIF> processor) {
-        Objects.requireNonNull(configuration, "Should not be null or empty");
-        Objects.requireNonNull(processor, "Should not be null or empty");
+        ValidationUtils.notNull(configuration, "Should not be null or empty");
+        ValidationUtils.notNull(processor, "Should not be null or empty");
         this.parser = new CharSequenceParser(configuration, processor);
     }
 

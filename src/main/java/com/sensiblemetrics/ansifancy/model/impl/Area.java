@@ -74,6 +74,7 @@ public class Area implements AreaIF<IntCoordinate> {
 
     /**
      * Returns binary flag by input {@link PositionIF} value
+     *
      * @param p - initial input {@link PositionIF} value
      * @return true - if current {@link Area} contains {@link PositionIF}, false - otherwise
      */
@@ -82,6 +83,19 @@ public class Area implements AreaIF<IntCoordinate> {
             && p.getColumn().getValue() <= this.getTopRight().getColumn().getValue()
             && p.getRow().getValue() <= this.getBottomLeft().getRow().getValue()
             && p.getColumn().getValue() >= this.getTopRight().getRow().getValue();
+    }
+
+    public boolean isEmpty() {
+        return (this.width() == 0) || (this.height() == 0);
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError();
+        }
     }
 
     /**
@@ -112,7 +126,8 @@ public class Area implements AreaIF<IntCoordinate> {
      * @return new {@link AreaIF} instance
      */
     public static Area create(@NonNull final PositionIF<IntCoordinate> topRight, @NonNull final PositionIF<IntCoordinate> bottomLeft) {
-        return Area.builder()
+        return Area
+            .builder()
             .topRight(topRight)
             .bottomLeft(bottomLeft)
             .build();
@@ -128,11 +143,13 @@ public class Area implements AreaIF<IntCoordinate> {
      */
     public static AreaIF<IntCoordinate> create(final int row, final int col, final int size) {
         ValidationUtils.isTrue(size >= 0, "Should be greater than or equal zero");
+
         return create(Position.create(row, col + size), Position.create(row + size, col));
     }
 
     public PositionIF<IntCoordinate> getCenter() {
-        return Position.builder()
+        return Position
+            .builder()
             .row(IntCoordinate.of(OperationFactory.SUBTRACT.apply(this.topRight.getRow(), this.bottomLeft.getRow()) / 2))
             .column(IntCoordinate.of(OperationFactory.SUBTRACT.apply(this.topRight.getColumn(), this.bottomLeft.getColumn()) / 2))
             .build();

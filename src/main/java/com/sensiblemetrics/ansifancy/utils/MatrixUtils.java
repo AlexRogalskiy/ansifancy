@@ -28,10 +28,10 @@ import static com.sensiblemetrics.ansifancy.calculation.OperationFactory.SUBTRAC
 public class MatrixUtils {
 
     public static <T> boolean equals(final MatrixIF<T> matrix1, final MatrixIF<T> matrix2, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix1);
-        Objects.requireNonNull(matrix1.getRow(0));
-        Objects.requireNonNull(matrix2);
-        Objects.requireNonNull(matrix2.getRow(0));
+        ValidationUtils.notNull(matrix1, "First matrix should not be null");
+        ValidationUtils.notNull(matrix1.getRow(0), "First matrix first row should not be null");
+        ValidationUtils.notNull(matrix2, "Second matrix should not be null");
+        ValidationUtils.notNull(matrix2.getRow(0), "Second matrix first row should not be null");
 
         if (matrix1.height() != matrix2.height() || matrix1.width() != matrix2.width()) {
             return false;
@@ -47,8 +47,8 @@ public class MatrixUtils {
     }
 
     public static <T> void updateColumn(final MatrixIF<T> matrix, int col, final T value) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         checkBound(col, 0, matrix.width() - 1);
         for (int i = 0; i < matrix.height(); i++) {
@@ -57,8 +57,8 @@ public class MatrixUtils {
     }
 
     public static <T> void updateRow(final MatrixIF<T> matrix, int row, final T value) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(row));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(row));
 
         checkBound(row, 0, matrix.height() - 1);
         for (int j = 0; j < matrix.getRow(row).length; j++) {
@@ -88,8 +88,8 @@ public class MatrixUtils {
     }
 
     public static <T> void replaceBy(final MatrixIF<T> matrix, final T value, final T defaultValue) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         boolean rowHasZero = false, colHasZero = false;
         for (final T row : matrix.getRow(0)) {
@@ -131,8 +131,8 @@ public class MatrixUtils {
     }
 
     public static <T> void shuffle(final MatrixIF<T> matrix) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         int nRows = matrix.height();
         int nColumns = matrix.width();
@@ -155,8 +155,8 @@ public class MatrixUtils {
     }
 
     public static <T> boolean exists(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         int row = 0;
         int col = matrix.width() - 1;
@@ -173,8 +173,8 @@ public class MatrixUtils {
     }
 
     public static <T> Position find(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         final Position origin = Position.create(0, 0);
         final Position dest = Position.create(matrix.height() - 1, matrix.width() - 1);
@@ -222,8 +222,8 @@ public class MatrixUtils {
     }
 
     public static <T> Position search(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         int l = matrix.height() - 1;
         int k = 0;
@@ -266,8 +266,8 @@ public class MatrixUtils {
     }
 
     public static <T> boolean fill(final MatrixIF<T> matrix, int row, int column, final T value) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         if (Objects.equals(value, matrix.get(row, column))) {
             return false;
@@ -290,8 +290,8 @@ public class MatrixUtils {
     }
 
     public static <T> AreaIF findSquare(final MatrixIF<T> matrix, final T value, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         for (int i = matrix.height(); i >= 1; i--) {
             final AreaIF square = findSquareWithSize(matrix, value, i, cmp);
@@ -335,8 +335,8 @@ public class MatrixUtils {
     }
 
     public static <T> boolean checkDiagonal(final MatrixIF<T> matrix, boolean isMainDiagonal, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         int row = 0, column = isMainDiagonal ? 0 : matrix.width() - 1;
         int direction = isMainDiagonal ? 1 : -1;
@@ -351,8 +351,8 @@ public class MatrixUtils {
     }
 
     public static <T> List<Integer> computeAreaSize(final MatrixIF<T> matrix, final T emptyValue, final Comparator<? super T> cmp) {
-        Objects.requireNonNull(matrix);
-        Objects.requireNonNull(matrix.getRow(0));
+        ValidationUtils.notNull(matrix);
+        ValidationUtils.notNull(matrix.getRow(0));
 
         boolean[][] visited = new boolean[matrix.height()][matrix.width()];
         final List<Integer> areaSize = new ArrayList<>();

@@ -23,6 +23,8 @@
  */
 package com.sensiblemetrics.ansifancy.parser.iface;
 
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
+
 import java.util.Objects;
 
 /**
@@ -55,7 +57,7 @@ public interface ParserIF<T, R> {
      * @throws NullPointerException if before is null
      */
     default <V> ParserIF<V, R> compose(final ParserIF<? super V, ? extends T> before) {
-        Objects.requireNonNull(before);
+        ValidationUtils.notNull(before);
         return (V v) -> parse(before.parse(v));
     }
 
@@ -70,7 +72,7 @@ public interface ParserIF<T, R> {
      * @throws NullPointerException if after is null
      */
     default <V> ParserIF<T, V> andThen(final ParserIF<? super R, ? extends V> after) {
-        Objects.requireNonNull(after);
+        ValidationUtils.notNull(after);
         return (T t) -> after.parse(parse(t));
     }
 

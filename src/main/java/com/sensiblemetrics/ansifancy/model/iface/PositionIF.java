@@ -24,6 +24,7 @@
 package com.sensiblemetrics.ansifancy.model.iface;
 
 import com.sensiblemetrics.ansifancy.model.impl.IntCoordinate;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.NonNull;
 
 import java.io.Serializable;
@@ -68,7 +69,7 @@ public interface PositionIF<T> extends Serializable, Cloneable {
     double length();
 
     default boolean isEquivalent(final PositionIF<IntCoordinate> position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         return Objects.equals(position.getDepth(), this.getDepth())
             && Objects.equals(position.getColumn(), this.getColumn())
             && Objects.equals(position.getRow(), this.getRow());

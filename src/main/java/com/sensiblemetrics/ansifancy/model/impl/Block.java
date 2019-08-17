@@ -4,9 +4,8 @@ import com.sensiblemetrics.ansifancy.model.iface.AreaIF;
 import com.sensiblemetrics.ansifancy.model.iface.BlockIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.*;
-
-import java.util.Objects;
 
 /**
  * Default {@link BlockIF} implementation
@@ -42,7 +41,8 @@ public class Block implements BlockIF<IntCoordinate> {
      * @param area - initial input {@link AreaIF}
      */
     public Block(final Area area) {
-        this.area = Objects.requireNonNull(area);
+        ValidationUtils.notNull(area, "Area should not be null");
+        this.area = area;
         this.matrix = new Matrix(this.area.height(), this.area.width());
     }
 
@@ -95,7 +95,8 @@ public class Block implements BlockIF<IntCoordinate> {
      * @return new {@link BlockIF} instance
      */
     public static Block create(@NonNull final Area area) {
-        return Block.builder()
+        return Block
+            .builder()
             .area(area)
             .build();
     }
@@ -119,7 +120,8 @@ public class Block implements BlockIF<IntCoordinate> {
     @Override
     @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
     public Block clone() {
-        return Block.builder()
+        return Block
+            .builder()
             .area(this.area.copy())
             .matrix(this.matrix.copy())
             .build();

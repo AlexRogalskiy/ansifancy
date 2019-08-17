@@ -28,6 +28,7 @@ import com.sensiblemetrics.ansifancy.calculation.OperationFactory;
 import com.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.sensiblemetrics.ansifancy.utils.NumberUtils;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.*;
 
 import java.util.Map;
@@ -52,6 +53,10 @@ public class Position implements PositionIF<IntCoordinate> {
      * Default explicit serialVersionUID for interoperability
      */
     private static final long serialVersionUID = 4745754960240147629L;
+    /**
+     * Default zero {@link Position}
+     */
+    public static final Position ZERO_POSITION = Position.create(0, 0, 0);
 
     /**
      * Default row {@link IntCoordinate} position
@@ -89,17 +94,17 @@ public class Position implements PositionIF<IntCoordinate> {
     }
 
     public void setCoordinates(final IntCoordinate[] values) {
-        Objects.requireNonNull(values, "Values array should not be null");
+        ValidationUtils.notNull(values, "Values array should not be null");
         this.setCoordinates(values[0], values[1], values[2]);
     }
 
     public void setCoordinates(final PositionIF<IntCoordinate> position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         this.setCoordinates(position.getRow(), position.getColumn(), position.getDepth());
     }
 
     public final double distanceBy(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         return Math.max(
             Math.abs(this.getRow().getValue() - position.getRow().getValue()),
             Math.abs(this.getColumn().getValue() - position.getColumn().getValue())
@@ -107,7 +112,7 @@ public class Position implements PositionIF<IntCoordinate> {
     }
 
     public final Position absolute(final Position position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         return this.create(
             Math.abs(position.getRow().getValue()),
             Math.abs(position.getColumn().getValue()),
@@ -355,7 +360,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @return updated {@link Position} instance
      */
     public <T extends Position> T vector(final T position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         int vx = MULTIPLY.apply(getColumn(), position.getDepth()) - MULTIPLY.apply(getDepth(), position.getRow());
         int vy = MULTIPLY.apply(getDepth(), position.getColumn()) - MULTIPLY.apply(getColumn(), position.getDepth());
         int vz = MULTIPLY.apply(getColumn(), position.getRow()) - MULTIPLY.apply(getRow(), position.getColumn());
@@ -369,7 +374,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @return updated {@link Position} instance
      */
     public <T extends Position> int scalar(final T position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         return MULTIPLY.apply(getColumn(), position.getColumn())
             + MULTIPLY.apply(getRow(), position.getRow())
             + MULTIPLY.apply(getDepth(), position.getDepth());
@@ -382,7 +387,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @return euclid distance
      */
     public <T extends Position> double distance(final T position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         int res = OperationFactory.SUBTRACT.apply(getColumn(), position.getColumn()) * 2
             + OperationFactory.SUBTRACT.apply(getRow(), position.getRow()) * 2
             + OperationFactory.SUBTRACT.apply(getDepth(), position.getDepth()) * 2;
@@ -396,7 +401,7 @@ public class Position implements PositionIF<IntCoordinate> {
      * @return angle value
      */
     public <T extends Position> double angle(final T position) {
-        Objects.requireNonNull(position, "Position should not be null");
+        ValidationUtils.notNull(position, "Position should not be null");
         double length = this.length() * position.length();
         if (0 == length) {
             throw new IllegalArgumentException(String.format("ERROR: should not be equal to zero, length={%s}", length));
@@ -425,6 +430,16 @@ public class Position implements PositionIF<IntCoordinate> {
      */
     public <T extends Position> T offset(int rowOffset, int colOffset, int depthOffset) {
         return (T) Position.create(this.getRow().getValue() + rowOffset, this.getColumn().getValue() + colOffset, this.getDepth().getValue() + depthOffset);
+    }
+
+    public boolean isEmpty() {
+        return Objects.equals(this, ZERO_POSITION);
+    }
+
+    public boolean contains(final Position position) {
+        return position.getRow().getValue() <= this.getRow().getValue() && position.getRow().getValue() >= ZERO_POSITION.getRow().getValue()
+            && position.getColumn().getValue() <= this.getColumn().getValue() && position.getColumn().getValue() >= ZERO_POSITION.getColumn().getValue()
+            && position.getDepth().getValue() <= this.getDepth().getValue() && position.getDepth().getValue() >= ZERO_POSITION.getDepth().getValue();
     }
 
     /**

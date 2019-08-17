@@ -27,6 +27,7 @@ import com.sensiblemetrics.ansifancy.exception.FormatException;
 import com.sensiblemetrics.ansifancy.model.iface.MarkerSequence;
 import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import com.sensiblemetrics.ansifancy.stream.FancyOutputStream;
+import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -149,7 +150,7 @@ public class FancyString implements MarkerSequence {
     }
 
     public MarkerSequence args(final Object... args) {
-        Objects.requireNonNull(args);
+        ValidationUtils.notNull(args, "Arguments should not be null");
         if (args.length % 2 == 1)
             throw FormatException.throwInvalidNumOfArguments(args.length);
         for (int i = 0; i < args.length; i += 2) {
@@ -196,7 +197,7 @@ public class FancyString implements MarkerSequence {
     }
 
     private CharSequence chew(final CharSequence str) {
-        Objects.requireNonNull(str);
+        ValidationUtils.notNull(str, "Char sequence should not be null");
         final ByteArrayOutputStream buff = new ByteArrayOutputStream();
         final FancyOutputStream out = new FancyOutputStream(buff);
         try {

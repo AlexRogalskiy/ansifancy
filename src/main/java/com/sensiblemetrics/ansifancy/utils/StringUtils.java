@@ -79,8 +79,8 @@ public class StringUtils {
      * @throws NullPointerException if after is null
      */
     public static String replaceAll(final String initialValue, final String pattern, final String replaceValue) {
-        Objects.requireNonNull(initialValue);
-        Objects.requireNonNull(pattern);
+        ValidationUtils.notNull(initialValue);
+        ValidationUtils.notNull(pattern);
         return initialValue.replaceAll(pattern, replaceValue);
     }
 
@@ -176,8 +176,8 @@ public class StringUtils {
      * @throws NullPointerException if after is null
      */
     public static String formatMessage(final Locale locale, final String message, final Object... args) {
-        Objects.requireNonNull(locale, "Locale should not be null");
-        Objects.requireNonNull(message, "Message should not be null");
+        ValidationUtils.notNull(locale, "Locale should not be null");
+        ValidationUtils.notNull(message, "Message should not be null");
         return String.format(locale, message, args);
     }
 
@@ -204,7 +204,7 @@ public class StringUtils {
      * @throws NullPointerException if after is null
      */
     public static String stripAnsiChars(final String value) {
-        Objects.requireNonNull(value);
+        ValidationUtils.notNull(value);
         return sanitize(value, "[\\u001b\\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]");
     }
 
