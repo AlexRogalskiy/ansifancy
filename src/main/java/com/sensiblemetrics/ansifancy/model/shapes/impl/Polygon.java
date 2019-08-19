@@ -3,7 +3,7 @@ package com.sensiblemetrics.ansifancy.model.shapes.impl;
 import com.sensiblemetrics.ansifancy.model.shapes.iface.Shape;
 import com.sensiblemetrics.ansifancy.utils.StringUtils;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ import java.util.*;
  * @author Thomas Darimont
  * @since 1.8
  */
-@EqualsAndHashCode
+@Data
 public class Polygon implements Iterable<Point>, Shape {
 
     private static final long serialVersionUID = -2705040068154648988L;

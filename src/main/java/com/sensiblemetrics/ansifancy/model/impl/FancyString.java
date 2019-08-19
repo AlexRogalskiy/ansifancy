@@ -29,8 +29,6 @@ import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import com.sensiblemetrics.ansifancy.stream.FancyOutputStream;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
@@ -49,8 +47,6 @@ import java.util.*;
  */
 @Slf4j
 @Data
-@EqualsAndHashCode
-@ToString
 public class FancyString implements MarkerSequence {
 
     /**

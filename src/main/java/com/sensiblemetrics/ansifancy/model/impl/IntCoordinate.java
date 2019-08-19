@@ -2,8 +2,6 @@ package com.sensiblemetrics.ansifancy.model.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Default coordinate implementation
@@ -13,8 +11,6 @@ import lombok.ToString;
  */
 @Data
 @AllArgsConstructor(staticName = "of")
-@EqualsAndHashCode
-@ToString
 public class IntCoordinate implements Comparable<IntCoordinate> {
 
     /**

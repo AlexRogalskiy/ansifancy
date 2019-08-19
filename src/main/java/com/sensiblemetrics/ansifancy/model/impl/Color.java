@@ -23,12 +23,14 @@
  */
 package com.sensiblemetrics.ansifancy.model.impl;
 
-import com.sensiblemetrics.ansifancy.utils.NumberUtils;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Predicate;
+
+import static com.sensiblemetrics.ansifancy.utils.NumberUtils.inRange;
 
 /**
  * Default color implementation
@@ -80,25 +82,25 @@ public class Color implements Serializable {
     /**
      * Default RGB color namespace values
      */
-    public final static Color WHITE = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND);
-    public final static Color BLACK = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
-    public final static Color PINK = new Color(DEFAULT_RGB_MAX_BOUND, 175, 175);
-    public final static Color ORANGE = new Color(DEFAULT_RGB_MAX_BOUND, 200, DEFAULT_RGB_MIN_BOUND);
-    public final static Color GRAY = new Color(DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2);
-    public final static Color LIGHT_GRAY = new Color(192, 192, 192);
-    public final static Color DARK_GRAY = new Color(64, 64, 64);
-    public final static Color RED = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
-    public final static Color LIGHT_RED = new Color(DEFAULT_RGB_MAX_BOUND, 51, DEFAULT_RGB_MIN_BOUND);
-    public final static Color YELLOW = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
-    public final static Color LIGHT_YELLOW = new Color(DEFAULT_RGB_MAX_BOUND, 153, 51);
-    public final static Color GREEN = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
-    public final static Color LIGHT_GREEN = new Color(51, 204, 51);
-    public final static Color MAGENTA = new Color(204, DEFAULT_RGB_MIN_BOUND, 204);
-    public final static Color LIGHT_MAGENTA = new Color(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
-    public final static Color CYAN = new Color(DEFAULT_RGB_MIN_BOUND, 153, DEFAULT_RGB_MAX_BOUND);
-    public final static Color LIGHT_CYAN = new Color(DEFAULT_RGB_MIN_BOUND, 204, DEFAULT_RGB_MAX_BOUND);
-    public final static Color BLUE = new Color(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
-    public final static Color LIGHT_BLUE = new Color(26, 140, DEFAULT_RGB_MAX_BOUND);
+    public final static Color WHITE = of(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color BLACK = of(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color PINK = of(DEFAULT_RGB_MAX_BOUND, 175, 175);
+    public final static Color ORANGE = of(DEFAULT_RGB_MAX_BOUND, 200, DEFAULT_RGB_MIN_BOUND);
+    public final static Color GRAY = of(DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2, DEFAULT_RGB_MAX_BOUND / 2);
+    public final static Color LIGHT_GRAY = of(192, 192, 192);
+    public final static Color DARK_GRAY = of(64, 64, 64);
+    public final static Color RED = of(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color LIGHT_RED = of(DEFAULT_RGB_MAX_BOUND, 51, DEFAULT_RGB_MIN_BOUND);
+    public final static Color YELLOW = of(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color LIGHT_YELLOW = of(DEFAULT_RGB_MAX_BOUND, 153, 51);
+    public final static Color GREEN = of(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND);
+    public final static Color LIGHT_GREEN = of(51, 204, 51);
+    public final static Color MAGENTA = of(204, DEFAULT_RGB_MIN_BOUND, 204);
+    public final static Color LIGHT_MAGENTA = of(DEFAULT_RGB_MAX_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color CYAN = of(DEFAULT_RGB_MIN_BOUND, 153, DEFAULT_RGB_MAX_BOUND);
+    public final static Color LIGHT_CYAN = of(DEFAULT_RGB_MIN_BOUND, 204, DEFAULT_RGB_MAX_BOUND);
+    public final static Color BLUE = of(DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
+    public final static Color LIGHT_BLUE = of(26, 140, DEFAULT_RGB_MAX_BOUND);
 
     /**
      * Default predicate to check RGB color namespace component value
@@ -106,7 +108,7 @@ public class Color implements Serializable {
      * @param value - initial input color component to be checked
      * @return true - if color component is in range, false - otherwise
      */
-    private static final Predicate<Float> DEFAULT_RGB_COLOR_CHECK = value -> NumberUtils.inRange(value, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
+    private static final Predicate<Float> DEFAULT_RGB_COLOR_CHECK = value -> inRange(value, DEFAULT_RGB_MIN_BOUND, DEFAULT_RGB_MAX_BOUND);
 
     /**
      * Default predicate to check HSB color namespace component value
@@ -114,7 +116,7 @@ public class Color implements Serializable {
      * @param value - initial input color component to be checked
      * @return true - if color component is in range, false - otherwise
      */
-    private static final Predicate<Float> DEFAULT_HSB_COLOR_CHECK = value -> NumberUtils.inRange(value, DEFAULT_HSB_MIN_BOUND, DEFAULT_HSB_MAX_BOUND);
+    private static final Predicate<Float> DEFAULT_HSB_COLOR_CHECK = value -> inRange(value, DEFAULT_HSB_MIN_BOUND, DEFAULT_HSB_MAX_BOUND);
 
     /**
      * Default transparency color type
@@ -169,7 +171,7 @@ public class Color implements Serializable {
      * @param blue  - initial input RGB blue component
      * @param alpha - initial input RGB alpha component
      **/
-    public static void testRGBColor(int red, int green, int blue, int alpha) {
+    public static void testRGBColor(final int red, final int green, final int blue, final int alpha) {
         testColor(red, green, blue, alpha, DEFAULT_RGB_COLOR_CHECK);
     }
 
@@ -183,7 +185,7 @@ public class Color implements Serializable {
      * @param blue  - initial input HSB blue component
      * @param alpha - initial input HSB alpha component
      **/
-    public static void testHSBColor(float red, float green, float blue, float alpha) {
+    public static void testHSBColor(final float red, final float green, final float blue, final float alpha) {
         testColor(red, green, blue, alpha, DEFAULT_HSB_COLOR_CHECK);
     }
 
@@ -198,7 +200,7 @@ public class Color implements Serializable {
      * @param alpha          - initial input alpha component of the color
      * @param colorPredicate - initial input color predicate {@link Predicate}
      **/
-    private static void testColor(float red, float green, float blue, float alpha, final Predicate<Float> colorPredicate) {
+    private static void testColor(final float red, final float green, final float blue, final float alpha, final Predicate<Float> colorPredicate) {
         final StringBuilder errorMessageBuilder = new StringBuilder();
         boolean hasRangeError = testColorComponent(red, DEFAULT_COLOR_APLHA_CHANNEL_NAME, errorMessageBuilder, colorPredicate) &&
             testColorComponent(red, DEFAULT_COLOR_RED_CHANNEL_NAME, errorMessageBuilder, colorPredicate) &&
@@ -218,7 +220,7 @@ public class Color implements Serializable {
      * @param colorRangePredicate - initial input color range predicate {@link Predicate}
      * @return true - if input value matches predicate, false - otherwise
      */
-    private static boolean testColorComponent(float value, final String errorMessage, final StringBuilder errorMessageBuilder, final Predicate<Float> colorRangePredicate) {
+    private static boolean testColorComponent(final float value, final String errorMessage, final StringBuilder errorMessageBuilder, final Predicate<Float> colorRangePredicate) {
         if (colorRangePredicate.negate().test(value)) {
             errorMessageBuilder.append(errorMessage);
             return true;
@@ -236,7 +238,7 @@ public class Color implements Serializable {
      *                                  or <code>b</code> are outside of the range
      *                                  0 to 255, inclusive
      */
-    public Color(int red, int green, int blue) {
+    public Color(final int red, final int green, final int blue) {
         this(red, green, blue, DEFAULT_RGB_MAX_BOUND);
     }
 
@@ -251,7 +253,7 @@ public class Color implements Serializable {
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0 to 255, inclusive
      */
-    public Color(int red, int green, int blue, int alpha) {
+    public Color(final int red, final int green, final int blue, final int alpha) {
         this.value = (
             (alpha & DEFAULT_RGB_MAX_BOUND) << 24) |
             ((red & DEFAULT_RGB_MAX_BOUND) << 16) |
@@ -266,7 +268,7 @@ public class Color implements Serializable {
      *
      * @param rgb - initial input RGB color namespace composite value
      */
-    public Color(int rgb) {
+    public Color(final int rgb) {
         this.value = 0xFF000000 | rgb;
     }
 
@@ -278,7 +280,7 @@ public class Color implements Serializable {
      * @param withAlpha - <code>true</code> if the alpha bits are valid;
      *                  <code>false</code> otherwise
      */
-    public Color(int rgb, boolean withAlpha) {
+    public Color(final int rgb, final boolean withAlpha) {
         this.value = (withAlpha) ? rgb : (0xFF000000 | rgb);
     }
 
@@ -292,7 +294,7 @@ public class Color implements Serializable {
      *                                  or <code>b</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
      */
-    public Color(float red, float green, float blue) {
+    public Color(final float red, final float green, final float blue) {
         this((int) (red * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
             (int) (green * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
             (int) (blue * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2));
@@ -315,7 +317,7 @@ public class Color implements Serializable {
      *                                  <code>b</code> or <code>a</code> are outside of the range
      *                                  0.0 to 1.0, inclusive
      */
-    public Color(float red, float green, float blue, float alpha) {
+    public Color(final float red, final float green, final float blue, final float alpha) {
         this((int) (red * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
             (int) (green * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
             (int) (blue * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2),
@@ -412,7 +414,7 @@ public class Color implements Serializable {
             getAlphaComponent());
     }
 
-    public static double[] normalize(final Color color, int value) {
+    public static double[] normalize(final Color color, final int value) {
         final double[] result = new double[3];
         result[0] = color.getRedComponent() / 255.0;
         result[1] = color.getGreenComponent() / 255.0;
@@ -471,7 +473,7 @@ public class Color implements Serializable {
      * @param value     - initial input composite color value
      * @return new {@link Color} instance
      */
-    public static Color getColor(final String namespace, int value) {
+    public static Color getColor(final String namespace, final int value) {
         final Integer intval = Integer.getInteger(namespace);
         int i = (Objects.nonNull(intval)) ? intval.intValue() : value;
         return new Color(
@@ -488,7 +490,7 @@ public class Color implements Serializable {
      * @param brightness - initial input brightness component of the color
      * @return the RGB value of the color by indicated hue, saturation, and brightness components
      */
-    public static int convertFromHSBToRGB(float hue, float saturation, float brightness) {
+    public static int convertFromHSBToRGB(final float hue, final float saturation, final float brightness) {
         int r = 0, g = 0, b = 0;
         if (saturation == 0) {
             r = g = b = (int) (brightness * DEFAULT_RGB_MAX_BOUND + DEFAULT_HSB_MAX_BOUND / 2);
@@ -542,7 +544,7 @@ public class Color implements Serializable {
      * @param blue  - initial input blue component of the color
      * @return an array of three elements containing the hue, saturation and brightness of the color
      */
-    public static float[] convertFromRGBToHSB(int red, int green, int blue) {
+    public static float[] convertFromRGBToHSB(final int red, final int green, final int blue) {
         float hue, saturation, brightness;
         float[] hsbvals = new float[3];
         int cmax = (red > green) ? red : green;
@@ -585,7 +587,7 @@ public class Color implements Serializable {
      * @param b - initial input brightness component of the color
      * @return a <code>Color</code> object with the specified hue, saturation, and brightness.
      */
-    public static Color getHSBColor(float h, float s, float b) {
+    public static Color getHSBColor(final float h, final float s, final float b) {
         return new Color(convertFromHSBToRGB(h, s, b));
     }
 
@@ -679,5 +681,10 @@ public class Color implements Serializable {
             return TransparencyColorType.BITMASK;
         }
         return TransparencyColorType.TRANSLUCENT;
+    }
+
+    @NotNull
+    public static final Color of(final int red, final int green, final int blue) {
+        return new Color(red, green, blue);
     }
 }

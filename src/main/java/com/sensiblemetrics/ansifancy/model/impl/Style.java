@@ -149,7 +149,7 @@ public class Style implements StyleIF {
      * @return updated {@link StyleIF}
      */
     public StyleIF add(final CharSequence name, final CharSequence symbol, final int code, final PointIF.PointType type) {
-        this.getPoints().add(Point.create(name, symbol, code, type));
+        this.getPoints().add(Point.of(name, symbol, code, type));
         return this;
     }
 

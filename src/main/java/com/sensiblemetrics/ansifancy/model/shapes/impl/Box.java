@@ -3,22 +3,16 @@ package com.sensiblemetrics.ansifancy.model.shapes.impl;
 import com.sensiblemetrics.ansifancy.model.shapes.iface.Shape;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Represents a geospatial box value
- *
- * @author Mark Pollack
- * @author Oliver Gierke
- * @author Thomas Darimont
- * @since 1.8
  */
 @Data
-@EqualsAndHashCode
-@ToString
 public class Box implements Shape {
 
+    /**
+     * Default explicit serialVersionUID for interoperability
+     */
     private static final long serialVersionUID = 8198095179084040711L;
 
     private final Point first;

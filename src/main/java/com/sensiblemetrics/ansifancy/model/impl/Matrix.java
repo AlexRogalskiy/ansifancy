@@ -3,7 +3,10 @@ package com.sensiblemetrics.ansifancy.model.impl;
 import com.sensiblemetrics.ansifancy.model.iface.MatrixIF;
 import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import com.sensiblemetrics.ansifancy.utils.MatrixUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 /**
  * Default {@link MatrixIF} implementation
@@ -11,11 +14,9 @@ import lombok.*;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Data
 @Builder
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
 public class Matrix implements MatrixIF<StyleIF> {
 
     /**
@@ -46,7 +47,7 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @return {@link StyleIF}
      */
     @Override
-    public StyleIF get(int i, int j) {
+    public StyleIF get(final int i, final int j) {
         MatrixUtils.checkBound(i, 0, this.height() - 1);
         MatrixUtils.checkBound(j, 0, this.width() - 1);
         return this.matrix[i][j];
@@ -60,7 +61,7 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @param style - initial input {@link StyleIF} instance
      */
     @Override
-    public void set(int i, int j, final StyleIF style) {
+    public void set(final int i, final int j, final StyleIF style) {
         MatrixUtils.checkBound(i, 0, this.height() - 1);
         MatrixUtils.checkBound(j, 0, this.width() - 1);
         this.matrix[i][j] = style;
@@ -82,7 +83,7 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @param wOffset - initial input width offset
      * @return matrix copy of {@link StyleIF}
      */
-    protected StyleIF[][] copy(int hOffset, int wOffset) {
+    protected StyleIF[][] copy(final int hOffset, final int wOffset) {
         MatrixUtils.checkBound(hOffset, 0, this.height());
         MatrixUtils.checkBound(wOffset, 0, this.width());
 
@@ -100,7 +101,7 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @return array of {@link StyleIF}
      */
     @Override
-    public StyleIF[] getRow(int i) {
+    public StyleIF[] getRow(final int i) {
         MatrixUtils.checkBound(i, 0, this.height());
         return this.matrix[i];
     }
@@ -112,7 +113,7 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @return array of {@link StyleIF}
      */
     @Override
-    public StyleIF[] getColumn(int j) {
+    public StyleIF[] getColumn(final int j) {
         MatrixUtils.checkBound(j, 0, this.width());
         final StyleIF[] result = new StyleIF[this.height()];
         for (int r = 0; r < this.height(); r++) {
@@ -127,8 +128,10 @@ public class Matrix implements MatrixIF<StyleIF> {
      * @param matrix - initial input array of {@link StyleIF}
      * @return new {@link Matrix} instance
      */
+    @NonNull
     public static Matrix create(@NonNull final StyleIF[][] matrix) {
-        return Matrix.builder()
+        return Matrix
+            .builder()
             .matrix(matrix)
             .build();
     }

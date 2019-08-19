@@ -24,7 +24,10 @@
 package com.sensiblemetrics.ansifancy.model.impl;
 
 import com.sensiblemetrics.ansifancy.model.iface.MetaDataIF;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 /**
  * Default {@link MetaDataIF} implementation
@@ -32,11 +35,9 @@ import lombok.*;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Data
 @Builder
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
 public class MetaData implements MetaDataIF {
 
     /**
@@ -47,11 +48,11 @@ public class MetaData implements MetaDataIF {
     /**
      * Default meta name
      */
-    private String name;
+    private final String name;
     /**
      * Default meta description
      */
-    private String description;
+    private final String description;
 
     /**
      * Returns new {@link MetaData} instance by input parameters
@@ -60,8 +61,10 @@ public class MetaData implements MetaDataIF {
      * @param description - initial input meta description {@link String}
      * @return new {@link MetaData} instance
      */
+    @NonNull
     public static MetaDataIF create(final String name, final String description) {
-        return MetaData.builder()
+        return MetaData
+            .builder()
             .name(name)
             .description(description)
             .build();

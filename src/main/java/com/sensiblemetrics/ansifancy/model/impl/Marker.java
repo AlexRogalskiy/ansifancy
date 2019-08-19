@@ -24,7 +24,10 @@
 package com.sensiblemetrics.ansifancy.model.impl;
 
 import com.sensiblemetrics.ansifancy.model.iface.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,8 +43,6 @@ import java.util.Optional;
 @Builder
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode
-@ToString
 public class Marker implements MarkerIF<IntCoordinate> {
 
     /**
@@ -91,6 +92,7 @@ public class Marker implements MarkerIF<IntCoordinate> {
      * @return new copy of current {@link BlockIF}
      */
     @Override
+    @NonNull
     @SuppressWarnings({"CloneDeclaresCloneNotSupported", "CloneDoesntCallSuperClone"})
     public MarkerIF clone() {
         return create(this.position, this.metaData, this.styles.toArray(new StyleIF[this.styles.size()]));
@@ -104,6 +106,7 @@ public class Marker implements MarkerIF<IntCoordinate> {
      * @param styles   - initial array of styles {@link StyleIF}
      * @return new {@link Marker} instance
      */
+    @NonNull
     public static MarkerIF create(@NonNull final PositionIF<IntCoordinate> position, @NonNull final MetaDataIF metaData, final StyleIF... styles) {
         return Marker.builder()
             .position(position)

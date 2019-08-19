@@ -9,14 +9,13 @@ import java.io.Serializable;
 
 /**
  * Value object to represent distances in a given metric.
- *
- * @author Oliver Gierke
- * @author Thomas Darimont
- * @since 1.8
  */
 @Value
 public class Distance implements Serializable, Comparable<Distance> {
 
+    /**
+     * Default explicit serialVersionUID for interoperability
+     */
     private static final long serialVersionUID = 2460886201934027744L;
 
     /**
@@ -34,7 +33,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      *
      * @param value
      */
-    public Distance(double value) {
+    public Distance(final double value) {
         this(value, Metrics.NEUTRAL);
     }
 
@@ -44,7 +43,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      * @param value
      * @param metric must not be {@literal null}.
      */
-    public Distance(double value, Metric metric) {
+    public Distance(final double value, final Metric metric) {
         ValidationUtils.notNull(metric, "Metric must not be null!");
 
         this.value = value;
@@ -58,7 +57,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      * @param max can be {@literal null}.
      * @return will never be {@literal null}.
      */
-    public static Range<Distance> between(Distance min, Distance max) {
+    public static Range<Distance> between(final Distance min, final Distance max) {
         return Range.from(Range.Bound.inclusive(min)).to(Range.Bound.inclusive(max));
     }
 
@@ -71,7 +70,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      * @param maxMetric can be {@literal null}.
      * @return
      */
-    public static Range<Distance> between(double minValue, Metric minMetric, double maxValue, Metric maxMetric) {
+    public static Range<Distance> between(final double minValue, final Metric minMetric, final double maxValue, final Metric maxMetric) {
         return between(new Distance(minValue, minMetric), new Distance(maxValue, maxMetric));
     }
 
@@ -81,7 +80,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      * @return
      */
     public double getNormalizedValue() {
-        return value / metric.getMultiplier();
+        return this.value / this.metric.getMultiplier();
     }
 
     /**
@@ -103,7 +102,7 @@ public class Distance implements Serializable, Comparable<Distance> {
      */
     public Distance add(final Distance other) {
         ValidationUtils.notNull(other, "Distance to add must not be null!");
-        double newNormalizedValue = getNormalizedValue() + other.getNormalizedValue();
+        final double newNormalizedValue = getNormalizedValue() + other.getNormalizedValue();
         return new Distance(newNormalizedValue * this.metric.getMultiplier(), this.metric);
     }
 

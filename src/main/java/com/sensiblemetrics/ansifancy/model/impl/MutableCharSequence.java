@@ -23,12 +23,17 @@
  */
 package com.sensiblemetrics.ansifancy.model.impl;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 /**
  * A mutable char sequence pointing at a single char[].
  */
+@Data
+@RequiredArgsConstructor
 public class MutableCharSequence implements CharSequence {
 
-    private char[] chars;
+    private final char[] chars;
 
     public int length() {
         return this.chars.length;

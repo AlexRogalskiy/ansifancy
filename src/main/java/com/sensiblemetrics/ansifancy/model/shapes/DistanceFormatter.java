@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Converter to create {@link Distance} instances from {@link String} representations. The supported format is a decimal
+ * Converter to of {@link Distance} instances from {@link String} representations. The supported format is a decimal
  * followed by whitespace and a metric abbreviation. We currently support the following abbreviations
  *
  * @author Oliver Gierke

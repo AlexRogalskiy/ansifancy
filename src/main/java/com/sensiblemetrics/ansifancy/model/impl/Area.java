@@ -4,7 +4,11 @@ import com.sensiblemetrics.ansifancy.calculation.OperationFactory;
 import com.sensiblemetrics.ansifancy.model.iface.AreaIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -14,11 +18,9 @@ import java.util.Objects;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Data
 @Builder
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
 public class Area implements AreaIF<IntCoordinate> {
 
     /**
@@ -125,6 +127,7 @@ public class Area implements AreaIF<IntCoordinate> {
      * @param bottomLeft - initial input bottom left {@link PositionIF}
      * @return new {@link AreaIF} instance
      */
+    @NotNull
     public static Area create(@NonNull final PositionIF<IntCoordinate> topRight, @NonNull final PositionIF<IntCoordinate> bottomLeft) {
         return Area
             .builder()
@@ -143,10 +146,10 @@ public class Area implements AreaIF<IntCoordinate> {
      */
     public static AreaIF<IntCoordinate> create(final int row, final int col, final int size) {
         ValidationUtils.isTrue(size >= 0, "Should be greater than or equal zero");
-
         return create(Position.create(row, col + size), Position.create(row + size, col));
     }
 
+    @NotNull
     public PositionIF<IntCoordinate> getCenter() {
         return Position
             .builder()
