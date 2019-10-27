@@ -14,7 +14,7 @@ import static com.sensiblemetrics.ansifancy.utils.MathUtils.hypot;
  * Jama = Java Matrix class.
  * <p>
  * The Java Matrix Class provides the fundamental operations of numerical
- * linear algebra.  Various constructors create Matrices from two dimensional
+ * linear algebra.  Various constructors of Matrices from two dimensional
  * arrays of double precision floating point numbers.  Various "gets" and
  * "sets" provide access to submatrices and matrix elements.  Several methods
  * implement basic matrix arithmetic, including matrix addition and

@@ -4,22 +4,16 @@ import com.sensiblemetrics.ansifancy.model.shapes.Metrics;
 import com.sensiblemetrics.ansifancy.model.shapes.iface.Shape;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Represents a geospatial circle value
- *
- * @author Mark Pollack
- * @author Oliver Gierke
- * @author Thomas Darimont
- * @since 1.8
  */
 @Data
-@EqualsAndHashCode
-@ToString
 public class Circle implements Shape {
 
+    /**
+     * Default explicit serialVersionUID for interoperability
+     */
     private static final long serialVersionUID = 5215611530535947924L;
 
     private final Point center;

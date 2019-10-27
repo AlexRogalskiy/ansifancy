@@ -31,10 +31,8 @@ public class Range<T extends Comparable<T>> {
      * @param lowerBound can be {@literal null} in case upperBound is not {@literal null}.
      * @param upperBound can be {@literal null} in case lowerBound is not {@literal null}.
      * @see Range#of(Bound, Bound)
-     * @deprecated since 2.0 in favor of {@link Range#of(Bound, Bound)}.
      */
-    @Deprecated
-    public Range(T lowerBound, T upperBound) {
+    public Range(final T lowerBound, final T upperBound) {
         this(lowerBound, upperBound, true, true);
     }
 
@@ -46,11 +44,8 @@ public class Range<T extends Comparable<T>> {
      * @param upperBound     can be {@literal null}.
      * @param lowerInclusive
      * @param upperInclusive
-     * @deprecated since 2.0. Use {@link Range#of(Bound, Bound)} and {@link Bound} factory methods:
-     * {@link Bound#inclusive(Comparable)}, {@link Bound#exclusive(Comparable)}/{@link Bound#unbounded()}.
      */
-    @Deprecated
-    public Range(final T lowerBound, final T upperBound, boolean lowerInclusive, boolean upperInclusive) {
+    public Range(final T lowerBound, final T upperBound, final boolean lowerInclusive, final boolean upperInclusive) {
         this.lowerBound = lowerBound == null ? Bound.unbounded()
             : lowerInclusive ? Bound.inclusive(lowerBound) : Bound.exclusive(lowerBound);
 
@@ -60,9 +55,6 @@ public class Range<T extends Comparable<T>> {
 
     /**
      * Returns an unbounded {@link Range}.
-     *
-     * @return
-     * @since 2.0
      */
     @SuppressWarnings("unchecked")
     public static <T extends Comparable<T>> Range<T> unbounded() {
@@ -94,18 +86,14 @@ public class Range<T extends Comparable<T>> {
 
     /**
      * @return
-     * @deprecated since 2.0, use {@link #getLowerBound()} and {@link Bound#isInclusive()}.
      */
-    @Deprecated
     public boolean isLowerInclusive() {
         return this.lowerBound.isInclusive();
     }
 
     /**
      * @return
-     * @deprecated since 2.0, use {@link #getUpperBound()} and {@link Bound#isInclusive()}.
      */
-    @Deprecated
     public boolean isUpperInclusive() {
         return this.upperBound.isInclusive();
     }
@@ -190,7 +178,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Integer> inclusive(int value) {
+        public static Bound<Integer> inclusive(final int value) {
             return inclusive((Integer) value);
         }
 
@@ -200,7 +188,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Long> inclusive(long value) {
+        public static Bound<Long> inclusive(final long value) {
             return inclusive((Long) value);
         }
 
@@ -210,7 +198,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Float> inclusive(float value) {
+        public static Bound<Float> inclusive(final float value) {
             return inclusive((Float) value);
         }
 
@@ -220,7 +208,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Double> inclusive(double value) {
+        public static Bound<Double> inclusive(final double value) {
             return inclusive((Double) value);
         }
 
@@ -241,7 +229,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Integer> exclusive(int value) {
+        public static Bound<Integer> exclusive(final int value) {
             return exclusive((Integer) value);
         }
 
@@ -251,7 +239,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Long> exclusive(long value) {
+        public static Bound<Long> exclusive(final long value) {
             return exclusive((Long) value);
         }
 
@@ -261,7 +249,7 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Float> exclusive(float value) {
+        public static Bound<Float> exclusive(final float value) {
             return exclusive((Float) value);
         }
 
@@ -271,18 +259,18 @@ public class Range<T extends Comparable<T>> {
          * @param value must not be {@literal null}.
          * @return
          */
-        public static Bound<Double> exclusive(double value) {
+        public static Bound<Double> exclusive(final double value) {
             return exclusive((Double) value);
         }
 
-        String toPrefixString() {
+        private String toPrefixString() {
             return getValue() //
                 .map(Object::toString) //
                 .map(it -> isInclusive() ? "[".concat(it) : "(".concat(it)) //
                 .orElse("unbounded");
         }
 
-        String toSuffixString() {
+        private String toSuffixString() {
             return getValue() //
                 .map(Object::toString) //
                 .map(it -> isInclusive() ? it.concat("]") : it.concat(")")) //

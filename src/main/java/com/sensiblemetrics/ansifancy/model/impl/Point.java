@@ -25,6 +25,7 @@ package com.sensiblemetrics.ansifancy.model.impl;
 
 import com.sensiblemetrics.ansifancy.model.iface.PointIF;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
@@ -37,11 +38,10 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Data
 @Builder
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
+@NoArgsConstructor
 public class Point implements PointIF {
 
     /**
@@ -132,56 +132,56 @@ public class Point implements PointIF {
     /**
      * Default decoration escape {@link PointIF} points
      */
-    public static final PointIF BOLD = create("BOLD", "BLD", 1, PointType.DECORATION_CONTROL);
-    public static final PointIF FAINT = create("FAINT", "FNT", 2, PointType.DECORATION_CONTROL);
-    public static final PointIF INVERSE = create("INVERSE", "INV", 3, PointType.DECORATION_CONTROL);
-    public static final PointIF UNDERLINE = create("UNDERLINE", "ULN", 4, PointType.DECORATION_CONTROL);
-    public static final PointIF SLOW_BLINK = create("SLOW_BLINK", "S_BLK", 5, PointType.DECORATION_CONTROL);
-    public static final PointIF FAST_BLINK = create("FAST_BLINK", "F_BLK", 6, PointType.DECORATION_CONTROL);
-    public static final PointIF REVERSE = create("REVERSE", "REV", 7, PointType.DECORATION_CONTROL);
-    public static final PointIF BLANK = create("BLANK", "BLN", 8, PointType.DECORATION_CONTROL);
-    public static final PointIF STRIKE = create("STRIKE", "STRK", 9, PointType.DECORATION_CONTROL);
-    //public static final PointIF DOUBLE_UNDERLINE = create("DOUBLE_UNDERLINE", "D_ULN", 21, PointType.DECORATION_CONTROL);
-    public static final PointIF FRAMED = create("FRAMED", "FRM", 51, PointType.DECORATION_CONTROL);
-    public static final PointIF CIRCLED = create("CIRCLED", "CRC", 52, PointType.DECORATION_CONTROL);
-    public static final PointIF OVERLINE = create("OVERLINE", "OLN", 53, PointType.DECORATION_CONTROL);
+    public static final PointIF BOLD = of("BOLD", "BLD", 1, PointType.DECORATION_CONTROL);
+    public static final PointIF FAINT = of("FAINT", "FNT", 2, PointType.DECORATION_CONTROL);
+    public static final PointIF INVERSE = of("INVERSE", "INV", 3, PointType.DECORATION_CONTROL);
+    public static final PointIF UNDERLINE = of("UNDERLINE", "ULN", 4, PointType.DECORATION_CONTROL);
+    public static final PointIF SLOW_BLINK = of("SLOW_BLINK", "S_BLK", 5, PointType.DECORATION_CONTROL);
+    public static final PointIF FAST_BLINK = of("FAST_BLINK", "F_BLK", 6, PointType.DECORATION_CONTROL);
+    public static final PointIF REVERSE = of("REVERSE", "REV", 7, PointType.DECORATION_CONTROL);
+    public static final PointIF BLANK = of("BLANK", "BLN", 8, PointType.DECORATION_CONTROL);
+    public static final PointIF STRIKE = of("STRIKE", "STRK", 9, PointType.DECORATION_CONTROL);
+    //public static final PointIF DOUBLE_UNDERLINE = of("DOUBLE_UNDERLINE", "D_ULN", 21, PointType.DECORATION_CONTROL);
+    public static final PointIF FRAMED = of("FRAMED", "FRM", 51, PointType.DECORATION_CONTROL);
+    public static final PointIF CIRCLED = of("CIRCLED", "CRC", 52, PointType.DECORATION_CONTROL);
+    public static final PointIF OVERLINE = of("OVERLINE", "OLN", 53, PointType.DECORATION_CONTROL);
     /**
      * Default ideogram escape {@link PointIF} points
      */
-    public static final PointIF RIGHT_SIDE_LINE = create("RIGHT_SIDE_LINE", "R_SD_LN", 60, PointType.IDEOGRAM);
-    public static final PointIF RIGHT_SIDE_DOUBLE_LINE = create("RIGHT_SIDE_DOUBLE_LINE", "R_SD_DLN", 61, PointType.IDEOGRAM);
-    public static final PointIF LEFT_SIDE_LINE = create("LEFT_SIDE_LINE", "L_SD_LN", 62, PointType.IDEOGRAM);
-    public static final PointIF LEFT_SIDE_DOUBLE_LINE = create("LEFT_SIDE_DOUBLE_LINE", "L_SD_DLN", 63, PointType.IDEOGRAM);
-    public static final PointIF STRESS_MARKING = create("STRESS_MARKING", "STRSS", 64, PointType.IDEOGRAM);
+    public static final PointIF RIGHT_SIDE_LINE = of("RIGHT_SIDE_LINE", "R_SD_LN", 60, PointType.IDEOGRAM);
+    public static final PointIF RIGHT_SIDE_DOUBLE_LINE = of("RIGHT_SIDE_DOUBLE_LINE", "R_SD_DLN", 61, PointType.IDEOGRAM);
+    public static final PointIF LEFT_SIDE_LINE = of("LEFT_SIDE_LINE", "L_SD_LN", 62, PointType.IDEOGRAM);
+    public static final PointIF LEFT_SIDE_DOUBLE_LINE = of("LEFT_SIDE_DOUBLE_LINE", "L_SD_DLN", 63, PointType.IDEOGRAM);
+    public static final PointIF STRESS_MARKING = of("STRESS_MARKING", "STRSS", 64, PointType.IDEOGRAM);
     /**
      * Default service escape {@link PointIF} points
      */
-    public static final PointIF RESET = create("RESET", "RST", 0, PointType.SERVICE_CONTROL);
-    public static final PointIF FRAKTUR = create("FRAKTUR", "FRKTR", 20, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_BOLD = create("RESET_BOLD", "RST_BLD", 21, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_COLOR = create("RESET_COLOR", "RST_CLR", 22, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_ITALIC = create("RESET_ITALIC", "RST_IT", 23, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_UNDERLINE = create("RESET_UNDERLINE", "RST_ULN", 24, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_BLINK = create("RESET_BLINK", "RST_BLNK", 25, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_INVERSE = create("RESET_INVERSE", "RST_INV", 27, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_BLANK = create("RESET_BLANK", "RST_BLNK", 28, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_STRIKE = create("RESET_STRIKE", "RST_STRK", 29, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_FRAMED = create("RESET_FRAMED", "RST_FRM", 54, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_OVERLINE = create("RESET_OVERLINE", "RST_OLN", 55, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_IDEOGRAM = create("RESET_IDEOGRAM", "RST_IDEO", 65, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_FOREGROUND = create("RESET_FOREGROUND", "RST_FG", 39, PointType.SERVICE_CONTROL);
-    public static final PointIF RESET_BACKGROUND = create("RESET_BACKGROUND", "RST_BG", 49, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET = of("RESET", "RST", 0, PointType.SERVICE_CONTROL);
+    public static final PointIF FRAKTUR = of("FRAKTUR", "FRKTR", 20, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_BOLD = of("RESET_BOLD", "RST_BLD", 21, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_COLOR = of("RESET_COLOR", "RST_CLR", 22, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_ITALIC = of("RESET_ITALIC", "RST_IT", 23, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_UNDERLINE = of("RESET_UNDERLINE", "RST_ULN", 24, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_BLINK = of("RESET_BLINK", "RST_BLNK", 25, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_INVERSE = of("RESET_INVERSE", "RST_INV", 27, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_BLANK = of("RESET_BLANK", "RST_BLNK", 28, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_STRIKE = of("RESET_STRIKE", "RST_STRK", 29, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_FRAMED = of("RESET_FRAMED", "RST_FRM", 54, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_OVERLINE = of("RESET_OVERLINE", "RST_OLN", 55, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_IDEOGRAM = of("RESET_IDEOGRAM", "RST_IDEO", 65, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_FOREGROUND = of("RESET_FOREGROUND", "RST_FG", 39, PointType.SERVICE_CONTROL);
+    public static final PointIF RESET_BACKGROUND = of("RESET_BACKGROUND", "RST_BG", 49, PointType.SERVICE_CONTROL);
     /**
      * Default foreground color escape {@link PointIF} points
      */
-    public static final PointIF BlACK_FOREGROUND = create("BlACK_FOREGROUND", "BLACK_FG", 30, PointType.FOREGROUND_COLOR);
-    public static final PointIF RED_FOREGROUND = create("RED_FOREGROUND", "RED_FG", 31, PointType.FOREGROUND_COLOR);
-    public static final PointIF GREEN_FOREGROUND = create("GREEN_FOREGROUND", "GREEN_FG", 32, PointType.FOREGROUND_COLOR);
-    public static final PointIF YELLOW_FOREGROUND = create("YELLOW_FOREGROUND", "YELLOW_FG", 33, PointType.FOREGROUND_COLOR);
-    public static final PointIF BLUE_FOREGROUND = create("BLUE_FOREGROUND", "BLUE_FG", 34, PointType.FOREGROUND_COLOR);
-    public static final PointIF MAGENTA_FOREGROUND = create("MAGENTA_FOREGROUND", "MAGENTA_FG", 35, PointType.FOREGROUND_COLOR);
-    public static final PointIF CYAN_FOREGROUND = create("CYAN_FOREGROUND", "CYAN_FG", 36, PointType.FOREGROUND_COLOR);
-    public static final PointIF WHITE_FOREGROUND = create("WHITE_FOREGROUND", "WHITE_FG", 37, PointType.FOREGROUND_COLOR);
+    public static final PointIF BlACK_FOREGROUND = of("BlACK_FOREGROUND", "BLACK_FG", 30, PointType.FOREGROUND_COLOR);
+    public static final PointIF RED_FOREGROUND = of("RED_FOREGROUND", "RED_FG", 31, PointType.FOREGROUND_COLOR);
+    public static final PointIF GREEN_FOREGROUND = of("GREEN_FOREGROUND", "GREEN_FG", 32, PointType.FOREGROUND_COLOR);
+    public static final PointIF YELLOW_FOREGROUND = of("YELLOW_FOREGROUND", "YELLOW_FG", 33, PointType.FOREGROUND_COLOR);
+    public static final PointIF BLUE_FOREGROUND = of("BLUE_FOREGROUND", "BLUE_FG", 34, PointType.FOREGROUND_COLOR);
+    public static final PointIF MAGENTA_FOREGROUND = of("MAGENTA_FOREGROUND", "MAGENTA_FG", 35, PointType.FOREGROUND_COLOR);
+    public static final PointIF CYAN_FOREGROUND = of("CYAN_FOREGROUND", "CYAN_FG", 36, PointType.FOREGROUND_COLOR);
+    public static final PointIF WHITE_FOREGROUND = of("WHITE_FOREGROUND", "WHITE_FG", 37, PointType.FOREGROUND_COLOR);
     /**
      * Default foreground bright color escape {@link PointIF} points
      */
@@ -196,14 +196,14 @@ public class Point implements PointIF {
     /**
      * Default background color escape {@link PointIF} points
      */
-    public static final PointIF BLACK_BACKGROUND = create("BLACK_BACKGROUND", "BLACK_BG", 40, PointType.BACKGROUND_COLOR);
-    public static final PointIF RED_BACKGROUND = create("RED_BACKGROUND", "RED_BG", 41, PointType.BACKGROUND_COLOR);
-    public static final PointIF GREEN_BACKGROUND = create("GREEN_BACKGROUND", "GREEN_BG", 44, PointType.BACKGROUND_COLOR);
-    public static final PointIF YELLOW_BACKGROUND = create("YELLOW_BACKGROUND", "YELLOW_BG", 43, PointType.BACKGROUND_COLOR);
-    public static final PointIF BLUE_BACKGROUND = create("BLUE_BACKGROUND", "BLUE_BG", 44, PointType.BACKGROUND_COLOR);
-    public static final PointIF MAGENTA_BACKGROUND = create("MAGENTA_BACKGROUND", "MAGENTA_BG", 45, PointType.BACKGROUND_COLOR);
-    public static final PointIF CYAN_BACKGROUND = create("CYAN_BACKGROUND", "CYAN_BG", 46, PointType.BACKGROUND_COLOR);
-    public static final PointIF WHITE_BACKGROUND = create("WHITE_BACKGROUND", "WHITE_BG", 47, PointType.BACKGROUND_COLOR);
+    public static final PointIF BLACK_BACKGROUND = of("BLACK_BACKGROUND", "BLACK_BG", 40, PointType.BACKGROUND_COLOR);
+    public static final PointIF RED_BACKGROUND = of("RED_BACKGROUND", "RED_BG", 41, PointType.BACKGROUND_COLOR);
+    public static final PointIF GREEN_BACKGROUND = of("GREEN_BACKGROUND", "GREEN_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final PointIF YELLOW_BACKGROUND = of("YELLOW_BACKGROUND", "YELLOW_BG", 43, PointType.BACKGROUND_COLOR);
+    public static final PointIF BLUE_BACKGROUND = of("BLUE_BACKGROUND", "BLUE_BG", 44, PointType.BACKGROUND_COLOR);
+    public static final PointIF MAGENTA_BACKGROUND = of("MAGENTA_BACKGROUND", "MAGENTA_BG", 45, PointType.BACKGROUND_COLOR);
+    public static final PointIF CYAN_BACKGROUND = of("CYAN_BACKGROUND", "CYAN_BG", 46, PointType.BACKGROUND_COLOR);
+    public static final PointIF WHITE_BACKGROUND = of("WHITE_BACKGROUND", "WHITE_BG", 47, PointType.BACKGROUND_COLOR);
     /**
      * Default background bright color escape {@link PointIF} points
      */
@@ -297,11 +297,13 @@ public class Point implements PointIF {
      * @param type   - initial input type
      * @return new {@link PointIF} instance
      */
-    public static PointIF create(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final String code, final PointType type) {
+    @NotNull
+    public static final PointIF of(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final String code, final PointType type) {
         if (isEmpty(symbol)) {
             throw new IllegalArgumentException(String.format("ERROR: invalid escape symbol={%s}, should not be empty or null", symbol));
         }
-        return Point.builder()
+        return Point
+            .builder()
             .name(name)
             .symbol(symbol)
             .code(code)
@@ -318,8 +320,9 @@ public class Point implements PointIF {
      * @param type   - initial input type
      * @return new {@link PointIF} instance
      */
-    public static PointIF create(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
-        return create(name, symbol, String.format(DEFAULT_ESCAPE_FORMAT, code), type);
+    @NotNull
+    public static final PointIF of(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
+        return of(name, symbol, String.format(DEFAULT_ESCAPE_FORMAT, code), type);
     }
 
     /**
@@ -331,8 +334,9 @@ public class Point implements PointIF {
      * @param type   - initial input color type
      * @return new {@link PointIF} instance
      */
-    public static PointIF getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final PointType type) {
-        return create(name, symbol, String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRedComponent(), color.getGreenComponent(), color.getBlueComponent()), type);
+    @NotNull
+    public static final PointIF getRGBPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final Color color, final PointType type) {
+        return of(name, symbol, String.format(DEFAULT_RGB_COLOR_ESCAPE_FORMAT, color.getRedComponent(), color.getGreenComponent(), color.getBlueComponent()), type);
     }
 
     /**
@@ -343,8 +347,9 @@ public class Point implements PointIF {
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
      */
-    public static PointIF getForegroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
-        return create(name, symbol, String.format(DEFAULT_FOREGROUND_COLOR_ESCAPE_FORMAT, code), PointType.FOREGROUND_COLOR);
+    @NotNull
+    public static final PointIF getForegroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
+        return of(name, symbol, String.format(DEFAULT_FOREGROUND_COLOR_ESCAPE_FORMAT, code), PointType.FOREGROUND_COLOR);
     }
 
     /**
@@ -355,8 +360,9 @@ public class Point implements PointIF {
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
      */
-    public static PointIF getBackgroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
-        return create(name, symbol, String.format(DEFAULT_BACKGROUND_COLOR_ESCAPE_FORMAT, code), PointType.BACKGROUND_COLOR);
+    @NotNull
+    public static final PointIF getBackgroundColor(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final CharSequence code) {
+        return of(name, symbol, String.format(DEFAULT_BACKGROUND_COLOR_ESCAPE_FORMAT, code), PointType.BACKGROUND_COLOR);
     }
 
     /**
@@ -367,8 +373,9 @@ public class Point implements PointIF {
      * @param code   - initial input code {@link CharSequence}
      * @return new {@link PointIF} instance
      */
-    private static PointIF getBrightColorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
-        return create(name, symbol, String.format(DEFAULT_BRIGHT_COLOR_ESCAPE_FORMAT, code), type);
+    @NotNull
+    private static final PointIF getBrightColorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int code, final PointType type) {
+        return of(name, symbol, String.format(DEFAULT_BRIGHT_COLOR_ESCAPE_FORMAT, code), type);
     }
 
     /**
@@ -380,8 +387,9 @@ public class Point implements PointIF {
      * @param type     - initial input cursor type
      * @return new {@link PointIF} instance
      */
-    public static PointIF getCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int position, final CursorPositionType type) {
-        return create(name, symbol, String.format(DEFAULT_CURSOR_ESCAPE_FORMAT, position, type), PointType.CURSOR_CONTROL);
+    @NotNull
+    public static final PointIF getCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int position, final CursorPositionType type) {
+        return of(name, symbol, String.format(DEFAULT_CURSOR_ESCAPE_FORMAT, position, type), PointType.CURSOR_CONTROL);
     }
 
     /**
@@ -393,8 +401,9 @@ public class Point implements PointIF {
      * @param column - initial input column position
      * @return new {@link PointIF} instance
      */
-    public static PointIF getPositionCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int row, final int column) {
-        return create(name, symbol, String.format(DEFAULT_CURSOR_POSITION_ESCAPE_FORMAT, row, column, CursorPositionType.H), PointType.CURSOR_CONTROL);
+    @NotNull
+    public static final PointIF getPositionCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final int row, final int column) {
+        return of(name, symbol, String.format(DEFAULT_CURSOR_POSITION_ESCAPE_FORMAT, row, column, CursorPositionType.H), PointType.CURSOR_CONTROL);
     }
 
     /**
@@ -405,7 +414,8 @@ public class Point implements PointIF {
      * @param code   - initial input cursor service code
      * @return new {@link PointIF} instance
      */
-    public static PointIF getServiceCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final char code) {
-        return create(name, symbol, String.format(DEFAULT_CURSOR_SERVICE_ESCAPE_FORMAT, code), PointType.CURSOR_CONTROL);
+    @NotNull
+    public static final PointIF getServiceCursorPoint(@NonNull final CharSequence name, @NonNull final CharSequence symbol, final char code) {
+        return of(name, symbol, String.format(DEFAULT_CURSOR_SERVICE_ESCAPE_FORMAT, code), PointType.CURSOR_CONTROL);
     }
 }

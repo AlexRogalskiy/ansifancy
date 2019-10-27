@@ -2,24 +2,18 @@ package com.sensiblemetrics.ansifancy.model.shapes.impl;
 
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
  * Represents a geospatial point value.
- *
- * @author Mark Pollack
- * @author Oliver Gierke
- * @author Thomas Darimont
- * @since 1.8
  */
 @Data
-@EqualsAndHashCode
-@ToString
 public class Point implements Serializable {
 
+    /**
+     * Default explicit serialVersionUID for interoperability
+     */
     private static final long serialVersionUID = 3583151228933783558L;
 
     private final double x;
@@ -31,7 +25,7 @@ public class Point implements Serializable {
      * @param x
      * @param y
      */
-    public Point(double x, double y) {
+    public Point(final double x, final double y) {
         this.x = x;
         this.y = y;
     }

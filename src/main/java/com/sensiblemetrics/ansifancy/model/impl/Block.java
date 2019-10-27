@@ -5,7 +5,10 @@ import com.sensiblemetrics.ansifancy.model.iface.BlockIF;
 import com.sensiblemetrics.ansifancy.model.iface.PositionIF;
 import com.sensiblemetrics.ansifancy.model.iface.StyleIF;
 import com.sensiblemetrics.ansifancy.utils.ValidationUtils;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 /**
  * Default {@link BlockIF} implementation
@@ -13,11 +16,9 @@ import lombok.*;
  * @author Alexander Rogalskiy
  * @version 1.0
  */
+@Data
 @Builder
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode
-@ToString
 public class Block implements BlockIF<IntCoordinate> {
 
     /**
