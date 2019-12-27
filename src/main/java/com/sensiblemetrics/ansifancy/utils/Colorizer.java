@@ -75,4 +75,34 @@ public class Colorizer {
             return color + text + ANSI_RESET;
         }
     }
+
+    public static double[] rgb2hsv(final int red, final int green, final int blue) {
+        double computedH, computedS, computedV;
+        double r, g, b;
+
+        if (red < 0 || green < 0 || blue < 0 || red > 255 || green > 255 || blue > 255) {
+            return null;
+        }
+
+        r = (double) red / 255;
+        g = (double) green / 255;
+        b = (double) blue / 255;
+
+        double minRGB = Math.min(r, Math.min(g, b));
+        double maxRGB = Math.max(r, Math.max(g, b));
+
+        // Black-gray-white
+        if (minRGB == maxRGB) {
+            computedV = minRGB;
+            return new double[]{0, 0, computedV};
+        }
+
+        // Colors other than black-gray-white:
+        double d = (r == minRGB) ? g - b : ((b == minRGB) ? r - g : b - r);
+        double h = (r == minRGB) ? 3 : ((b == minRGB) ? 1 : 5);
+        computedH = 60 * (h - d / (maxRGB - minRGB));
+        computedS = (maxRGB - minRGB) / maxRGB;
+        computedV = maxRGB;
+        return new double[]{computedH, computedS, computedV};
+    }
 }
