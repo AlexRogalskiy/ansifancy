@@ -1,5 +1,7 @@
 package com.sensiblemetrics.ansifancy.utils;
 
+import com.google.common.collect.Multiset;
+
 import java.util.Collection;
 
 /**
@@ -33,7 +35,7 @@ public final class Color {
 
     public static Color getCentroid(Multiset<Color> colors) {
         Color sum = Color.BLACK;
-        for (Color color : colors.getDistinctElements()) {
+        for (Color color : colors.elementSet()) {
             int weight = colors.count(color);
             sum = sum.plus(color.scaled(weight));
         }
