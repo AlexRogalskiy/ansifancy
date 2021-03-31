@@ -164,7 +164,7 @@
 
         <apache.commons.version>3.8.1</apache.commons.version>
         <joda-time.version>2.10.1</joda-time.version>
-        <guava.version>27.0.1-jre</guava.version>
+        <guava.version>29.0-jre</guava.version>
 
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
